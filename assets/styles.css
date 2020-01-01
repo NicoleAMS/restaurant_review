@@ -1,5 +1,12 @@
 #map {
-  height: 80vh; 
-  width: 100vw;
+  height: 60vh; 
   position: fixed; 
+}
+
+.navbar.bg-primary {
+  background: #5000ff !important;
+}
+
+.navbar .logo {
+  height: 60px;
 }
