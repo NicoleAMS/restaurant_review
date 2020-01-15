@@ -1,10 +1,10 @@
+$primary: #5000ff;
+
+@import "~bootstrap/scss/bootstrap";
+
 #map {
   height: 60vh; 
   position: fixed; 
-}
-
-.navbar.bg-primary {
-  background: #5000ff !important;
 }
 
 .navbar .logo {
