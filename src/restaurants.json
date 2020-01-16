@@ -1,0 +1,34 @@
+[
+  {
+    "restaurantName": "Sparrow London",
+    "address": "2 Rennell Street, Lewisham",
+    "lat": 51.4613,
+    "long": -0.0119,
+    "ratings": [
+      {
+        "stars": 5,
+        "comment": "Just enjoyed a delicious dinner at Sparrow in Lewisham with my wife."
+      },
+      {
+        "stars": 5,
+        "comment": "Wow! What an amazing newcomer to Lewisham!"
+      }
+    ]
+  },
+  {
+    "restaurantName": "Levante Restaurant",
+    "address": "11 Lewis Grove, Lewisham",
+    "lat": 51.4715,
+    "long": -0.0219,
+    "ratings": [
+      {
+        "stars": 4,
+        "comment": "Wow, what a place. The food is amazing."
+      },
+      {
+        "stars": 4,
+        "comment": "Absolutely amazing value for money. Great tasting food."
+      }
+    ]
+  }
+]
