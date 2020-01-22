@@ -1,4 +1,13 @@
-$primary: #5000ff;
+$primary: #342574;
+// $primary: #5a3fca;
+$secondary: #F2D11D;
+$dark: #110E20;
+$light: #F4F4F6;
+$success: #9BCC89;
+// $success: #204C39;
+$info: $dark;
+$warning: #B87D31;
+$danger: #C42A3D;
 
 @import "~bootstrap/scss/bootstrap";
 
@@ -8,5 +17,5 @@ $primary: #5000ff;
 }
 
 .navbar .logo {
-  height: 60px;
+  height: 90px;
 }

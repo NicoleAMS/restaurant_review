@@ -12,31 +12,36 @@
     <meta name="description" content="" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
   </head>
-  <body>
+  <body class="text-dark">
     <!--[if lt IE 7]>
       <p class="browsehappy">
         You are using an <strong>outdated</strong> browser. Please
         <a href="#">upgrade your browser</a> to improve your experience.
       </p>
     <![endif]-->
-    <nav class="navbar navbar-dark bg-primary">
+    <nav class="navbar navbar-dark bg-primary py-4 justify-content-center">
       <a class="navbar-brand" href="#">
         <img src="./assets/images/logo_white_t.png" class="logo" alt="logo">
       </a>
     </nav>
 
-    <div class="container">
-      <div class="row justify-content-center">
-        <h3 class="my-5">Restaurant Reviews</h3>
-      </div>
+    <div class="container-fluid">
       <div class="row">
-        <div id="restaurantCol" class="col col-8"></div>
-        <div class="col col-4">
-          <div id="map"></div>
+        <div class="col col-12 bg-secondary mb-5 border-bottom">
+          <h5 class="my-4 text-uppercase">Restaurant Reviews</h5>
         </div>
       </div>
     </div>
 
-    <script async defer src="https://maps.googleapis.com/maps/api/js?key=YOUR_KEY&callback=initMap"></script>
+    <div class="container">
+      <div class="row">
+        <div class="col col-4">
+          <div id="map"></div>
+        </div>
+        <div id="restaurantCol" class="col col-8"></div>
+      </div>
+    </div>
+
+    <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDbf_3sey8XfRERzyiMqZIR7OZsENz6GXo&callback=initMap"></script>
   </body>
 </html>
