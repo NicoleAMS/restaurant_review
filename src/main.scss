@@ -1,21 +1,29 @@
 $primary: #342574;
 // $primary: #5a3fca;
-$secondary: #F2D11D;
-$dark: #110E20;
-$light: #F4F4F6;
-$success: #9BCC89;
+$secondary: #f2d11d;
+$dark: #110e20;
+$light: #f4f4f6;
+$success: #9bcc89;
 // $success: #204C39;
 $info: $dark;
-$warning: #B87D31;
-$danger: #C42A3D;
+$warning: #b87d31;
+$danger: #c42a3d;
 
 @import "~bootstrap/scss/bootstrap";
+$fa-font-path: "~@fortawesome/fontawesome-free/webfonts/";
+@import "~@fortawesome/fontawesome-free/scss/fontawesome.scss";
+@import "~@fortawesome/fontawesome-free/scss/regular.scss";
+@import "@fortawesome/fontawesome-free/scss/solid.scss";
 
 #map {
-  height: 60vh; 
-  position: fixed; 
+  height: 60vh;
+  position: fixed;
 }
 
 .navbar .logo {
   height: 90px;
+}
+
+footer {
+  height: 80px;
 }

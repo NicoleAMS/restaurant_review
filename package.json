@@ -20,9 +20,11 @@
   },
   "homepage": "https://github.com/NicoleAMS/restaurant_review#readme",
   "devDependencies": {
+    "@fortawesome/fontawesome-free": "^5.12.0",
     "bootstrap": "^4.4.1",
     "css-loader": "^3.4.2",
     "file-loader": "^5.0.2",
+    "font-awesome-loader": "^1.0.2",
     "html-loader": "^0.5.5",
     "html-webpack-plugin": "^3.2.0",
     "node-sass": "^4.13.0",
