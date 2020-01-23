@@ -5,6 +5,5 @@ export function calculateAverageRating(ratings) {
 		average += rating.stars;
 	});
 	average = average / ratings.length;
-	console.log(average);
 	return average;
 }

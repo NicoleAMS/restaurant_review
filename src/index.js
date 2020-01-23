@@ -1,6 +1,6 @@
 import "./main.scss";
-import { initMap } from "./google_maps";
 import "./restaurant-component";
+import { initMap } from "./google_maps";
 import { calculateAverageRating } from "./restaurants";
 const restaurants = require("./restaurants.json");
 
@@ -8,10 +8,20 @@ const restaurantColumn = document.getElementById("restaurantCol");
 
 restaurants.forEach(restaurant => {
   restaurant.average = calculateAverageRating(restaurant.ratings);
-  console.log(restaurant);
   const element = document.createElement("restaurant-component");
   element.restaurant = restaurant;
   restaurantColumn.appendChild(element);
+});
+
+document.addEventListener("DOMContentLoaded", function() {
+  const starTotal = 5;
+  restaurants.forEach(restaurant => {
+    const starPercentage = (restaurant.average / starTotal) * 100;
+    const starPercentageRounded = `${Math.round(starPercentage / 10) * 10}%`;
+    document.querySelector(
+      `.id_${restaurant.id} .stars-inner`
+    ).style.width = starPercentageRounded;
+  });
 });
 
 window.initMap = initMap;
