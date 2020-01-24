@@ -8,7 +8,7 @@ class RestaurantComponent extends HTMLElement {
 				<div class="icon stars-outer">
 					<div class="icon stars-inner"></div>
 				</div>
-				<span>(${restaurant.ratings.length})</span>
+				<small class="text-muted">(${restaurant.ratings.length} reviews)</small>
 			</div>
 		</div>
 		`;
