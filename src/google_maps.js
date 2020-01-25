@@ -50,5 +50,28 @@ export function initMap() {
     };
     addMarker(restaurantMarker);
   });
+
+  // set lat/lng of NE & SW corners every time the map changes
+  google.maps.event.addListener(map, "bounds_changed", function() {
+    var bounds = map.getBounds();
+    var NE = bounds.getNorthEast();
+    var SW = bounds.getSouthWest();
+    var SWLatLng = new google.maps.LatLng(SW.lat(), SW.lng());
+    var NELatLng = new google.maps.LatLng(NE.lat(), NE.lng());
+
+    // set corner coordinates of the map
+    var viewportBounds = new google.maps.LatLngBounds(SWLatLng, NELatLng);
+
+    // check if restaurant is currently visible on the map
+    restaurants.forEach(restaurant => {
+      var restaurantLatLng = new google.maps.LatLng({lat: restaurant.lat, lng: restaurant.long});
+      console.log(restaurantLatLng.lat(), restaurantLatLng.lng());
+      if (viewportBounds.contains(restaurantLatLng)) {
+        console.log("visible");
+      } else {
+        console.log("hidden");
+      }
+    });
+  });
 }
 
