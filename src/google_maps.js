@@ -29,6 +29,14 @@ export function initMap() {
       map: map,
       icon: props.icon
     });
+
+    var infoWindow = new google.maps.InfoWindow({
+      content: props.content
+    });
+
+    marker.addListener('click', function() {
+      infoWindow.open(map, marker);
+    });
   };
 
   // adds markers for each restaurant
@@ -38,7 +46,7 @@ export function initMap() {
       icon: {
         url: "https://www.google.com/maps/vt/icon/name=assets/icons/poi/tactile/pinlet_shadow-1-small.png,assets/icons/poi/tactile/pinlet_outline_v2-1-small.png,assets/icons/poi/tactile/pinlet-1-small.png,assets/icons/poi/quantum/pinlet/restaurant_pinlet-1-small.png&highlight=ff000000,ffffff,F1D11F,ffffff?scale=1.75"
       },
-      content: `<h3>${restaurant.restaurantName}</h3>`
+      content: `<p>${restaurant.restaurantName}</p>`
     };
     addMarker(restaurantMarker);
   });
