@@ -36,5 +36,21 @@
         "comment": "Absolutely amazing value for money. Great tasting food."
       }
     ]
-  }
+  },
+  {
+    "restaurantName":"Babalou",
+    "address":"4 Rue Lamarck, 75018 Paris",
+    "lat":48.8865035,
+    "long":2.3442197,
+    "ratings":[
+       {
+          "stars": 3,
+          "comment":"Tiny pizzeria next to Sacre Coeur!"
+       },
+       {
+          "stars": 3,
+          "comment":"Meh, it was fine."
+       }
+    ]
+ }
 ]
