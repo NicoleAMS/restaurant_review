@@ -1,7 +1,8 @@
-import { calculateAverageRating } from "./restaurants";
+import { displayRestaurant, addRestaurantMarker } from "./restaurants";
 const allRestaurants = require("./restaurants.json");
 const styles = require("./google_maps.json");
-let restaurants = [];
+export let restaurants = [];
+export let googleMap;
 
 export function initMap() {
   // map with default position
@@ -11,7 +12,7 @@ export function initMap() {
     center: paris, 
     styles: styles
   });
-  // var marker = new google.maps.Marker({ position: paris, map: map });
+  googleMap = map;
 
   // geolocation: center map based on user's location
   if (navigator.geolocation) {
@@ -21,28 +22,14 @@ export function initMap() {
         lng: position.coords.longitude
       };
       map.setCenter(pos);
+      googleMap = map;
       var marker = new google.maps.Marker({ position: pos, map: map });
     });
   }
 
-  function addMarker(props) {
-    var marker = new google.maps.Marker({
-      position: props.coords,
-      map: map,
-      icon: props.icon
-    });
-
-    var infoWindow = new google.maps.InfoWindow({
-      content: props.content
-    });
-
-    marker.addListener('click', function() {
-      infoWindow.open(map, marker);
-    });
-  };
-
   // set lat/lng of NE & SW corners every time the map changes
   google.maps.event.addListener(map, "bounds_changed", function() {
+    googleMap = map;
     var bounds = map.getBounds();
     var NE = bounds.getNorthEast();
     var SW = bounds.getSouthWest();
@@ -63,18 +50,6 @@ export function initMap() {
       }
     });
 
-    // adds markers for each visible restaurant
-    restaurants.forEach(restaurant => {
-      const restaurantMarker = {
-        coords:  {lat: restaurant.lat, lng: restaurant.long},
-        icon: {
-          url: "https://www.google.com/maps/vt/icon/name=assets/icons/poi/tactile/pinlet_shadow-1-small.png,assets/icons/poi/tactile/pinlet_outline_v2-1-small.png,assets/icons/poi/tactile/pinlet-1-small.png,assets/icons/poi/quantum/pinlet/restaurant_pinlet-1-small.png&highlight=ff000000,ffffff,F1D11F,ffffff?scale=1.75"
-        },
-        content: `<p>${restaurant.restaurantName}</p>`
-      };
-      addMarker(restaurantMarker);
-    });
-    
     const starTotal = 5;
     const restaurantColumn = document.getElementById("restaurantCol");
 
@@ -82,20 +57,10 @@ export function initMap() {
     restaurantColumn.innerHTML = '';
 
     restaurants.forEach(restaurant => {
-      // calculate average star rating
-      restaurant.average = calculateAverageRating(restaurant.ratings);
-  
-      // create restaurant component & append to DOM
-      const element = document.createElement("restaurant-component");
-      element.restaurant = restaurant;
-      restaurantColumn.appendChild(element);
-  
-      // show star reviews
-      const starPercentage = (restaurant.average / starTotal) * 100;
-      const starPercentageRounded = `${Math.round(starPercentage / 10) * 10}%`;
-      document.querySelector(
-        `.id_${restaurant.id} .stars-inner`
-      ).style.width = starPercentageRounded;
+      // display restaurants visible on the map
+      displayRestaurant(restaurant, restaurantColumn, starTotal);
+      // adds markers on the  map for each visible restaurant
+      addRestaurantMarker(restaurant, map);
     });
   });
 }
