@@ -27,8 +27,13 @@ export function initMap() {
     });
   }
 
-  // set lat/lng of NE & SW corners every time the map changes
-  google.maps.event.addListener(map, "bounds_changed", function() {
+  // set lat/lng of NE & SW corners every time the map becomes idle after dragging, panning or zooming
+  google.maps.event.addListener(map, "idle", function() {
+    onBoundsChanged();
+  });
+
+  function onBoundsChanged() {
+    console.log('bounds changed');
     googleMap = map;
     var bounds = map.getBounds();
     var NE = bounds.getNorthEast();
@@ -45,9 +50,7 @@ export function initMap() {
       var restaurantLatLng = new google.maps.LatLng({lat: restaurant.lat, lng: restaurant.long});
       if (viewportBounds.contains(restaurantLatLng)) {
         restaurants.push(restaurant);
-      } else {
-        console.log("hidden");
-      }
+      } 
     });
 
     const starTotal = 5;
@@ -62,6 +65,6 @@ export function initMap() {
       // adds markers on the  map for each visible restaurant
       addRestaurantMarker(restaurant, map);
     });
-  });
+  }
 }
 
