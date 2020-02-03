@@ -45,12 +45,8 @@ function filterRestaurants(restaurants, min, max) {
   const starTotal = 5;
   restaurants.forEach(restaurant => {
     restaurant.marker.setMap(null);
-    console.log("filter");
     const average = Math.round(restaurant.average);
-    if (
-      (average >= min && average <= max) ||
-      (average >= max && average <= min)
-    ) {
+    if (average >= min && average <= max) {
       displayRestaurant(restaurant, restaurantColumn, starTotal);
       restaurant.marker.setMap(googleMap);
     }
