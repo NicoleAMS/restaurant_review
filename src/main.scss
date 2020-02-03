@@ -20,6 +20,10 @@ $fa-font-path: "~@fortawesome/fontawesome-free/webfonts/";
   position: fixed;
 }
 
+.main {
+  min-height: 75vh;
+}
+
 .custom-select {
   background-image: none;
 }
