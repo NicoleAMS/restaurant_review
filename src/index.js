@@ -29,12 +29,24 @@ document.addEventListener("DOMContentLoaded", function() {
   minStarSelect.addEventListener("change", e => {
     minStarAverage = e.target.value;
     filterRestaurants(restaurants, minStarAverage, maxStarAverage);
+    updateMaxSelect(minStarAverage);
   });
 
   maxStarSelect.addEventListener("change", e => {
     maxStarAverage = e.target.value;
     filterRestaurants(restaurants, minStarAverage, maxStarAverage);
   });
+
+  function updateMaxSelect(minStarAverage) {
+    for (let i = 1; i <= 5; i++) {
+      const element = document.getElementById(`maxStar${i}`);
+      if (i < minStarAverage) {
+        element.disabled = true;
+      } else {
+        element.disabled = false;
+      }
+    }
+  }
 });
 
 function filterRestaurants(restaurants, min, max) {
