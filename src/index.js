@@ -3,7 +3,7 @@ import "./main.scss";
 import "./restaurant-component";
 import "./rating-filter-component";
 import { initMap, restaurants, googleMap } from "./google_maps";
-import { displayRestaurant } from "./restaurants";
+import { displayRestaurant, destroyRestaurants } from "./restaurants";
 
 window.initMap = initMap;
 
@@ -17,50 +17,37 @@ document.addEventListener("DOMContentLoaded", function() {
 
   // create filter-component
   const filterDiv = document.getElementById("filterDiv");
-  const element = document.createElement("filter-component");
-  element.filter = "";
-  filterDiv.appendChild(element);
+  const filterComponent = document.createElement("filter-component");
+  filterDiv.appendChild(filterComponent);
 
-  const minStarSelect = document.getElementById("minStarSelect");
-  const maxStarSelect = document.getElementById("maxStarSelect");
-  let minStarAverage = 0;
-  let maxStarAverage = 5;
-
-  minStarSelect.addEventListener("change", e => {
-    minStarAverage = e.target.value;
-    filterRestaurants(restaurants, minStarAverage, maxStarAverage);
-    updateMaxSelect(minStarAverage);
+  // listen to changes on the filter component: minimum star rating
+  filterComponent.minStarSelect.addEventListener("change", e => {
+    // set minimum star rating
+    filterComponent.minStarAverage = e.target.value;
+    // filter restaurants
+    onFilterSelect(filterComponent);
+    // update the max select values
+    filterComponent.updateMaxSelect();
   });
 
-  maxStarSelect.addEventListener("change", e => {
-    maxStarAverage = e.target.value;
-    filterRestaurants(restaurants, minStarAverage, maxStarAverage);
+  // listen to changes on the filter component: maximum star rating
+  filterComponent.maxStarSelect.addEventListener("change", e => {
+    filterComponent.maxStarAverage = e.target.value;
+    onFilterSelect(filterComponent);
   });
-
-  function updateMaxSelect(minStarAverage) {
-    for (let i = 1; i <= 5; i++) {
-      const element = document.getElementById(`maxStar${i}`);
-      if (i < minStarAverage) {
-        element.disabled = true;
-      } else {
-        element.disabled = false;
-      }
-    }
-  }
 });
 
-function filterRestaurants(restaurants, min, max) {
-  // destroy existing restaurant-components
-  const restaurantColumn = document.getElementById("restaurantCol");
-  restaurantColumn.innerHTML = "";
-
+function onFilterSelect(component) {
   const starTotal = 5;
-  restaurants.forEach(restaurant => {
-    restaurant.marker.setMap(null);
-    const average = Math.round(restaurant.average);
-    if (average >= min && average <= max) {
-      displayRestaurant(restaurant, restaurantColumn, starTotal);
-      restaurant.marker.setMap(googleMap);
-    }
+  const restaurantColumn = document.getElementById("restaurantCol");
+  
+  // destroy existing restaurant-components
+  destroyRestaurants(restaurants);
+
+  // re-add filtered restaurants 
+  const filteredRestaurants = component.filterTool(restaurants);
+  filteredRestaurants.forEach(restaurant => {
+    displayRestaurant(restaurant, restaurantColumn, starTotal);
+    restaurant.marker.setMap(googleMap);
   });
 }
