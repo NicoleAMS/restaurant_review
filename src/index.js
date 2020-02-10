@@ -36,7 +36,6 @@ document.addEventListener("DOMContentLoaded", function() {
 });
 
 function onFilterSelect(component) {
-  const starTotal = 5;
   const restaurantColumn = document.getElementById("restaurantCol");
   
   // destroy existing restaurant-components
@@ -45,7 +44,7 @@ function onFilterSelect(component) {
   // re-add filtered restaurants 
   const filteredRestaurants = component.filterTool(restaurants);
   filteredRestaurants.forEach(restaurant => {
-    displayRestaurant(restaurant, restaurantColumn, starTotal);
+    displayRestaurant(restaurant, restaurantColumn);
     restaurant.marker.setMap(googleMap);
   });
 }

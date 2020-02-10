@@ -7,21 +7,25 @@ export function calculateAverageRating(ratings) {
   return average;
 }
 
-export function displayRestaurant(restaurant, restaurantColumn, starTotal) {
-  // calculate average star rating
-  restaurant.average = calculateAverageRating(restaurant.ratings);
+export function displayRestaurant(restaurant, restaurantColumn) {
+	// calculate average star rating
+	restaurant.average = calculateAverageRating(restaurant.ratings);
+	// create restaurant component & append to DOM
+	const element = document.createElement("restaurant-component");
+	element.restaurant = restaurant;
+	restaurantColumn.appendChild(element);
+	// show star reviews
+	document.querySelector(
+		`.id_${restaurant.id} .stars-inner`
+	).style.width = element.starPercentageRounded;
+}
 
-  // create restaurant component & append to DOM
-  const element = document.createElement("restaurant-component");
-  element.restaurant = restaurant;
-  restaurantColumn.appendChild(element);
-
-  // show star reviews
-  const starPercentage = (restaurant.average / starTotal) * 100;
-  const starPercentageRounded = `${Math.round(starPercentage / 10) * 10}%`;
-  document.querySelector(
-    `.id_${restaurant.id} .stars-inner`
-  ).style.width = starPercentageRounded;
+export function destroyRestaurants(restaurants) {
+  const restaurantColumn = document.getElementById("restaurantCol");
+  restaurantColumn.innerHTML = "";
+  restaurants.forEach(restaurant => {
+    restaurant.marker.setMap(null);
+  });
 }
 
 export function addRestaurantMarker(restaurant, map) {
@@ -43,10 +47,3 @@ export function addRestaurantMarker(restaurant, map) {
   restaurant.marker = marker;
 }
 
-export function destroyRestaurants(restaurants) {
-  const restaurantColumn = document.getElementById("restaurantCol");
-  restaurantColumn.innerHTML = "";
-  restaurants.forEach(restaurant => {
-    restaurant.marker.setMap(null);
-  });
-}
