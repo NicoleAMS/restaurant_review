@@ -3,8 +3,6 @@ class RatingFilterComponent extends HTMLElement {
     super();
     this.attachShadow({ mode: "open" });
     this.shadowRoot.innerHTML = `
-		<link href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
-			<form class="d-flex">
 				<select class="custom-select mx-2" id="minStarSelect">
 					<option selected disabled>Select minimum star rating</option>
 					<option value="1">One star</option>
