@@ -2,10 +2,8 @@ import "bootstrap";
 import "./main.scss";
 import "./restaurant-component";
 import "./rating-filter-component";
-import { initMap, restaurants, googleMap } from "./google_maps";
+import { initMap, restaurantsOnMap, googleMap } from "./google_maps";
 import { displayRestaurant, destroyRestaurants } from "./restaurants";
-
-window.initMap = initMap;
 
 document.addEventListener("DOMContentLoaded", function() {
   const google_api_key = process.env.GOOGLE_API_KEY;
@@ -14,6 +12,9 @@ document.addEventListener("DOMContentLoaded", function() {
   const googleScriptTag = document.createElement("script");
   googleScriptTag.src = `https://maps.googleapis.com/maps/api/js?key=${google_api_key}&callback=initMap`;
   document.getElementsByTagName("body")[0].appendChild(googleScriptTag);
+
+  // initialize google maps
+  window.initMap = initMap;
 
   // get filter-component
   const filterComponent = document.querySelector("filter-component");
@@ -39,10 +40,10 @@ function onFilterSelect(component) {
   const restaurantColumn = document.getElementById("restaurantCol");
   
   // destroy existing restaurant-components
-  destroyRestaurants(restaurants);
+  destroyRestaurants(restaurantsOnMap);
 
   // re-add filtered restaurants 
-  const filteredRestaurants = component.filterTool(restaurants);
+  const filteredRestaurants = component.filterTool(restaurantsOnMap);
   filteredRestaurants.forEach(restaurant => {
     displayRestaurant(restaurant, restaurantColumn);
     restaurant.marker.setMap(googleMap);

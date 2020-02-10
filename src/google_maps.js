@@ -1,7 +1,7 @@
 import { displayRestaurant, addRestaurantMarker } from "./restaurants";
 const allRestaurants = require("./restaurants.json");
 const styles = require("./google_maps.json");
-export let restaurants = [];
+export let restaurantsOnMap = [];
 export let googleMap;
 
 export function initMap() {
@@ -45,23 +45,21 @@ export function initMap() {
     var viewportBounds = new google.maps.LatLngBounds(SWLatLng, NELatLng);
 
     // check if restaurant is currently visible on the map
-    restaurants = [];
+    restaurantsOnMap = [];
     allRestaurants.forEach(restaurant => {
       var restaurantLatLng = new google.maps.LatLng({lat: restaurant.lat, lng: restaurant.long});
       if (viewportBounds.contains(restaurantLatLng)) {
-        restaurants.push(restaurant);
+        restaurantsOnMap.push(restaurant);
       } 
     });
 
-    const starTotal = 5;
-    const restaurantColumn = document.getElementById("restaurantCol");
-
     // destroy existing restaurant-components
+    const restaurantColumn = document.getElementById("restaurantCol");
     restaurantColumn.innerHTML = '';
 
-    restaurants.forEach(restaurant => {
+    restaurantsOnMap.forEach(restaurant => {
       // display restaurants visible on the map
-      displayRestaurant(restaurant, restaurantColumn, starTotal);
+      displayRestaurant(restaurant, restaurantColumn);
       // adds markers on the  map for each visible restaurant
       addRestaurantMarker(restaurant, map);
     });
