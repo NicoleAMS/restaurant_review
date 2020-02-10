@@ -1,4 +1,4 @@
-class RestaurantComponent extends HTMLElement {
+class RestaurantCard extends HTMLElement {
 	constructor() {
 		super();
 		this.starTotal = 5;
@@ -26,4 +26,4 @@ class RestaurantComponent extends HTMLElement {
 	
 }
 
-customElements.define("restaurant-component", RestaurantComponent);
+customElements.define("restaurant-card", RestaurantCard);

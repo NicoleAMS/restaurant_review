@@ -11,7 +11,7 @@ export function displayRestaurant(restaurant, restaurantColumn) {
 	// calculate average star rating
 	restaurant.average = calculateAverageRating(restaurant.ratings);
 	// create restaurant component & append to DOM
-	const element = document.createElement("restaurant-component");
+	const element = document.createElement("restaurant-card");
 	element.restaurant = restaurant;
 	restaurantColumn.appendChild(element);
 	// show star reviews

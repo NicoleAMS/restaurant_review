@@ -1,6 +1,6 @@
 import "bootstrap";
 import "./main.scss";
-import "./restaurant-component";
+import "./restaurant-card.component";
 import "./rating-filter-component";
 import { initMap, restaurantsOnMap, googleMap } from "./google_maps";
 import { displayRestaurant, destroyRestaurants } from "./restaurants";
