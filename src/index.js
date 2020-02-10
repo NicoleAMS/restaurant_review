@@ -15,10 +15,8 @@ document.addEventListener("DOMContentLoaded", function() {
   googleScriptTag.src = `https://maps.googleapis.com/maps/api/js?key=${google_api_key}&callback=initMap`;
   document.getElementsByTagName("body")[0].appendChild(googleScriptTag);
 
-  // create filter-component
-  const filterDiv = document.getElementById("filterDiv");
-  const filterComponent = document.createElement("filter-component");
-  filterDiv.appendChild(filterComponent);
+  // get filter-component
+  const filterComponent = document.querySelector("filter-component");
 
   // listen to changes on the filter component: minimum star rating
   filterComponent.minStarSelect.addEventListener("change", e => {
