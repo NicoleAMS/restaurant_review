@@ -1,9 +1,7 @@
 class MinMaxSelect extends HTMLElement {
   constructor() {
     super();
-    this.attachShadow({ mode: "open" });
-    this.shadowRoot.innerHTML = `
-    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+    this.innerHTML = `
 			<form class="d-flex">
 				<select class="custom-select mx-2" id="minStarSelect">
 					<option selected disabled>Select minimum star rating</option>
@@ -22,17 +20,17 @@ class MinMaxSelect extends HTMLElement {
 					<option id="maxStar5" value="5">Five stars</option>
 				</select>
 			</form>
-		`;
+    `;
 
-    this.minStarSelect = this.shadowRoot.getElementById("minStarSelect");
-    this.maxStarSelect = this.shadowRoot.getElementById("maxStarSelect");
+    this.minStarSelect = this.querySelector("#minStarSelect");
+    this.maxStarSelect = this.querySelector("#maxStarSelect");
     this.minStarAverage = 0;
     this.maxStarAverage = 5;
   }
 
   updateMaxSelect() {
     for (let i = 1; i <= 5; i++) {
-      const element = this.shadowRoot.getElementById(`maxStar${i}`);
+      const element = this.querySelector(`#maxStar${i}`);
       if (i < this.minStarAverage) {
         element.disabled = true;
       } else {
