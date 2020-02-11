@@ -1,4 +1,4 @@
-class RatingFilterComponent extends HTMLElement {
+class MinMaxSelect extends HTMLElement {
   constructor() {
     super();
     this.attachShadow({ mode: "open" });
@@ -50,4 +50,4 @@ class RatingFilterComponent extends HTMLElement {
   }
 }
 
-customElements.define("filter-component", RatingFilterComponent);
+customElements.define("min-max-select", MinMaxSelect);
