@@ -2,8 +2,8 @@ import "bootstrap";
 import "./main.scss";
 import "./restaurant-card.component";
 import "./min-max-select.component";
-import { initMap, restaurantsOnMap, googleMap } from "./google_maps";
-import { displayRestaurant, destroyRestaurants } from "./restaurants";
+import { initMap, restaurantsOnMap } from "./google_maps";
+import { filterRestaurants } from "./restaurants";
 
 document.addEventListener("DOMContentLoaded", function() {
   const google_api_key = process.env.GOOGLE_API_KEY;
@@ -21,31 +21,19 @@ document.addEventListener("DOMContentLoaded", function() {
 
   // listen to changes on the min-max-select component: minimum star rating
   minMaxSelectMenu.minStarSelect.addEventListener("change", e => {
-    // set minimum star rating
-    minMaxSelectMenu.minStarAverage = e.target.value;
-    // filter restaurants
-    onFilterSelect(minMaxSelectMenu);
-    // update the max select values
-    minMaxSelectMenu.updateMaxSelect();
+    filterRestaurants(
+      restaurantsOnMap,
+      minMaxSelectMenu.minStarAverage,
+      minMaxSelectMenu.maxStarAverage
+    );
   });
 
   // listen to changes on the min-max-select component: maximum star rating
   minMaxSelectMenu.maxStarSelect.addEventListener("change", e => {
-    minMaxSelectMenu.maxStarAverage = e.target.value;
-    onFilterSelect(minMaxSelectMenu);
+    filterRestaurants(
+      restaurantsOnMap,
+      minMaxSelectMenu.minStarAverage,
+      minMaxSelectMenu.maxStarAverage
+    );
   });
 });
-
-function onFilterSelect(component) {
-  const restaurantColumn = document.getElementById("restaurantCol");
-
-  // destroy existing restaurant-components
-  destroyRestaurants(restaurantsOnMap);
-
-  // re-add filtered restaurants
-  const filteredRestaurants = component.filterTool(restaurantsOnMap);
-  filteredRestaurants.forEach(restaurant => {
-    displayRestaurant(restaurant, restaurantColumn);
-    restaurant.marker.setMap(googleMap);
-  });
-}

@@ -1,3 +1,5 @@
+import { googleMap } from "./google_maps";
+
 export function calculateAverageRating(ratings) {
   let average = 0;
   ratings.forEach(rating => {
@@ -8,16 +10,15 @@ export function calculateAverageRating(ratings) {
 }
 
 export function displayRestaurant(restaurant, restaurantColumn) {
-	// calculate average star rating
-	restaurant.average = calculateAverageRating(restaurant.ratings);
-	// create restaurant component & append to DOM
-	const element = document.createElement("restaurant-card");
-	element.restaurant = restaurant;
-	restaurantColumn.appendChild(element);
-	// show star reviews
-	document.querySelector(
-		`.id_${restaurant.id} .stars-inner`
-	).style.width = element.starPercentageRounded;
+  // calculate average star rating
+  restaurant.average = calculateAverageRating(restaurant.ratings);
+  // create restaurant component & append to DOM
+  const element = document.createElement("restaurant-card");
+  element.restaurant = restaurant;
+  restaurantColumn.appendChild(element);
+  // show star reviews
+  document.querySelector(`.id_${restaurant.id} .stars-inner`).style.width =
+    element.starPercentageRounded;
 }
 
 export function destroyRestaurants(restaurants) {
@@ -25,6 +26,25 @@ export function destroyRestaurants(restaurants) {
   restaurantColumn.innerHTML = "";
   restaurants.forEach(restaurant => {
     restaurant.marker.setMap(null);
+  });
+}
+
+export function filterRestaurants(restaurants, min, max) {
+  const restaurantColumn = document.getElementById("restaurantCol");
+
+  // destroy existing restaurant-components
+  destroyRestaurants(restaurants);
+
+  // get filtered restaurants
+  const filteredRestaurants = restaurants.filter(restaurant => {
+    const average = Math.round(restaurant.average);
+    return average >= min && average <= max;
+  });
+
+  // re-add filtered restaurants
+  filteredRestaurants.forEach(restaurant => {
+    displayRestaurant(restaurant, restaurantColumn);
+    restaurant.marker.setMap(googleMap);
   });
 }
 
@@ -46,4 +66,3 @@ export function addRestaurantMarker(restaurant, map) {
 
   restaurant.marker = marker;
 }
-

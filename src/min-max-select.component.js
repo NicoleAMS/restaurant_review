@@ -26,6 +26,17 @@ class MinMaxSelect extends HTMLElement {
     this.maxStarSelect = this.querySelector("#maxStarSelect");
     this.minStarAverage = 0;
     this.maxStarAverage = 5;
+
+    this.minStarSelect.addEventListener("change", e => {
+      // set minimum star rating
+      this.minStarAverage = e.target.value;
+      // update the max select values
+      this.updateMaxSelect();
+    });
+
+    this.maxStarSelect.addEventListener("change", e => {
+      this.maxStarAverage = e.target.value;
+    });
   }
 
   updateMaxSelect() {
@@ -37,14 +48,6 @@ class MinMaxSelect extends HTMLElement {
         element.disabled = false;
       }
     }
-  }
-
-  filterTool(array) {
-    const filteredArray = array.filter(index => {
-      const average = Math.round(index.average);
-      return average >= this.minStarAverage && average <= this.maxStarAverage;
-    });
-    return filteredArray;
   }
 }
 
