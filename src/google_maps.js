@@ -1,4 +1,4 @@
-import { displayRestaurant, addRestaurantMarker } from "./restaurants";
+import { createRestaurantCard, addRestaurantMarker } from "./restaurants";
 const allRestaurants = require("./restaurants.json");
 const styles = require("./google_maps.json");
 export let restaurantsOnMap = [];
@@ -68,7 +68,7 @@ function displayRestaurants(restaurantsOnMap, map) {
 
   restaurantsOnMap.forEach(restaurant => {
     // display restaurants visible on the map
-    displayRestaurant(restaurant, restaurantColumn);
+    createRestaurantCard(restaurant, restaurantColumn);
     // adds markers on the  map for each visible restaurant
     addRestaurantMarker(restaurant, map);
   });

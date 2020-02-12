@@ -9,7 +9,7 @@ export function calculateAverageRating(ratings) {
   return average;
 }
 
-export function displayRestaurant(restaurant, restaurantColumn) {
+export function createRestaurantCard(restaurant, restaurantColumn) {
   // calculate average star rating
   restaurant.average = calculateAverageRating(restaurant.ratings);
   // create restaurant component & append to DOM
@@ -43,7 +43,7 @@ export function filterRestaurants(restaurants, min, max) {
 
   // re-add filtered restaurants
   filteredRestaurants.forEach(restaurant => {
-    displayRestaurant(restaurant, restaurantColumn);
+    createRestaurantCard(restaurant, restaurantColumn);
     restaurant.marker.setMap(googleMap);
   });
 }
