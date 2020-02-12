@@ -62,3 +62,19 @@ function setRestaurantsOnMap(viewportBounds) {
   });
   return restaurantsOnMap;
 }
+
+export function addMarkerWithInfoWindow(props) {
+  var marker = new google.maps.Marker({
+    position: props.coords,
+    map: props.map,
+    icon: props.icon
+  });
+  var infoWindow = new google.maps.InfoWindow({
+    content: props.content
+  });
+
+  marker.addListener("click", function() {
+    infoWindow.open(props.map, marker);
+  });
+  return marker;
+}
