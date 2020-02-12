@@ -21,7 +21,20 @@ export function createRestaurantCard(restaurant, restaurantColumn) {
     element.starPercentageRounded;
 }
 
-export function destroyRestaurants(restaurants) {
+export function displayRestaurantList(restaurantsOnMap, map) {
+  // destroy existing restaurant-cards
+  const restaurantColumn = document.getElementById("restaurantCol");
+  restaurantColumn.innerHTML = "";
+
+  restaurantsOnMap.forEach(restaurant => {
+    // display restaurants visible on the map
+    createRestaurantCard(restaurant, restaurantColumn);
+    // adds markers on the  map for each visible restaurant
+    addRestaurantMarker(restaurant, map);
+  });
+}
+
+export function destroyRestaurantList(restaurants) {
   const restaurantColumn = document.getElementById("restaurantCol");
   restaurantColumn.innerHTML = "";
   restaurants.forEach(restaurant => {
@@ -29,11 +42,11 @@ export function destroyRestaurants(restaurants) {
   });
 }
 
-export function filterRestaurants(restaurants, min, max) {
+export function filterRestaurantList(restaurants, min, max) {
   const restaurantColumn = document.getElementById("restaurantCol");
 
   // destroy existing restaurant-components
-  destroyRestaurants(restaurants);
+  destroyRestaurantList(restaurants);
 
   // get filtered restaurants
   const filteredRestaurants = restaurants.filter(restaurant => {

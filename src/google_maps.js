@@ -1,4 +1,4 @@
-import { createRestaurantCard, addRestaurantMarker } from "./restaurants";
+import { displayRestaurantList } from "./restaurants";
 const allRestaurants = require("./restaurants.json");
 const styles = require("./google_maps.json");
 export let restaurantsOnMap = [];
@@ -9,7 +9,7 @@ export function initMap() {
   var paris = { lat: 48.864716, lng: 2.349014 };
   var map = new google.maps.Map(document.getElementById("map"), {
     zoom: 13,
-    center: paris, 
+    center: paris,
     styles: styles
   });
   googleMap = map;
@@ -31,9 +31,8 @@ export function initMap() {
   google.maps.event.addListener(map, "idle", function() {
     let viewportBounds = setViewportBounds(map);
     let restaurantsOnMap = setRestaurantsOnMap(viewportBounds);
-    displayRestaurants(restaurantsOnMap, map);
+    displayRestaurantList(restaurantsOnMap, map);
   });
-
 }
 
 function setViewportBounds(map) {
@@ -53,23 +52,13 @@ function setRestaurantsOnMap(viewportBounds) {
   // check if restaurant is currently visible on the map
   restaurantsOnMap = [];
   allRestaurants.forEach(restaurant => {
-    var restaurantLatLng = new google.maps.LatLng({lat: restaurant.lat, lng: restaurant.long});
+    var restaurantLatLng = new google.maps.LatLng({
+      lat: restaurant.lat,
+      lng: restaurant.long
+    });
     if (viewportBounds.contains(restaurantLatLng)) {
       restaurantsOnMap.push(restaurant);
-    } 
+    }
   });
   return restaurantsOnMap;
-}
-
-function displayRestaurants(restaurantsOnMap, map) {
-  // destroy existing restaurant-components
-  const restaurantColumn = document.getElementById("restaurantCol");
-  restaurantColumn.innerHTML = '';
-
-  restaurantsOnMap.forEach(restaurant => {
-    // display restaurants visible on the map
-    createRestaurantCard(restaurant, restaurantColumn);
-    // adds markers on the  map for each visible restaurant
-    addRestaurantMarker(restaurant, map);
-  });
 }
