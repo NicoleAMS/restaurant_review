@@ -2,6 +2,7 @@ import "bootstrap";
 import "./main.scss";
 import "./restaurant-card.component";
 import "./min-max-select.component";
+import "./restaurant-details.component";
 import { initMap, restaurantsOnMap } from "./google_maps";
 import { filterRestaurantList } from "./restaurants";
 

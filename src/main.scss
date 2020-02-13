@@ -7,7 +7,8 @@ $success: #9bcc89;
 // $success: #204C39;
 $info: $dark;
 $warning: #b87d31;
-$danger: #c42a3d;
+// $danger: #c42a3d;
+$danger: #EA4236;
 
 @import "~bootstrap/scss/bootstrap";
 $fa-font-path: "~@fortawesome/fontawesome-free/webfonts/";
@@ -68,6 +69,15 @@ $fa-font-path: "~@fortawesome/fontawesome-free/webfonts/";
   font-weight: 900;
   color: $secondary;
   font-size: 14px;
+}
+
+.card {
+  cursor: pointer;
+  .restaurant-name {
+    &:hover {
+      color: $danger !important;
+    }
+  }
 }
 
 footer {

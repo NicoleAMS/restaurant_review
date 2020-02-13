@@ -74,3 +74,14 @@ function addRestaurantMarker(restaurant, map) {
   const marker = addMarkerWithInfoWindow(restaurantMarker);
   restaurant.marker = marker;
 }
+
+export function showRestaurantDetails(restaurant) {
+  console.log(restaurant);
+
+  const restaurantColumn = document.getElementById("restaurantCol");
+  restaurantColumn.innerHTML = "";
+
+  const element = document.createElement("restaurant-details");
+  element.restaurant = restaurant;
+  restaurantColumn.appendChild(element);
+}
