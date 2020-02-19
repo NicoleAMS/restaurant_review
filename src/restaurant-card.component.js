@@ -20,7 +20,7 @@ class RestaurantCard extends HTMLElement {
 
     this.innerHTML = `
 		<div class="card bg-default my-2 id_${restaurant.id}">
-			<h4 class="card-header text-primary bg-light restaurant-name">${restaurant.restaurantName}</h4>
+			<h4 class="card-header text-primary bg-light restaurant-name" data-toggle="modal" data-target="#modal_${restaurant.id}">${restaurant.restaurantName}</h4>
 			<div class="card-body">
 				<p>${restaurant.address}</p>
 				<div class="icon stars-outer">
@@ -34,3 +34,4 @@ class RestaurantCard extends HTMLElement {
 }
 
 customElements.define("restaurant-card", RestaurantCard);
+

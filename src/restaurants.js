@@ -67,20 +67,23 @@ export function showRestaurantCard(restaurant, restaurantColumn) {
 
 export function showRestaurantDetails(restaurant) {
   const restaurantColumn = document.getElementById("restaurantCol");
-  restaurantColumn.innerHTML = "";
 
   const detailsEl = document.createElement("restaurant-details");
   detailsEl.restaurant = restaurant;
   restaurantColumn.appendChild(detailsEl);
 
-  // adds reviews
+  // clear modal's body text
+  const detailsBody = document.querySelector(`restaurant-details #modal_${restaurant.id} .card-body`);
+  detailsBody.innerHTML = "";
+
+  // adds reviews to modal
   for (let i = 0; i < restaurant.ratings.length; i++) {
     addReviewCard(restaurant, i);
   }
 }
 
 function addReviewCard(restaurant, index) {
-  const detailsBody = document.querySelector("restaurant-details .card-body");
+  const detailsBody = document.querySelector(`restaurant-details #modal_${restaurant.id} .card-body`);
   const ratingEl = document.createElement("review-card");
   ratingEl.review = restaurant.ratings[index];
   detailsBody.appendChild(ratingEl);
