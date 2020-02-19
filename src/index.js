@@ -4,6 +4,7 @@ import { Restaurant } from "./restaurant.class";
 import "./restaurant-card.component";
 import "./min-max-select.component";
 import "./restaurant-details.component";
+import "./review-card.component";
 import { initMap } from "./google_maps";
 import { filterRestaurantList, restaurantsOnMap } from "./restaurants";
 const jsonRestaurants = require("./restaurants.json");

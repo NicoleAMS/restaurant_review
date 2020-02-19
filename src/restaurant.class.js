@@ -10,6 +10,15 @@ export class Restaurant {
     this.photos = photos;
     this.restaurantCard = this.createRestaurantCard();
     this.restaurantDetails = this.createRestaurantDetails();
+    this.ratingCards = this.create
+
+    this.addIDtoRatings();
+  }
+
+  addIDtoRatings() {
+    for (let i = 0; i < this.ratings.length; i++) {
+      this.ratings[i].id = `rating_${i}`;
+    }
   }
 
   calculateAverageRating(ratings) {

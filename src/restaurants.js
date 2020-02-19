@@ -69,7 +69,22 @@ export function showRestaurantDetails(restaurant) {
   const restaurantColumn = document.getElementById("restaurantCol");
   restaurantColumn.innerHTML = "";
 
-  const element = document.createElement("restaurant-details");
-  element.restaurant = restaurant;
-  restaurantColumn.appendChild(element);
+  const detailsEl = document.createElement("restaurant-details");
+  detailsEl.restaurant = restaurant;
+  restaurantColumn.appendChild(detailsEl);
+
+  // adds reviews
+  for (let i = 0; i < restaurant.ratings.length; i++) {
+    addReviewCard(restaurant, i);
+  }
+}
+
+function addReviewCard(restaurant, index) {
+  const detailsBody = document.querySelector("restaurant-details .card-body");
+  const ratingEl = document.createElement("review-card");
+  ratingEl.review = restaurant.ratings[index];
+  detailsBody.appendChild(ratingEl);
+
+  document.querySelector(`#${restaurant.ratings[index].id} .stars-inner`).style.width =
+  ratingEl.starPercentageRounded;
 }

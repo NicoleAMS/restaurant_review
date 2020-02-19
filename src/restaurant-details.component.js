@@ -11,16 +11,6 @@ class RestaurantDetails extends HTMLElement {
 			<div class="card-body"></div>
 		</div>
     `;
-
-    const cardBody = this.querySelector(".card-body");
-    for (let i = 0; i < restaurant.ratings.length; i++) {
-      cardBody.innerHTML += `
-        <p>${restaurant.ratings[i].comment}</p>
-        <div class="icon stars-outer details_id_${i}">
-          <div class="icon stars-inner"></div>
-        </div>
-      `;
-    }
   }
 }
 
