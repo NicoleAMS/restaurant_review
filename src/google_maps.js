@@ -1,7 +1,5 @@
-import { displayRestaurantList } from "./restaurants";
-const allRestaurants = require("./restaurants.json");
+import { displayRestaurantList, setRestaurantsOnMap } from "./restaurants";
 const styles = require("./google_maps.json");
-export let restaurantsOnMap = [];
 export let googleMap;
 
 export function initMap() {
@@ -46,21 +44,6 @@ function setViewportBounds(map) {
   // set corner coordinates of the map
   var viewportBounds = new google.maps.LatLngBounds(SWLatLng, NELatLng);
   return viewportBounds;
-}
-
-function setRestaurantsOnMap(viewportBounds) {
-  // check if restaurant is currently visible on the map
-  restaurantsOnMap = [];
-  allRestaurants.forEach(restaurant => {
-    var restaurantLatLng = new google.maps.LatLng({
-      lat: restaurant.lat,
-      lng: restaurant.long
-    });
-    if (viewportBounds.contains(restaurantLatLng)) {
-      restaurantsOnMap.push(restaurant);
-    }
-  });
-  return restaurantsOnMap;
 }
 
 export function addMarkerWithInfoWindow(props) {

@@ -1,10 +1,13 @@
 import "bootstrap";
 import "./main.scss";
+import { Restaurant } from "./restaurant.class";
 import "./restaurant-card.component";
 import "./min-max-select.component";
 import "./restaurant-details.component";
-import { initMap, restaurantsOnMap } from "./google_maps";
-import { filterRestaurantList } from "./restaurants";
+import { initMap } from "./google_maps";
+import { filterRestaurantList, restaurantsOnMap } from "./restaurants";
+const jsonRestaurants = require("./restaurants.json");
+export const allRestaurants = [];
 
 document.addEventListener("DOMContentLoaded", function() {
   const google_api_key = process.env.GOOGLE_API_KEY;
@@ -16,6 +19,20 @@ document.addEventListener("DOMContentLoaded", function() {
 
   // initialize google maps
   window.initMap = initMap;
+
+  // create restaurant objects
+  for (let i = 0; i < jsonRestaurants.length; i++) {
+    const restaurant = new Restaurant({
+      id: jsonRestaurants[i].id,
+      name: jsonRestaurants[i].restaurantName,
+      address: jsonRestaurants[i].address,
+      lat: jsonRestaurants[i].lat,
+      long: jsonRestaurants[i].long,
+      ratings: jsonRestaurants[i].ratings
+    });
+    allRestaurants.push(restaurant);
+  }
+  console.log(allRestaurants);
 
   // get min-max-select
   const minMaxSelectMenu = document.querySelector("min-max-select");

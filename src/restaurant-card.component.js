@@ -3,18 +3,18 @@ import { showRestaurantDetails } from "./restaurants";
 class RestaurantCard extends HTMLElement {
   constructor() {
     super();
-		this.starTotal = 5;
-		
-		this.addEventListener("click", () => {
-			showRestaurantDetails(this.restaurantDetails);
-		}); 
+    this.starTotal = 5;
+
+    this.addEventListener("click", () => {
+      showRestaurantDetails(this.restaurantDetails);
+    });
   }
 
   set restaurant(restaurant) {
-		restaurant.element = this;
-		this.restaurantDetails = restaurant;
+    restaurant.element = this;
+    this.restaurantDetails = restaurant;
     this.ratings = restaurant.ratings;
-    this.starPercentage = (restaurant.average / this.starTotal) * 100;
+    this.starPercentage = (restaurant.averageRating / this.starTotal) * 100;
     this.starPercentageRounded = `${Math.round(this.starPercentage / 10) *
       10}%`;
 
@@ -30,7 +30,7 @@ class RestaurantCard extends HTMLElement {
 			</div>
 		</div>
 		`;
-	}
+  }
 }
 
 customElements.define("restaurant-card", RestaurantCard);
