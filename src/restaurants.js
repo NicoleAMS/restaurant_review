@@ -72,8 +72,16 @@ export function showRestaurantDetails(restaurant) {
   detailsEl.restaurant = restaurant;
   restaurantColumn.appendChild(detailsEl);
 
+  //add google street view
+  // const streetViewCol = document.querySelector(`restaurant-details #modal_${restaurant.id} .modal-body #streetView`);
+  const streetViewImg = document.querySelector(`restaurant-details #modal_${restaurant.id} .modal-body #streetViewImg`);
+  const google_api_key = process.env.GOOGLE_API_KEY;
+  const streetViewSrc = `https://maps.googleapis.com/maps/api/streetview?size=400x400&location=${restaurant.lat},${restaurant.long}
+  &key=${google_api_key}`;
+  streetViewImg.src = streetViewSrc;
+
   // clear modal's body text
-  const detailsBody = document.querySelector(`restaurant-details #modal_${restaurant.id} .card-body`);
+  const detailsBody = document.querySelector(`restaurant-details #modal_${restaurant.id} .modal-body #reviews`);
   detailsBody.innerHTML = "";
 
   // adds reviews to modal
@@ -83,7 +91,7 @@ export function showRestaurantDetails(restaurant) {
 }
 
 function addReviewCard(restaurant, index) {
-  const detailsBody = document.querySelector(`restaurant-details #modal_${restaurant.id} .card-body`);
+  const detailsBody = document.querySelector(`restaurant-details #modal_${restaurant.id} .modal-body #reviews`);
   const ratingEl = document.createElement("review-card");
   ratingEl.review = restaurant.ratings[index];
   detailsBody.appendChild(ratingEl);
