@@ -95,5 +95,98 @@
           "comment":"Meh, it was fine."
        }
     ]
- }
+  },
+  {
+    "id": 6,
+    "restaurantName":"Het Medaillon",
+    "address":"Gildenweg 2, 1695 GD Blokker",
+    "lat":52.660900,
+    "long":5.108030,
+    "ratings":[
+       {
+          "stars": 3,
+          "comment":"Corned beef salami beef shank."
+       },
+       {
+          "stars": 4,
+          "comment":"Prosciutto pork belly boudin turkey."
+       },
+       {
+        "stars": 3,
+        "comment":"Filet mignon bacon beef venison short ribs."
+     }
+    ]
+  },
+  {
+    "id": 7,
+    "restaurantName":"De Vlindertuin",
+    "address":"De Oude Veiling 23, 1689 AA Zwaag",
+    "lat":52.662610,
+    "long":5.062680,
+    "ratings":[
+       {
+          "stars": 4,
+          "comment":"Prosciutto pork belly boudin turkey."
+       },
+       {
+          "stars": 5,
+          "comment":"Corned beef salami beef shank."
+       }
+    ]
+  },
+  {
+    "id": 8,
+    "restaurantName":"De Halve Maen",
+    "address":"Zuiderhout 40, 1695 AS Blokker",
+    "lat":52.660590,
+    "long":5.091680,
+    "ratings":[
+       {
+          "stars": 4,
+          "comment":"Corned beef salami beef shank."
+       },
+       {
+          "stars": 4,
+          "comment":"Prosciutto pork belly boudin turkey."
+       },
+       {
+        "stars": 3,
+        "comment":"Filet mignon bacon beef venison short ribs."
+     }
+    ]
+  },
+  {
+    "id": 9,
+    "restaurantName":"De IJsvogel",
+    "address":"Pergola 16, 1628 LK Hoorn",
+    "lat":52.649550,
+    "long":5.084132,
+    "ratings":[
+       {
+          "stars": 3,
+          "comment":"Corned beef salami beef shank."
+       },
+       {
+          "stars": 3,
+          "comment":"Prosciutto pork belly boudin turkey."
+       }
+    ]
+  },
+  {
+    "id": 10,
+    "restaurantName":"De Dijk",
+    "address":"Wierdijk 28, 1689 WD Zwaag",
+    "lat":52.675103,
+    "long":5.091186,
+    "ratings":[
+       {
+          "stars": 2,
+          "comment":"Corned beef salami beef shank."
+       },
+       {
+          "stars": 2,
+          "comment":"Prosciutto pork belly boudin turkey."
+       }
+    ]
+  }
 ]
