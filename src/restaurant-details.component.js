@@ -15,6 +15,7 @@ class RestaurantDetails extends HTMLElement {
             <div class="col col-6" id="reviews"></div>
             <div class="col col-6" id="streetView">
               <img id="streetViewImg">
+              <button class="btn btn-secondary btn-lg btn-block mt-3">Write a review</button>
             </div>
           </div>
         </div>
