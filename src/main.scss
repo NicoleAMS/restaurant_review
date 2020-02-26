@@ -8,7 +8,7 @@ $success: #9bcc89;
 $info: $dark;
 $warning: #b87d31;
 // $danger: #c42a3d;
-$danger: #EA4236;
+$danger: #ea4236;
 
 @import "~bootstrap/scss/bootstrap";
 $fa-font-path: "~@fortawesome/fontawesome-free/webfonts/";
@@ -86,4 +86,48 @@ footer {
 
 #streetViewImg {
   width: 100%;
+}
+
+// restaurant-details card
+input.star {
+  border: 0;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  position: absolute !important;
+  clip: rect(1px 1px 1px 1px);
+  clip: rect(1px, 1px, 1px, 1px);
+  opacity: 0;
+  float: right;
+}
+
+label.star {
+  position: relative;
+  float: right;
+  color: $light;
+}
+
+label.star:before {
+  margin: 3px;
+  content: "\f005";
+  font-family: "Font Awesome 5 Free";
+  font-weight: 800;
+  font-size: 1.2em;
+  color: $light;
+  -webkit-user-select: none; /* Safari 3.1+ */
+  -moz-user-select: none; /* Firefox 2+ */
+  -ms-user-select: none; /* IE 10+ */
+  user-select: none;
+}
+
+input.star:checked ~ label.star:before {
+  color: $secondary;
+}
+
+label.star:hover ~ label.star:before {
+  color: $secondary;
+}
+
+label.star:hover:before {
+  color: $secondary;
 }
