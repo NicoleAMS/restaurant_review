@@ -3,6 +3,7 @@ import "./main.scss";
 import { Restaurant } from "./restaurant.class";
 import "./restaurant-card.component";
 import "./min-max-select.component";
+import "./review-form.component";
 import "./restaurant-details.component";
 import "./review-card.component";
 import { initMap } from "./google_maps";

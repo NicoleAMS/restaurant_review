@@ -72,6 +72,7 @@ export function showRestaurantDetails(restaurant) {
   const detailsEl = document.createElement("restaurant-details");
   detailsEl.restaurant = restaurant;
   restaurantColumn.appendChild(detailsEl);
+  detailsEl.appendChild(document.createElement("review-form"));
 
   //add google street view
   addStreetView(restaurant);
