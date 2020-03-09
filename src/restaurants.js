@@ -66,6 +66,7 @@ export function showRestaurantCard(restaurant, restaurantColumn) {
 }
 
 export function showRestaurantDetails(restaurant) {
+  // console.log(restaurant);
   const restaurantColumn = document.getElementById("restaurantCol");
   restaurantColumn.innerHTML = "";
 
@@ -88,6 +89,7 @@ export function showRestaurantDetails(restaurant) {
 }
 
 function addReviewCard(restaurant, index) {
+  // console.log(restaurant);
   const detailsBody = document.querySelector(`restaurant-details #card_${restaurant.id} .card-body #reviews`);
   const ratingEl = document.createElement("review-card");
   ratingEl.review = restaurant.ratings[index];
