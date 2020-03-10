@@ -21,7 +21,6 @@ class RestaurantDetails extends HTMLElement {
         </div>
       </div>
       <div id="review_form_${restaurant.id}" class="mx-3 my-5">
-        <slot></slot>
       </div>
     `;
   }

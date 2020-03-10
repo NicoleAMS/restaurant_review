@@ -1,4 +1,5 @@
 import { Review } from "./review.class";
+import { allRestaurants } from ".";
 
 class ReviewForm extends HTMLElement {
   constructor() {
@@ -52,11 +53,19 @@ class ReviewForm extends HTMLElement {
   }
 
   createReviewCard(review) {
+    console.log(this);
     const reviewCard = document.createElement('review-card');
     reviewCard.review = review;
-    const container = this.parentNode.querySelector("#reviews");
-    container.appendChild(reviewCard);
-    console.log(this.parentNode.querySelector("#reviews"));
+    // const container = this.parentNode.querySelector("#reviews");
+    // container.appendChild(reviewCard);
+    const reviewID = this.parentNode.id.split("_");
+    const restaurantID = parseInt(reviewID[reviewID.length - 1]);
+    this.review.restaurantID = restaurantID;
+    const foundRestaurant = allRestaurants.find((restaurant) => {
+      return restaurant.id === restaurantID;
+    });
+    foundRestaurant.ratings.push({stars: review.stars, comment: review.comment});
+    console.log(foundRestaurant);
     return reviewCard;
   }
 
