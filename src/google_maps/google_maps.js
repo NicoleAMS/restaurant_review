@@ -1,4 +1,4 @@
-import { displayRestaurantList, setRestaurantsOnMap } from "./restaurants";
+import { displayRestaurantList, setRestaurantsOnMap } from "../restaurant/restaurants";
 const styles = require("./google_maps.json");
 export let googleMap;
 

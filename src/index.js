@@ -1,14 +1,14 @@
 import "bootstrap";
 import "./main.scss";
-import { Restaurant } from "./restaurant.class";
-import "./restaurant-card.component";
-import "./min-max-select.component";
-import "./review-form.component";
-import "./restaurant-details.component";
-import "./review-card.component";
-import { initMap } from "./google_maps";
-import { filterRestaurantList, restaurantsOnMap } from "./restaurants";
-const jsonRestaurants = require("./restaurants.json");
+import { Restaurant } from "./restaurant/restaurant.class";
+import "./restaurant/components/restaurant-card.component";
+import "./filter/min-max-select.component";
+import "./review/components/review-form.component";
+import "./restaurant/components/restaurant-details.component";
+import "./review/components/review-card.component";
+import { initMap } from "./google_maps/google_maps";
+import { filterRestaurantList, restaurantsOnMap } from "./restaurant/restaurants";
+const jsonRestaurants = require("././restaurant/restaurants.json");
 export const allRestaurants = [];
 
 document.addEventListener("DOMContentLoaded", function() {

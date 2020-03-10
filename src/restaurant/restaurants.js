@@ -1,5 +1,5 @@
-import { googleMap, addMarkerWithInfoWindow } from "./google_maps";
-import { allRestaurants } from ".";
+import { googleMap, addMarkerWithInfoWindow } from "../google_maps/google_maps";
+import { allRestaurants } from "..";
 export let restaurantsOnMap = [];
 
 export function setRestaurantsOnMap(viewportBounds) {

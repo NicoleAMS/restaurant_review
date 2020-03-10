@@ -1,4 +1,4 @@
-import { showRestaurantDetails } from "./restaurants";
+import { showRestaurantDetails } from "../restaurants.js";
 
 class RestaurantCard extends HTMLElement {
   constructor() {

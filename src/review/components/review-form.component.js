@@ -1,5 +1,5 @@
-import { Review } from "./review.class";
-import { allRestaurants } from ".";
+import { Review } from "../review.class";
+import { allRestaurants } from "../..";
 
 class ReviewForm extends HTMLElement {
   constructor() {
