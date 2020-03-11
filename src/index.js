@@ -11,6 +11,7 @@ import {
   filterRestaurantList,
   restaurantsOnMap
 } from "./restaurant/restaurants";
+import { showRestaurantDetails } from "./restaurant/restaurants.js";
 const jsonRestaurants = require("././restaurant/restaurants.json");
 export const allRestaurants = [];
 
@@ -37,7 +38,6 @@ document.addEventListener("DOMContentLoaded", function() {
     });
     allRestaurants.push(restaurant);
   }
-  console.log(allRestaurants);
 
   // get min-max-select
   const minMaxSelectMenu = document.querySelector("min-max-select");
@@ -58,5 +58,9 @@ document.addEventListener("DOMContentLoaded", function() {
       minMaxSelectMenu.minimum,
       minMaxSelectMenu.maximum
     );
+  });
+
+  document.addEventListener("showDetails", () => {
+    showRestaurantDetails(event.detail.restaurant);
   });
 });

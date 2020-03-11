@@ -60,9 +60,6 @@ export function filterRestaurantList(restaurants, min, max) {
 
 export function showRestaurantCard(restaurant, restaurantColumn) {
   restaurantColumn.appendChild(restaurant.restaurantCard);
-  // show star reviews
-  document.querySelector(`.id_${restaurant.id} .stars-inner`).style.width =
-    restaurant.restaurantCard.starPercentageRounded;
 }
 
 export function showRestaurantDetails(restaurant) {
@@ -81,7 +78,9 @@ export function showRestaurantDetails(restaurant) {
   addStreetView(restaurant);
 
   // clear card's body text
-  const detailsBody = document.querySelector(`restaurant-details #card_${restaurant.id} .card-body #reviews`);
+  const detailsBody = document.querySelector(
+    `restaurant-details #card_${restaurant.id} .card-body #reviews`
+  );
   detailsBody.innerHTML = "";
 
   // adds reviews to card
@@ -92,17 +91,22 @@ export function showRestaurantDetails(restaurant) {
 
 function addReviewCard(restaurant, index) {
   // console.log(restaurant);
-  const detailsBody = document.querySelector(`restaurant-details #card_${restaurant.id} .card-body #reviews`);
+  const detailsBody = document.querySelector(
+    `restaurant-details #card_${restaurant.id} .card-body #reviews`
+  );
   const ratingEl = document.createElement("review-card");
   ratingEl.review = restaurant.ratings[index];
   detailsBody.appendChild(ratingEl);
 
-  document.querySelector(`#${restaurant.ratings[index].id} .stars-inner`).style.width =
-  ratingEl.starPercentageRounded;
+  document.querySelector(
+    `#${restaurant.ratings[index].id} .stars-inner`
+  ).style.width = ratingEl.starPercentageRounded;
 }
 
 function addStreetView(restaurant) {
-  const streetViewImg = document.querySelector(`restaurant-details #card_${restaurant.id} .card-body #streetViewImg`);
+  const streetViewImg = document.querySelector(
+    `restaurant-details #card_${restaurant.id} .card-body #streetViewImg`
+  );
   const google_api_key = process.env.GOOGLE_API_KEY;
   const streetViewSrc = `https://maps.googleapis.com/maps/api/streetview?size=400x400&location=${restaurant.lat},${restaurant.long}
   &key=${google_api_key}`;
