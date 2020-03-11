@@ -1,48 +1,32 @@
+import Template from "./min-max-select.template.js";
+
 class MinMaxSelect extends HTMLElement {
   constructor() {
     super();
-    this.innerHTML = `
-			<form class="d-flex">
-				<select class="custom-select mx-2" id="minStarSelect">
-					<option selected disabled>Select minimum star rating</option>
-					<option value="1">One star</option>
-					<option value="2">Two stars</option>
-					<option value="3">Three stars</option>
-					<option value="4">Four stars</option>
-					<option value="5">Five stars</option>
-				</select>
-				<select class="custom-select mx-2" id="maxStarSelect">
-					<option selected disabled>Select maximum star rating</option>
-					<option id="maxStar1" value="1">One star</option>
-					<option id="maxStar2" value="2">Two stars</option>
-					<option id="maxStar3" value="3">Three stars</option>
-					<option id="maxStar4" value="4">Four stars</option>
-					<option id="maxStar5" value="5">Five stars</option>
-				</select>
-			</form>
-    `;
+    this.minimum = 1;
+    this.maximum = 5;
+  }
 
-    this.minStarSelect = this.querySelector("#minStarSelect");
-    this.maxStarSelect = this.querySelector("#maxStarSelect");
-    this.minStarAverage = 0;
-    this.maxStarAverage = 5;
+  connectedCallback() {
+    this.innerHTML = Template.render();
+    this.dom = Template.mapDOM(this);
 
-    this.minStarSelect.addEventListener("change", e => {
+    this.dom.minStarSelect.addEventListener("change", e => {
       // set minimum star rating
-      this.minStarAverage = e.target.value;
+      this.minimum = e.target.value;
       // update the max select values
       this.updateMaxSelect();
     });
 
-    this.maxStarSelect.addEventListener("change", e => {
-      this.maxStarAverage = e.target.value;
+    this.dom.maxStarSelect.addEventListener("change", e => {
+      this.maximum = e.target.value;
     });
   }
 
   updateMaxSelect() {
-    for (let i = 1; i <= 5; i++) {
+    for (let i = this.minimum; i <= this.maximum; i++) {
       const element = this.querySelector(`#maxStar${i}`);
-      if (i < this.minStarAverage) {
+      if (i < this.minimum) {
         element.disabled = true;
       } else {
         element.disabled = false;

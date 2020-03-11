@@ -7,7 +7,10 @@ import "./review/components/review-form.component";
 import "./restaurant/components/restaurant-details.component";
 import "./review/components/review-card.component";
 import { initMap } from "./google_maps/google_maps";
-import { filterRestaurantList, restaurantsOnMap } from "./restaurant/restaurants";
+import {
+  filterRestaurantList,
+  restaurantsOnMap
+} from "./restaurant/restaurants";
 const jsonRestaurants = require("././restaurant/restaurants.json");
 export const allRestaurants = [];
 
@@ -40,20 +43,20 @@ document.addEventListener("DOMContentLoaded", function() {
   const minMaxSelectMenu = document.querySelector("min-max-select");
 
   // listen to changes on the min-max-select component: minimum star rating
-  minMaxSelectMenu.minStarSelect.addEventListener("change", e => {
+  minMaxSelectMenu.dom.minStarSelect.addEventListener("change", e => {
     filterRestaurantList(
       restaurantsOnMap,
-      minMaxSelectMenu.minStarAverage,
-      minMaxSelectMenu.maxStarAverage
+      minMaxSelectMenu.minimum,
+      minMaxSelectMenu.maximum
     );
   });
 
   // listen to changes on the min-max-select component: maximum star rating
-  minMaxSelectMenu.maxStarSelect.addEventListener("change", e => {
+  minMaxSelectMenu.dom.maxStarSelect.addEventListener("change", e => {
     filterRestaurantList(
       restaurantsOnMap,
-      minMaxSelectMenu.minStarAverage,
-      minMaxSelectMenu.maxStarAverage
+      minMaxSelectMenu.minimum,
+      minMaxSelectMenu.maximum
     );
   });
 });
