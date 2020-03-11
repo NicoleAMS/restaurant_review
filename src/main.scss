@@ -71,7 +71,7 @@ $fa-font-path: "~@fortawesome/fontawesome-free/webfonts/";
   font-size: 14px;
 }
 
-.card {
+restaurant-card .card {
   cursor: pointer;
   .restaurant-name {
     &:hover {
