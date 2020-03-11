@@ -1,21 +1,20 @@
+import Template from "../templates/review-card.template.js";
+
 class ReviewCard extends HTMLElement {
   constructor() {
     super();
-    this.starTotal = 5;
+    this._starTotal = 5;
   }
 
   set review(review) {
-    console.log(review);
-    this.starPercentage = (review.stars / this.starTotal) * 100;
-    this.starPercentageRounded = `${Math.round(this.starPercentage / 10) *
+    this._review = review;
+  }
+
+  connectedCallback() {
+    this._starPercentage = (this._review.stars / this._starTotal) * 100;
+    this._starPercentageRounded = `${Math.round(this._starPercentage / 10) *
       10}%`;
-    this.innerHTML = `
-      <p>${review.comment}</p>
-      <div class="icon stars-outer mb-3" id="${review.id}">
-        <div class="icon stars-inner" style="width: ${this.starPercentageRounded}"></div>
-      </div>
-      <div class="dropdown-divider"></div>
-    `;
+    this.innerHTML = Template.render(this._review, this._starPercentageRounded);
   }
 }
 
