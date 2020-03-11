@@ -10,7 +10,7 @@ export class Restaurant {
     this.photos = photos;
     this.restaurantCard = this.createRestaurantCard();
     this.restaurantDetails = this.createRestaurantDetails();
-    this.ratingCards = this.create
+    this.reviewCards = [];
 
     this.addIDtoRatings();
   }
@@ -31,13 +31,24 @@ export class Restaurant {
   }
 
   createRestaurantCard() {
-    const element = document.createElement("restaurant-card");
-    element.restaurant = this;
-    return element;
+    if (!this.restaurantCard) {
+      const element = document.createElement("restaurant-card");
+      element.restaurant = this;
+      return element;
+    } else {
+      return this.restaurantCard
+    };
   }
 
   createRestaurantDetails() {
-    return document.createElement("restaurant-details");
+    if (!this.restaurantDetails) {
+      const element = document.createElement("restaurant-details");
+      element.restaurant = this;
+      return element;
+    } else {
+      console.log('details');
+      return this.restaurantDetails;
+    }
   }
 
   createRestaurantMarker(map) {

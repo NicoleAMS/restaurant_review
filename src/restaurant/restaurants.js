@@ -63,13 +63,9 @@ export function showRestaurantCard(restaurant, restaurantColumn) {
 }
 
 export function showRestaurantDetails(restaurant) {
-  // console.log(restaurant);
   const restaurantColumn = document.getElementById("restaurantCol");
   restaurantColumn.innerHTML = "";
-
-  const detailsEl = document.createElement("restaurant-details");
-  detailsEl.restaurant = restaurant;
-  restaurantColumn.appendChild(detailsEl);
+  restaurantColumn.appendChild(restaurant.restaurantDetails);
 
   const formContainer = document.getElementById(`review_form_${restaurant.id}`);
   formContainer.appendChild(document.createElement("review-form"));
