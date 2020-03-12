@@ -67,9 +67,6 @@ export function showRestaurantDetails(restaurant) {
   restaurantColumn.innerHTML = "";
   restaurantColumn.appendChild(restaurant.restaurantDetails);
 
-  const formContainer = document.getElementById(`review_form_${restaurant.id}`);
-  formContainer.appendChild(document.createElement("review-form"));
-
   //add google street view
   addStreetView(restaurant);
 

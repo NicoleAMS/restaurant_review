@@ -20,7 +20,9 @@ export default {
         </div>
       </div>
       <div id="review_form_${restaurant.id}" class="mx-3 my-5">
+        <review-form restaurant=${restaurant.id}></review-form>
       </div>
+      <button id="backBtn" class="btn btn-primary m-3">Back</button>
     `;
   }
 }

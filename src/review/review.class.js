@@ -1,6 +1,6 @@
 export class Review {
-  constructor({ restaurantID, name, email, comment, stars }) {
-    this.restaurantID = restaurantID;
+  constructor({ restaurant, name, email, comment, stars }) {
+    this.restaurant = restaurant;
     this.name = name;
     this.email = email;
     this.comment = comment;

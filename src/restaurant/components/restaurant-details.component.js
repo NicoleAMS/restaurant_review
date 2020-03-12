@@ -11,6 +11,11 @@ class RestaurantDetails extends HTMLElement {
 
   connectedCallback() {
     this.innerHTML = Template.render(this._restaurant);
+
+    const btn = this.querySelector("#backBtn");
+    btn.addEventListener("click", () => {
+      console.log("back");
+    });
   }
 
 }
