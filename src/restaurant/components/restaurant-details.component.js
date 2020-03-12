@@ -6,7 +6,11 @@ class RestaurantDetails extends HTMLElement {
   }
 
   set restaurant(restaurant) {
-    this.innerHTML = Template.render(restaurant);
+    this._restaurant = restaurant;
+  }
+
+  connectedCallback() {
+    this.innerHTML = Template.render(this._restaurant);
   }
 
 }

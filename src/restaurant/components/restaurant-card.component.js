@@ -3,26 +3,26 @@ import Template from "../templates/restaurant-card.template.js";
 class RestaurantCard extends HTMLElement {
   constructor() {
     super();
-    this.starTotal = 5;
-  }
-
-  connectedCallback() {
-    this.addEventListener("click", this._showDetails.bind(this));
+    this._starTotal = 5;
   }
 
   set restaurant(restaurant) {
-    this.restaurantDetails = restaurant;
-    this.starPercentage = (restaurant.averageRating / this.starTotal) * 100;
-    this.starPercentageRounded = `${Math.round(this.starPercentage / 10) *
+    this._restaurant = restaurant;
+  }
+
+  connectedCallback() {
+    this._starPercentage = (this._restaurant.averageRating / this._starTotal) * 100;
+    this._starPercentageRounded = `${Math.round(this._starPercentage / 10) *
       10}%`;
 
-    this.innerHTML = Template.render(restaurant, this.starPercentageRounded);
+    this.innerHTML = Template.render(this._restaurant, this._starPercentageRounded);
+    this.addEventListener("click", this._showDetails.bind(this));
   }
 
   _showDetails(event) {
     const showDetailsEvent = new CustomEvent("showDetails", {
       bubbles: true,
-      detail: { restaurant: this.restaurantDetails }
+      detail: { restaurant: this._restaurant }
     });
     event.target.dispatchEvent(showDetailsEvent);
   }
