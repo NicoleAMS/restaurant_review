@@ -9,7 +9,9 @@ import "./review/components/review-card.component";
 import { initMap } from "./google_maps/google_maps";
 import {
   filterRestaurantList,
-  restaurantsOnMap
+  restaurantsOnMap,
+  setRestaurantsOnMap,
+  displayRestaurantList
 } from "./restaurant/restaurants";
 import { showRestaurantDetails } from "./restaurant/restaurants.js";
 const jsonRestaurants = require("././restaurant/restaurants.json");
@@ -62,5 +64,13 @@ document.addEventListener("DOMContentLoaded", function() {
 
   document.addEventListener("showDetails", () => {
     showRestaurantDetails(event.detail.restaurant);
+  });
+
+  document.addEventListener("mapIdle", () => {
+    const bounds = event.detail.bounds;
+    const map = event.detail.map;
+  
+    let restaurantsOnMap = setRestaurantsOnMap(bounds);
+    displayRestaurantList(restaurantsOnMap, map);
   });
 });

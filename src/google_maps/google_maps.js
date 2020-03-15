@@ -1,4 +1,3 @@
-import { displayRestaurantList, setRestaurantsOnMap } from "../restaurant/restaurants";
 const styles = require("./google_maps.json");
 export let googleMap;
 
@@ -26,11 +25,19 @@ export function initMap() {
   }
 
   // set lat/lng of NE & SW corners every time the map becomes idle after dragging, panning or zooming
-  google.maps.event.addListener(map, "idle", function() {
+  map.addListener("idle", function() {
     let viewportBounds = setViewportBounds(map);
-    let restaurantsOnMap = setRestaurantsOnMap(viewportBounds);
-    displayRestaurantList(restaurantsOnMap, map);
+    onMapIdle(map, viewportBounds);
   });
+}
+
+function onMapIdle(map, bounds) {
+  const mapEl = document.querySelector("#map");
+  const mapIdleEvent = new CustomEvent("mapIdle", {
+    bubbles: true,
+    detail: { bounds: bounds, map: map }
+  });
+  mapEl.dispatchEvent(mapIdleEvent);
 }
 
 function setViewportBounds(map) {
