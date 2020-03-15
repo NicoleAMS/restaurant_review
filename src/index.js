@@ -6,15 +6,12 @@ import "./filter/min-max-select.component";
 import "./review/components/review-form.component";
 import "./restaurant/components/restaurant-details.component";
 import "./review/components/review-card.component";
+
 import { initMap } from "./google_maps/google_maps";
-import {
-  filterRestaurantList,
-  restaurantsOnMap,
-  setRestaurantsOnMap,
-  displayRestaurantList
-} from "./restaurant/restaurants";
-import { showRestaurantDetails } from "./restaurant/restaurants.js";
+import RestaurantsModule from "./restaurant/restaurants.module.js";
+
 const jsonRestaurants = require("././restaurant/restaurants.json");
+
 export const allRestaurants = [];
 
 document.addEventListener("DOMContentLoaded", function() {
@@ -46,8 +43,8 @@ document.addEventListener("DOMContentLoaded", function() {
 
   // listen to changes on the min-max-select component: minimum star rating
   minMaxSelectMenu.dom.minStarSelect.addEventListener("change", e => {
-    filterRestaurantList(
-      restaurantsOnMap,
+    RestaurantsModule.filterRestaurantList(
+      RestaurantsModule.restaurantsOnMap,
       minMaxSelectMenu.minimum,
       minMaxSelectMenu.maximum
     );
@@ -55,22 +52,22 @@ document.addEventListener("DOMContentLoaded", function() {
 
   // listen to changes on the min-max-select component: maximum star rating
   minMaxSelectMenu.dom.maxStarSelect.addEventListener("change", e => {
-    filterRestaurantList(
-      restaurantsOnMap,
+    RestaurantsModule.filterRestaurantList(
+      RestaurantsModule.restaurantsOnMap,
       minMaxSelectMenu.minimum,
       minMaxSelectMenu.maximum
     );
   });
 
   document.addEventListener("showDetails", () => {
-    showRestaurantDetails(event.detail.restaurant);
+    RestaurantsModule.showRestaurantDetails(event.detail.restaurant);
   });
 
   document.addEventListener("mapIdle", () => {
     const bounds = event.detail.bounds;
     const map = event.detail.map;
   
-    let restaurantsOnMap = setRestaurantsOnMap(bounds);
-    displayRestaurantList(restaurantsOnMap, map);
+    let restaurantsOnMap = RestaurantsModule.setRestaurantsOnMap(bounds);
+    RestaurantsModule.displayRestaurantList(restaurantsOnMap, map);
   });
 });
