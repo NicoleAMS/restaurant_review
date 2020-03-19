@@ -76,9 +76,12 @@ export default {
   },
   
   showRestaurantDetails(restaurant) {
-    const restaurantColumn = document.getElementById("restaurantCol");
-    restaurantColumn.innerHTML = "";
-    restaurantColumn.appendChild(restaurant.restaurantDetails);
+    const main = document.querySelector("main");
+    main.innerHTML = "";
+    main.appendChild(restaurant.restaurantDetails);
+    // const restaurantColumn = document.getElementById("restaurantCol");
+    // restaurantColumn.innerHTML = "";
+    // restaurantColumn.appendChild(restaurant.restaurantDetails);
   
     //add google street view
     this.addStreetView(restaurant);

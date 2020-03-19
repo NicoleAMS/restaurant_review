@@ -16,6 +16,10 @@ $fa-font-path: "~@fortawesome/fontawesome-free/webfonts/";
 @import "~@fortawesome/fontawesome-free/scss/regular.scss";
 @import "@fortawesome/fontawesome-free/scss/solid.scss";
 
+* {
+  box-sizing: border-box;
+}
+
 #map {
   height: 60vh;
   position: fixed;

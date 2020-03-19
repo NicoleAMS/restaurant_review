@@ -1,6 +1,7 @@
 import "bootstrap";
 import "./main.scss";
 import { Restaurant } from "./restaurant/restaurant.class";
+import "./restaurant/components/restaurant-list.component";
 import "./restaurant/components/restaurant-card.component";
 import "./filter/min-max-select.component";
 import "./review/components/review-form.component";
