@@ -27,14 +27,7 @@ document.addEventListener("DOMContentLoaded", function() {
 
   // create restaurant objects
   for (let i = 0; i < jsonRestaurants.length; i++) {
-    const restaurant = new Restaurant({
-      id: jsonRestaurants[i].id,
-      name: jsonRestaurants[i].restaurantName,
-      address: jsonRestaurants[i].address,
-      lat: jsonRestaurants[i].lat,
-      long: jsonRestaurants[i].long,
-      ratings: jsonRestaurants[i].ratings
-    });
+    const restaurant = RestaurantsModule.createRestaurant(jsonRestaurants[i]);
     allRestaurants.push(restaurant);
   }
 
@@ -67,7 +60,7 @@ document.addEventListener("DOMContentLoaded", function() {
     const bounds = event.detail.bounds;
     const map = event.detail.map;
   
-    let restaurantsOnMap = RestaurantsModule.setRestaurantsOnMap(bounds);
+    let restaurantsOnMap = RestaurantsModule.setRestaurantsOnMap(bounds, allRestaurants);
     RestaurantsModule.displayRestaurantList(restaurantsOnMap, map);
   });
 });

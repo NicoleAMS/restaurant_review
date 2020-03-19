@@ -1,11 +1,23 @@
 import { googleMap, addMarkerWithInfoWindow } from "../google_maps/google_maps";
-import { allRestaurants } from "..";
+import { Restaurant } from "./restaurant.class";
 
 export default {
 
-  setRestaurantsOnMap(viewportBounds) {
+  createRestaurant(rest) {
+    const restaurant = new Restaurant({
+      id: rest.id,
+      name: rest.restaurantName,
+      address: rest.address,
+      lat: rest.lat,
+      long: rest.long,
+      ratings: rest.ratings
+    });
+    return restaurant;
+  },
+
+  setRestaurantsOnMap(viewportBounds, restaurants) {
     this.restaurantsOnMap = [];
-    allRestaurants.forEach(restaurant => {
+    restaurants.forEach(restaurant => {
       var restaurantLatLng = new google.maps.LatLng({
         lat: restaurant.lat,
         lng: restaurant.long
