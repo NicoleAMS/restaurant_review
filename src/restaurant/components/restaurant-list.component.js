@@ -16,6 +16,15 @@ class RestaurantList extends HTMLElement {
 
   connectedCallback() {
     this.innerHTML = Template.render();
+    if (window.google) {
+      initMap();
+    }
+    console.log(window);
+
+    const btn = this.querySelector("#addRestaurant");
+    btn.addEventListener("click", () => {
+      console.log("add restaurant");
+    });
   }
 
   // createRestaurant(restaurant) {

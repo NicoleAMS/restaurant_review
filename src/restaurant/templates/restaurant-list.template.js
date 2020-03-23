@@ -14,6 +14,7 @@ export default {
         <div class="row">
           <div class="col col-4">
             <div id="map"></div>
+            <button id="addRestaurant" class="btn btn-primary mt-4">Add Restaurant</button>
           </div>
           <div id="restaurantCol" class="col col-8"></div>
         </div>
