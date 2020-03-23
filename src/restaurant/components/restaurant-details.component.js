@@ -13,9 +13,16 @@ class RestaurantDetails extends HTMLElement {
     this.innerHTML = Template.render(this._restaurant);
 
     const btn = this.querySelector("#backBtn");
-    btn.addEventListener("click", () => {
-      console.log("back");
+    console.log(btn);
+    btn.addEventListener("click", this._showRestaurantList.bind(this));
+  }
+
+  _showRestaurantList(event) {
+    const showRestaurantListEvent = new CustomEvent("showRestaurantList", {
+      bubbles: true
     });
+    console.log(showRestaurantListEvent);
+    event.target.dispatchEvent(showRestaurantListEvent);
   }
 
 }
