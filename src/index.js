@@ -57,6 +57,11 @@ document.addEventListener("DOMContentLoaded", function() {
     RestaurantsModule.showRestaurantDetails(event.detail.restaurant);
   });
 
+  document.addEventListener("showRestaurantList", () => {
+    const main = document.querySelector("main");
+    main.innerHTML = `<restaurant-list></restaurant-list>`;
+  });
+
   document.addEventListener("mapIdle", () => {
     const bounds = event.detail.bounds;
     const map = event.detail.map;
@@ -64,4 +69,5 @@ document.addEventListener("DOMContentLoaded", function() {
     let restaurantsOnMap = RestaurantsModule.setRestaurantsOnMap(bounds, allRestaurants);
     RestaurantsModule.displayRestaurantList(restaurantsOnMap, map);
   });
+
 });
