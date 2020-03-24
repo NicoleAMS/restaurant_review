@@ -1,4 +1,5 @@
 import Template from "../templates/restaurant-details.template.js";
+import { addMarkerWithInfoWindow } from "../../google_maps/google_maps.js";
 
 class RestaurantDetails extends HTMLElement {
   constructor() {
@@ -11,9 +12,19 @@ class RestaurantDetails extends HTMLElement {
 
   connectedCallback() {
     this.innerHTML = Template.render(this._restaurant);
+    if (window.google) {
+      initMap();
+    }
+
+    document.addEventListener("markRestaurant", () => {
+      // console.log(this._restaurant);
+      const marker = this._restaurant.marker;
+      console.log('marker1: ', marker.map);
+      marker.map = event.detail.map;
+      console.log('marker2: ', marker.map);
+    });
 
     const btn = this.querySelector("#backBtn");
-    console.log(btn);
     btn.addEventListener("click", this._showRestaurantList.bind(this));
   }
 
@@ -21,7 +32,6 @@ class RestaurantDetails extends HTMLElement {
     const showRestaurantListEvent = new CustomEvent("showRestaurantList", {
       bubbles: true
     });
-    console.log(showRestaurantListEvent);
     event.target.dispatchEvent(showRestaurantListEvent);
   }
 

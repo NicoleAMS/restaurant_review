@@ -19,7 +19,6 @@ class RestaurantList extends HTMLElement {
     if (window.google) {
       initMap();
     }
-    console.log(window);
 
     const btn = this.querySelector("#addRestaurant");
     btn.addEventListener("click", () => {

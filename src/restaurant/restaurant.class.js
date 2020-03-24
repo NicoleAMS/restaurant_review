@@ -61,6 +61,7 @@ export class Restaurant {
       map: map,
       content: `<p>${this.restaurantName}</p>`
     };
+    // this.marker = restaurantMarker;
     return restaurantMarker;
   }
 }

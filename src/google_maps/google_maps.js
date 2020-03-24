@@ -2,6 +2,8 @@ const styles = require("./google_maps.json");
 export let googleMap;
 
 export function initMap() {
+  // cannot use parameters in a function that is used as callback --> use attributes
+  var mapType = document.getElementById("map").getAttribute("type");
   // map with default position
   var paris = { lat: 48.864716, lng: 2.349014 };
   var map = new google.maps.Map(document.getElementById("map"), {
@@ -9,6 +11,7 @@ export function initMap() {
     center: paris,
     styles: styles
   });
+  map.markers = [];
   googleMap = map;
 
   // geolocation: center map based on user's location
@@ -25,11 +28,27 @@ export function initMap() {
   }
 
   // set lat/lng of NE & SW corners every time the map becomes idle after dragging, panning or zooming
-  map.addListener("idle", function() {
-    let viewportBounds = setViewportBounds(map);
-    onMapIdle(map, viewportBounds);
-  });
+  if (mapType === "list") {
+    map.addListener("idle", function() {
+      let viewportBounds = setViewportBounds(map);
+      onMapIdle(map, viewportBounds);
+    });
+  } else {
+    map.addListener("idle", function() {
+      onMarkrestaurant(map);
+    });
+  }
 }
+
+function onMarkrestaurant(map) {
+  const markrestaurantEvent = new CustomEvent("markRestaurant", {
+    detail: {map: map},
+    bubbles: true,
+  });
+  console.log(map.markers);
+  const mapEl = document.querySelector("#map");
+  mapEl.dispatchEvent(markrestaurantEvent);
+ }
 
 function onMapIdle(map, bounds) {
   const mapEl = document.querySelector("#map");
