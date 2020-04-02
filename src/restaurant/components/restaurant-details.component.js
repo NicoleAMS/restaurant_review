@@ -18,6 +18,7 @@ class RestaurantDetails extends HTMLElement {
 
     document.addEventListener("markRestaurant", () => {
       // console.log(this._restaurant);
+      console.log(event.detail.map);
       const marker = this._restaurant.marker;
       console.log('marker1: ', marker.map);
       marker.map = event.detail.map;

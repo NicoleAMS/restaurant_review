@@ -11,7 +11,7 @@ export function initMap() {
     center: paris,
     styles: styles
   });
-  map.markers = [];
+  var markers = [];
   googleMap = map;
 
   // geolocation: center map based on user's location
@@ -85,5 +85,6 @@ export function addMarkerWithInfoWindow(props) {
   marker.addListener("click", function() {
     infoWindow.open(props.map, marker);
   });
+
   return marker;
 }

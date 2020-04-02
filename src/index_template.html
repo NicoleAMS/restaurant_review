@@ -38,8 +38,19 @@
     <div class="container py-5">
       <div class="row">
         <div class="col col-12">
-          <main>
-            <restaurant-list></restaurant-list>
+          <main id="main">
+            <div class="row">
+              <div class="col col-12 d-flex justify-content-end text-primary mb-5" id="filterDiv">
+                <min-max-select></min-max-select>
+                <button id="addRestaurant" class="btn btn-primary">Add Restaurant</button>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col col-4">
+                <div id="map" type="list"></div>
+              </div>
+              <div class="col col-8" id="main-site"></div>
+            </div>
           </main>
         </div>
       </div>

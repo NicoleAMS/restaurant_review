@@ -28,19 +28,14 @@ export default {
     });
     return this.restaurantsOnMap;
   },
-  
-  displayRestaurantList(restaurantsOnMap, map) {
-    // destroy existing restaurant-cards
-    const restaurantColumn = document.getElementById("restaurantCol");
-    restaurantColumn.innerHTML = "";
-  
-    restaurantsOnMap.forEach(restaurant => {
-      // display restaurants visible on the map
-      this.showRestaurantCard(restaurant, restaurantColumn);
-      // adds markers on the  map for each visible restaurant
+
+  displayRestaurantMarkers(restaurants, map) {
+    map.markers = [];
+    restaurants.forEach(restaurant => {
       const restaurantMarker = restaurant.createRestaurantMarker(map);
       const marker = addMarkerWithInfoWindow(restaurantMarker);
       restaurant.marker = marker;
+      map.markers.push(marker);
     });
   },
   
@@ -51,37 +46,26 @@ export default {
       restaurant.marker.setMap(null);
     });
   },
-  
-  filterRestaurantList(restaurants, min, max) {
-    const restaurantColumn = document.getElementById("restaurantCol");
-  
-    // destroy existing restaurant-components
-    this.destroyRestaurantList(restaurants);
-  
-    // get filtered restaurants
+
+  filterRestaurantList(restaurants, min, max){
     const filteredRestaurants = restaurants.filter(restaurant => {
       const average = Math.round(restaurant.averageRating);
       return average >= min && average <= max;
     });
-  
-    // re-add filtered restaurants
-    filteredRestaurants.forEach(restaurant => {
-      this.showRestaurantCard(restaurant, restaurantColumn);
-      restaurant.marker.setMap(googleMap);
-    });
+    return filteredRestaurants;
   },
   
   showRestaurantCard(restaurant, restaurantColumn) {
     restaurantColumn.appendChild(restaurant.restaurantCard);
   },
   
-  showRestaurantDetails(restaurant) {
+  showRestaurantDetails(restaurant, state) {
     const main = document.querySelector("main");
     main.innerHTML = "";
-    main.appendChild(restaurant.restaurantDetails);
-    // const restaurantColumn = document.getElementById("restaurantCol");
-    // restaurantColumn.innerHTML = "";
-    // restaurantColumn.appendChild(restaurant.restaurantDetails);
+    const element = document.createElement("restaurant-details");
+    element.restaurant = restaurant;
+    main.appendChild(element);
+    // main.appendChild(restaurant.restaurantDetails);
   
     //add google street view
     this.addStreetView(restaurant);
@@ -94,18 +78,24 @@ export default {
   
     // adds reviews to card
     for (let i = 0; i < restaurant.ratings.length; i++) {
-      this.addReviewCard(restaurant, i);
+      this.addReviewCard(restaurant, i, detailsBody);
     }
+
+    // add form
+    const formContainer = document.getElementById(`review_form_${restaurant.id}`);
+    const form = document.createElement("review-form");
+    form.restaurant = restaurant;
+    formContainer.appendChild(form);
   },
   
-  addReviewCard(restaurant, index) {
+  addReviewCard(restaurant, index, parent) {
     // console.log(restaurant);
-    const detailsBody = document.querySelector(
-      `restaurant-details #card_${restaurant.id} .card-body #reviews`
-    );
+    // const detailsBody = document.querySelector(
+    //   `restaurant-details #card_${restaurant.id} .card-body #reviews`
+    // );
     const ratingEl = document.createElement("review-card");
     ratingEl.review = restaurant.ratings[index];
-    detailsBody.appendChild(ratingEl);
+    parent.appendChild(ratingEl);
   
     document.querySelector(
       `#${restaurant.ratings[index].id} .stars-inner`

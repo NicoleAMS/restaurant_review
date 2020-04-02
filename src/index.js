@@ -1,6 +1,9 @@
 import "bootstrap";
 import "./main.scss";
-import { Restaurant } from "./restaurant/restaurant.class";
+
+import State from "./lib/state.js";
+const jsonRestaurants = require("././restaurant/restaurants.json");
+
 import "./restaurant/components/restaurant-list.component";
 import "./restaurant/components/restaurant-card.component";
 import "./filter/min-max-select.component";
@@ -10,10 +13,6 @@ import "./review/components/review-card.component";
 
 import { initMap } from "./google_maps/google_maps";
 import RestaurantsModule from "./restaurant/restaurants.module.js";
-
-const jsonRestaurants = require("././restaurant/restaurants.json");
-
-export const allRestaurants = [];
 
 document.addEventListener("DOMContentLoaded", function() {
   const google_api_key = process.env.GOOGLE_API_KEY;
@@ -26,48 +25,95 @@ document.addEventListener("DOMContentLoaded", function() {
   // initialize google maps
   window.initMap = initMap;
 
+  // instantiate classes
+  const restaurantState = new State();
+  const restaurantList = document.createElement("restaurant-list");
+  const allRestaurants = getRestaurants();
+  let restaurantsOnMap = allRestaurants;
+  let filteredRestaurants = allRestaurants;
+
   // create restaurant objects
-  for (let i = 0; i < jsonRestaurants.length; i++) {
-    const restaurant = RestaurantsModule.createRestaurant(jsonRestaurants[i]);
-    allRestaurants.push(restaurant);
+  function getRestaurants() {
+    let restaurants = [];
+    for (let i = 0; i < jsonRestaurants.length; i++) {
+      const restaurant = RestaurantsModule.createRestaurant(jsonRestaurants[i]);
+      restaurants.push(restaurant);
+    }
+    return restaurants;
   }
 
-  // get min-max-select
-  const minMaxSelectMenu = document.querySelector("min-max-select");
+  // populate state with initial restaurants
+  restaurantState.update({allRestaurants, restaurantsOnMap, filteredRestaurants});
 
-  // listen to changes on the min-max-select component: minimum star rating
-  minMaxSelectMenu.dom.minStarSelect.addEventListener("change", e => {
-    RestaurantsModule.filterRestaurantList(
-      RestaurantsModule.restaurantsOnMap,
-      minMaxSelectMenu.minimum,
-      minMaxSelectMenu.maximum
-    );
-  });
+  // add observers 
+  restaurantState.addObserver(restaurantList);
 
-  // listen to changes on the min-max-select component: maximum star rating
-  minMaxSelectMenu.dom.maxStarSelect.addEventListener("change", e => {
-    RestaurantsModule.filterRestaurantList(
-      RestaurantsModule.restaurantsOnMap,
-      minMaxSelectMenu.minimum,
-      minMaxSelectMenu.maximum
-    );
-  });
+  // render restaurantList
+  const state = restaurantState.getState();
+  restaurantList.render(state, "main-site");
 
-  document.addEventListener("showDetails", () => {
-    RestaurantsModule.showRestaurantDetails(event.detail.restaurant);
-  });
 
-  document.addEventListener("showRestaurantList", () => {
-    const main = document.querySelector("main");
-    main.innerHTML = `<restaurant-list></restaurant-list>`;
-  });
-
+  // EVENT LISTENERS
   document.addEventListener("mapIdle", () => {
     const bounds = event.detail.bounds;
     const map = event.detail.map;
-  
-    let restaurantsOnMap = RestaurantsModule.setRestaurantsOnMap(bounds, allRestaurants);
-    RestaurantsModule.displayRestaurantList(restaurantsOnMap, map);
+    const state = restaurantState.getState();
+
+    restaurantsOnMap = RestaurantsModule.setRestaurantsOnMap(bounds, state.allRestaurants);
+    filteredRestaurants = restaurantsOnMap;
+    RestaurantsModule.displayRestaurantMarkers(restaurantsOnMap, map);
+    restaurantState.update({
+      ...state, restaurantsOnMap, filteredRestaurants, map
+    });
+  });
+
+  document.addEventListener("onMinChange", () => {
+    const state = restaurantState.getState();
+    filteredRestaurants = RestaurantsModule.filterRestaurantList(
+      state.restaurantsOnMap, event.detail.min, event.detail.max
+    );
+
+    RestaurantsModule.displayRestaurantMarkers(filteredRestaurants, state.map);
+    restaurantState.update({
+      ...state, filteredRestaurants
+    });
+  });
+
+  document.addEventListener("onMaxChange", () => {
+    const state = restaurantState.getState();
+    filteredRestaurants = RestaurantsModule.filterRestaurantList(
+      state.restaurantsOnMap, event.detail.min, event.detail.max
+    );
+
+    RestaurantsModule.displayRestaurantMarkers(filteredRestaurants, state.map);
+    restaurantState.update({
+      ...state, filteredRestaurants
+    });
+  });
+
+  document.addEventListener("showDetails", () => {
+    const state = restaurantState.getState();
+    const restaurant = state.allRestaurants.find(restaurant => {
+      return event.detail.restaurant.id === restaurant.id;
+    });
+    RestaurantsModule.showRestaurantDetails(restaurant, state);
+  });
+
+  document.addEventListener("reviewCreated", () => {
+    const state = restaurantState.getState();
+    let restaurant = state.allRestaurants.find(restaurant => {
+      return event.detail.restaurant.id === restaurant.id;
+    });
+    restaurant = event.detail.restaurant;
+    console.log("review detail: ", state);
+  });
+
+  document.addEventListener("showRestaurantList", () => {
+    const main = document.querySelector("#main");
+    main.innerHTML = "";
+    const restaurantList = document.createElement("restaurant-list");
+    restaurantState.addObserver(restaurantList);
+    restaurantList.render(state, "main");
   });
 
 });
