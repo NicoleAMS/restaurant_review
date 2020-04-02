@@ -4,6 +4,7 @@ import "./main.scss";
 import State from "./lib/state.js";
 const jsonRestaurants = require("././restaurant/restaurants.json");
 
+import "./pages/components/homepage.component";
 import "./restaurant/components/restaurant-list.component";
 import "./restaurant/components/restaurant-card.component";
 import "./filter/min-max-select.component";
@@ -27,7 +28,9 @@ document.addEventListener("DOMContentLoaded", function() {
 
   // instantiate classes
   const restaurantState = new State();
-  const restaurantList = document.createElement("restaurant-list");
+  const homePage = document.createElement("home-page");
+
+  // const restaurantList = document.createElement("restaurant-list");
   const allRestaurants = getRestaurants();
   let restaurantsOnMap = allRestaurants;
   let filteredRestaurants = allRestaurants;
@@ -46,11 +49,12 @@ document.addEventListener("DOMContentLoaded", function() {
   restaurantState.update({allRestaurants, restaurantsOnMap, filteredRestaurants});
 
   // add observers 
-  restaurantState.addObserver(restaurantList);
+  // restaurantState.addObserver(restaurantList);
 
   // render restaurantList
   const state = restaurantState.getState();
-  restaurantList.render(state, "main-site");
+  homePage.render(restaurantState, state, "main");
+  // restaurantList.render(state, "main-site");
 
 
   // EVENT LISTENERS
@@ -111,9 +115,8 @@ document.addEventListener("DOMContentLoaded", function() {
   document.addEventListener("showRestaurantList", () => {
     const main = document.querySelector("#main");
     main.innerHTML = "";
-    const restaurantList = document.createElement("restaurant-list");
-    restaurantState.addObserver(restaurantList);
-    restaurantList.render(state, "main");
+    const homepage = document.createElement("home-page");
+    homepage.render(restaurantState, state, "main");
   });
 
 });

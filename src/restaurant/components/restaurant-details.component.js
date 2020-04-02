@@ -17,12 +17,17 @@ class RestaurantDetails extends HTMLElement {
     }
 
     document.addEventListener("markRestaurant", () => {
-      // console.log(this._restaurant);
-      console.log(event.detail.map);
+      const map = event.detail.map;
+      // remove old markers from map
+      for (let i = 0; i < map.markers.length; i++) {
+        map.markers[i].setMap(null);
+      }
+      map.markers = [];
+      
+      // add marker of current restaurant to map
       const marker = this._restaurant.marker;
-      console.log('marker1: ', marker.map);
-      marker.map = event.detail.map;
-      console.log('marker2: ', marker.map);
+      marker.setMap(map);
+      map.markers.push(marker);
     });
 
     const btn = this.querySelector("#backBtn");

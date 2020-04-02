@@ -11,7 +11,7 @@ export function initMap() {
     center: paris,
     styles: styles
   });
-  var markers = [];
+  map.markers = [];
   googleMap = map;
 
   // geolocation: center map based on user's location
@@ -45,7 +45,6 @@ function onMarkrestaurant(map) {
     detail: {map: map},
     bubbles: true,
   });
-  console.log(map.markers);
   const mapEl = document.querySelector("#map");
   mapEl.dispatchEvent(markrestaurantEvent);
  }

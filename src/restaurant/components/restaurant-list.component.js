@@ -8,14 +8,10 @@ class RestaurantList extends HTMLElement {
   connectedCallback() {
     this.active = true;
     this.addRestaurantListener();
-    // if (window.google) {
-    //   initMap();
-    // }
   }
 
   disconnectedCallback() {
     this.active = false;
-    // this.removeRestaurantListener();
   }
 
   render(state, selector) {
@@ -30,7 +26,7 @@ class RestaurantList extends HTMLElement {
 
   update(state) {
     if (this.active) {
-      this.render(state, "main-site");
+      this.render(state, "homepageSlot");
     }
   }
 
