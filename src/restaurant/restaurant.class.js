@@ -27,6 +27,8 @@ export class Restaurant {
       average += rating.stars;
     });
     average = average / ratings.length;
+    // calculate average with 1 decimal precision
+    average = Math.round(average * 10) / 10;
     return average;
   }
 

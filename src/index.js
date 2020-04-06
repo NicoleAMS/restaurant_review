@@ -108,11 +108,11 @@ document.addEventListener("DOMContentLoaded", function() {
 
   document.addEventListener("reviewCreated", () => {
     const state = restaurantState.getState();
-    // let restaurant = state.allRestaurants.find(restaurant => {
-    //   return event.detail.restaurant.id === restaurant.id;
-    // });
-    // restaurant = event.detail.restaurant;
-    console.log("review detail: ", state);
+    let restaurant = state.allRestaurants.find(restaurant => {
+      return event.detail.restaurant.id === restaurant.id;
+    });
+    // recalculate restaurant's average star rating
+    restaurant.averageRating = restaurant.calculateAverageRating(restaurant.ratings);
   });
 
   document.addEventListener("showRestaurantList", () => {

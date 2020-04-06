@@ -48,7 +48,7 @@ export default {
 
   filterRestaurantList(restaurants, min, max){
     const filteredRestaurants = restaurants.filter(restaurant => {
-      const average = Math.round(restaurant.averageRating);
+      const average = restaurant.averageRating;
       return average >= min && average <= max;
     });
     return filteredRestaurants;
