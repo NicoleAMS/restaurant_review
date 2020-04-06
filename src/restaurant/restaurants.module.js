@@ -1,4 +1,4 @@
-import { googleMap, addMarkerWithInfoWindow } from "../google_maps/google_maps";
+import { addMarkerWithInfoWindow } from "../google_maps/google_maps";
 import { Restaurant } from "./restaurant.class";
 
 export default {
@@ -30,7 +30,6 @@ export default {
   },
 
   displayRestaurantMarkers(restaurants, map) {
-    map.markers = [];
     restaurants.forEach(restaurant => {
       const restaurantMarker = restaurant.createRestaurantMarker(map);
       const marker = addMarkerWithInfoWindow(restaurantMarker);
@@ -65,7 +64,6 @@ export default {
     const element = document.createElement("restaurant-details");
     element.restaurant = restaurant;
     main.appendChild(element);
-    // main.appendChild(restaurant.restaurantDetails);
   
     //add google street view
     this.addStreetView(restaurant);
@@ -89,10 +87,6 @@ export default {
   },
   
   addReviewCard(restaurant, index, parent) {
-    // console.log(restaurant);
-    // const detailsBody = document.querySelector(
-    //   `restaurant-details #card_${restaurant.id} .card-body #reviews`
-    // );
     const ratingEl = document.createElement("review-card");
     ratingEl.review = restaurant.ratings[index];
     parent.appendChild(ratingEl);

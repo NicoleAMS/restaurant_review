@@ -1,5 +1,5 @@
 import Template from "../templates/restaurant-details.template.js";
-import { addMarkerWithInfoWindow } from "../../google_maps/google_maps.js";
+import { removeMarkers } from "../../google_maps/google_maps.js";
 
 class RestaurantDetails extends HTMLElement {
   constructor() {
@@ -19,10 +19,7 @@ class RestaurantDetails extends HTMLElement {
     document.addEventListener("markRestaurant", () => {
       const map = event.detail.map;
       // remove old markers from map
-      for (let i = 0; i < map.markers.length; i++) {
-        map.markers[i].setMap(null);
-      }
-      map.markers = [];
+      removeMarkers(map);
       
       // add marker of current restaurant to map
       const marker = this._restaurant.marker;

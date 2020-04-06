@@ -12,7 +12,7 @@ import "./review/components/review-form.component";
 import "./restaurant/components/restaurant-details.component";
 import "./review/components/review-card.component";
 
-import { initMap } from "./google_maps/google_maps";
+import { initMap, removeMarkers } from "./google_maps/google_maps";
 import RestaurantsModule from "./restaurant/restaurants.module.js";
 
 document.addEventListener("DOMContentLoaded", function() {
@@ -30,7 +30,6 @@ document.addEventListener("DOMContentLoaded", function() {
   const restaurantState = new State();
   const homePage = document.createElement("home-page");
 
-  // const restaurantList = document.createElement("restaurant-list");
   const allRestaurants = getRestaurants();
   let restaurantsOnMap = allRestaurants;
   let filteredRestaurants = allRestaurants;
@@ -49,13 +48,11 @@ document.addEventListener("DOMContentLoaded", function() {
   restaurantState.update({allRestaurants, restaurantsOnMap, filteredRestaurants});
 
   // add observers 
-  // restaurantState.addObserver(restaurantList);
 
   // render restaurantList
   const state = restaurantState.getState();
   homePage.render(restaurantState, state, "main");
   // restaurantList.render(state, "main-site");
-
 
   // EVENT LISTENERS
   document.addEventListener("mapIdle", () => {
@@ -77,7 +74,10 @@ document.addEventListener("DOMContentLoaded", function() {
       state.restaurantsOnMap, event.detail.min, event.detail.max
     );
 
+    // remove old markers and replace with markers of filtered restaurants
+    removeMarkers(state.map);
     RestaurantsModule.displayRestaurantMarkers(filteredRestaurants, state.map);
+
     restaurantState.update({
       ...state, filteredRestaurants
     });
@@ -89,7 +89,10 @@ document.addEventListener("DOMContentLoaded", function() {
       state.restaurantsOnMap, event.detail.min, event.detail.max
     );
 
+    // remove old markers and replace with markers of filtered restaurants
+    removeMarkers(state.map);
     RestaurantsModule.displayRestaurantMarkers(filteredRestaurants, state.map);
+
     restaurantState.update({
       ...state, filteredRestaurants
     });
@@ -105,10 +108,10 @@ document.addEventListener("DOMContentLoaded", function() {
 
   document.addEventListener("reviewCreated", () => {
     const state = restaurantState.getState();
-    let restaurant = state.allRestaurants.find(restaurant => {
-      return event.detail.restaurant.id === restaurant.id;
-    });
-    restaurant = event.detail.restaurant;
+    // let restaurant = state.allRestaurants.find(restaurant => {
+    //   return event.detail.restaurant.id === restaurant.id;
+    // });
+    // restaurant = event.detail.restaurant;
     console.log("review detail: ", state);
   });
 

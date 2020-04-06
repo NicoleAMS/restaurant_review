@@ -33,6 +33,9 @@ export function initMap() {
       let viewportBounds = setViewportBounds(map);
       onMapIdle(map, viewportBounds);
     });
+    map.addListener("click", function(event) {
+      console.log(event.latLng);
+    });
   } else {
     map.addListener("idle", function() {
       onMarkrestaurant(map);
@@ -86,4 +89,13 @@ export function addMarkerWithInfoWindow(props) {
   });
 
   return marker;
+}
+
+export function removeMarkers(map) {
+  for (let i = 0; i < map.markers.length; i++) {
+    map.markers[i].setMap(null);
+  }
+  map.markers = [];
+
+  return map;
 }
