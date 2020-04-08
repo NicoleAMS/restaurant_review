@@ -5,6 +5,7 @@ import State from "./lib/state.js";
 const jsonRestaurants = require("././restaurant/restaurants.json");
 
 import "./pages/components/homepage.component";
+import "./pages/components/new-restaurant-page.component";
 import "./restaurant/components/restaurant-list.component";
 import "./restaurant/components/restaurant-card.component";
 import "./filter/min-max-select.component";
@@ -115,11 +116,36 @@ document.addEventListener("DOMContentLoaded", function() {
     restaurant.averageRating = restaurant.calculateAverageRating(restaurant.ratings);
   });
 
+  document.addEventListener("restaurantCreated", () => {
+    const state = restaurantState.getState();
+    const restaurant = event.detail.restaurant;
+    state.allRestaurants.push(restaurant);
+
+    restaurantState.update({
+      ...state, allRestaurants
+    });
+
+    showRestaurantList(state);
+  });
+
   document.addEventListener("showRestaurantList", () => {
+    const state = restaurantState.getState();
+    showRestaurantList(state);
+  });
+
+  document.addEventListener("addRestaurant", () => {
+    const state = restaurantState.getState();
+    const main = document.querySelector("#main");
+    main.innerHTML = "";
+    const newRestaurantPage = document.createElement("new-restaurant-page");
+    newRestaurantPage.render(state, "main");
+  });
+
+  function showRestaurantList(state) {
     const main = document.querySelector("#main");
     main.innerHTML = "";
     const homepage = document.createElement("home-page");
     homepage.render(restaurantState, state, "main");
-  });
+  }
 
 });

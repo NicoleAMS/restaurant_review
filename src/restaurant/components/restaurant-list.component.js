@@ -7,7 +7,9 @@ class RestaurantList extends HTMLElement {
 
   connectedCallback() {
     this.active = true;
-    this.addRestaurantListener();
+
+    this.btn = document.querySelector("#addRestaurant");
+    this.btn.addEventListener("click", this._onAddRestaurant);
   }
 
   disconnectedCallback() {
@@ -35,18 +37,15 @@ class RestaurantList extends HTMLElement {
     this.parent.appendChild(restaurant);
   }
 
-  addRestaurantListener() {
-    const btn = document.querySelector("#addRestaurant");
-    btn.addEventListener("click", this.onAddRestaurant);
-  }
-
-  onAddRestaurant() {
-    console.log("add restaurant");
+  _onAddRestaurant() {
+    const addRestaurantEvent = new CustomEvent("addRestaurant", {
+      bubbles: true,
+    });
+    event.target.dispatchEvent(addRestaurantEvent);
   }
 
   // removeRestaurantListener() {
-  //   const btn = document.querySelector("#addRestaurant");
-  //   btn.removeEventListener("click", this.onAddRestaurant);
+  //   this.btn.removeEventListener("click", this._onAddRestaurant);
   // }
 
 }
@@ -54,25 +53,3 @@ class RestaurantList extends HTMLElement {
 if (!customElements.get("restaurant-list")) {
   customElements.define("restaurant-list", RestaurantList);
 }
-
-
-  // addRestaurantMarker(){
-  //   // adds markers on the  map for each visible restaurant
-  //   const restaurantMarker = restaurant.createRestaurantMarker(map);
-  //   const marker = addMarkerWithInfoWindow(restaurantMarker);
-  //   restaurant.marker = marker;
-  // }
-
-  // setRestaurantsOnMap(viewportBounds, restaurants) {
-  //   const restaurantsOnMap = [];
-  //   restaurants.forEach(restaurant => {
-  //     var restaurantLatLng = new google.maps.LatLng({
-  //       lat: restaurant.lat,
-  //       lng: restaurant.long
-  //     });
-  //     if (viewportBounds.contains(restaurantLatLng)) {
-  //       restaurantsOnMap.push(restaurant);
-  //     }
-  //   });
-  //   return restaurantsOnMap;
-  // }

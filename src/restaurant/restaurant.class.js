@@ -6,7 +6,7 @@ export class Restaurant {
     this.lat = lat;
     this.long = long;
     this.ratings = ratings;
-    this.averageRating = this.calculateAverageRating(this.ratings);
+    this.averageRating = this.ratings.length > 0 ? this.calculateAverageRating(this.ratings) : 0;
     this.photos = photos;
     this.restaurantCard = this.createRestaurantCard();
     this.restaurantDetails = this.createRestaurantDetails();

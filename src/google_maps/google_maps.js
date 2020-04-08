@@ -33,14 +33,32 @@ export function initMap() {
       let viewportBounds = setViewportBounds(map);
       onMapIdle(map, viewportBounds);
     });
+  } else if (mapType === "new") {
     map.addListener("click", function(event) {
-      console.log(event.latLng);
+      removeMarkers(map);
+      const lat = event.latLng.lat();
+      const lng = event.latLng.lng();
+      onGetLatLng(map, lat, lng);
+      var marker = new google.maps.Marker({
+        position: {lat, lng},
+        map: map
+      });
+      map.markers.push(marker);
     });
   } else {
     map.addListener("idle", function() {
       onMarkrestaurant(map);
     });
   }
+}
+
+function onGetLatLng(map, lat, lng) {
+  const getLatLngEvent = new CustomEvent("latlng", {
+    detail: {map: map, position: {lat: lat, lng: lng}},
+    bubbles: true
+  });
+  const mapEl = document.querySelector("#map");
+  mapEl.dispatchEvent(getLatLngEvent);
 }
 
 function onMarkrestaurant(map) {
