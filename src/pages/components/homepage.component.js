@@ -1,5 +1,5 @@
 import Template from "../templates/homepage.template";
-import {initMap} from "../../google_maps/google_maps.js";
+import { initMap } from "../../google_maps/google_maps.js";
 
 class HomePage extends HTMLElement {
   constructor() {

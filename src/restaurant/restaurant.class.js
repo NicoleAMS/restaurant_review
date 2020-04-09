@@ -6,7 +6,8 @@ export class Restaurant {
     this.lat = lat;
     this.long = long;
     this.ratings = ratings;
-    this.averageRating = this.ratings.length > 0 ? this.calculateAverageRating(this.ratings) : 0;
+    this.averageRating =
+      this.ratings.length > 0 ? this.calculateAverageRating(this.ratings) : 0;
     this.photos = photos;
     this.restaurantCard = this.createRestaurantCard();
     this.restaurantDetails = this.createRestaurantDetails();
@@ -38,8 +39,8 @@ export class Restaurant {
       element.restaurant = this;
       return element;
     } else {
-      return this.restaurantCard
-    };
+      return this.restaurantCard;
+    }
   }
 
   createRestaurantDetails() {
@@ -62,7 +63,6 @@ export class Restaurant {
       map: map,
       content: `<p>${this.restaurantName}</p>`
     };
-    // this.marker = restaurantMarker;
     return restaurantMarker;
   }
 }

@@ -6,7 +6,7 @@ export default {
   mapDOM(scope) {
     // the scope parameter is the web components reference
     return {
-      addRestaurant: scope.querySelector("#addRestaurant"),
+      addRestaurant: scope.querySelector("#addRestaurant")
     };
   },
 
@@ -15,4 +15,4 @@ export default {
       <div id="restaurantCol" class="col col-12"></div>
     `;
   }
-}
+};

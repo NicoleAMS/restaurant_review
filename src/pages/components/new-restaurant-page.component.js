@@ -1,5 +1,5 @@
 import Template from "../templates/new-restaurant-page.template";
-import {initMap} from "../../google_maps/google_maps.js";
+import { initMap } from "../../google_maps/google_maps.js";
 import RestaurantsModule from "../../restaurant/restaurants.module";
 
 class NewRestaurantPage extends HTMLElement {
@@ -39,7 +39,10 @@ class NewRestaurantPage extends HTMLElement {
       this.dom.form.appendChild(helpText);
     } else {
       // create restaurant with input values
-      this.restaurant = this.createRestaurant(this.dom.name.value, this.dom.address.value);
+      this.restaurant = this.createRestaurant(
+        this.dom.name.value,
+        this.dom.address.value
+      );
       // dispatch custom event
       this.dispatchCreatedEvent();
     }

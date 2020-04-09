@@ -11,8 +11,14 @@ class MinMaxSelect extends HTMLElement {
     this.innerHTML = Template.render();
     this.dom = Template.mapDOM(this);
 
-    this.dom.minStarSelect.addEventListener("change", this._onMinChange.bind(this));
-    this.dom.maxStarSelect.addEventListener("change", this._onMaxChange.bind(this));
+    this.dom.minStarSelect.addEventListener(
+      "change",
+      this._onMinChange.bind(this)
+    );
+    this.dom.maxStarSelect.addEventListener(
+      "change",
+      this._onMaxChange.bind(this)
+    );
   }
 
   _onMinChange(event) {

@@ -2,7 +2,6 @@ import { addMarkerWithInfoWindow } from "../google_maps/google_maps";
 import { Restaurant } from "./restaurant.class";
 
 export default {
-
   createRestaurant(rest) {
     const restaurant = new Restaurant({
       id: rest.id,
@@ -38,56 +37,58 @@ export default {
     });
   },
 
-  filterRestaurantList(restaurants, min, max){
+  filterRestaurantList(restaurants, min, max) {
     const filteredRestaurants = restaurants.filter(restaurant => {
       const average = restaurant.averageRating;
       return average >= min && average <= max;
     });
     return filteredRestaurants;
   },
-  
+
   showRestaurantCard(restaurant, restaurantColumn) {
     restaurantColumn.appendChild(restaurant.restaurantCard);
   },
-  
+
   showRestaurantDetails(restaurant, state) {
     const main = document.querySelector("main");
     main.innerHTML = "";
     const element = document.createElement("restaurant-details");
     element.restaurant = restaurant;
     main.appendChild(element);
-  
+
     //add google street view
     this.addStreetView(restaurant);
-  
+
     // clear card's body text
     const detailsBody = document.querySelector(
       `restaurant-details #card_${restaurant.id} .card-body #reviews`
     );
     detailsBody.innerHTML = "";
-  
+
     // adds reviews to card
     for (let i = 0; i < restaurant.ratings.length; i++) {
       this.addReviewCard(restaurant, i, detailsBody);
     }
 
     // add form
-    const formContainer = document.getElementById(`review_form_${restaurant.id}`);
+    const formContainer = document.getElementById(
+      `review_form_${restaurant.id}`
+    );
     const form = document.createElement("review-form");
     form.restaurant = restaurant;
     formContainer.appendChild(form);
   },
-  
+
   addReviewCard(restaurant, index, parent) {
     const ratingEl = document.createElement("review-card");
     ratingEl.review = restaurant.ratings[index];
     parent.appendChild(ratingEl);
-  
+
     document.querySelector(
       `#${restaurant.ratings[index].id} .stars-inner`
     ).style.width = ratingEl.starPercentageRounded;
   },
-  
+
   addStreetView(restaurant) {
     const streetViewImg = document.querySelector(
       `restaurant-details #card_${restaurant.id} .card-body #streetViewImg`
@@ -98,4 +99,4 @@ export default {
     streetViewImg.src = streetViewSrc;
     return streetViewImg;
   }
-}
+};

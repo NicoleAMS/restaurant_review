@@ -46,14 +46,15 @@ document.addEventListener("DOMContentLoaded", function() {
   }
 
   // populate state with initial restaurants
-  restaurantState.update({allRestaurants, restaurantsOnMap, filteredRestaurants});
-
-  // add observers 
+  restaurantState.update({
+    allRestaurants,
+    restaurantsOnMap,
+    filteredRestaurants
+  });
 
   // render restaurantList
   const state = restaurantState.getState();
   homePage.render(restaurantState, state, "main");
-  // restaurantList.render(state, "main-site");
 
   // EVENT LISTENERS
   document.addEventListener("mapIdle", () => {
@@ -61,18 +62,26 @@ document.addEventListener("DOMContentLoaded", function() {
     const map = event.detail.map;
     const state = restaurantState.getState();
 
-    restaurantsOnMap = RestaurantsModule.setRestaurantsOnMap(bounds, state.allRestaurants);
+    restaurantsOnMap = RestaurantsModule.setRestaurantsOnMap(
+      bounds,
+      state.allRestaurants
+    );
     filteredRestaurants = restaurantsOnMap;
     RestaurantsModule.displayRestaurantMarkers(restaurantsOnMap, map);
     restaurantState.update({
-      ...state, restaurantsOnMap, filteredRestaurants, map
+      ...state,
+      restaurantsOnMap,
+      filteredRestaurants,
+      map
     });
   });
 
   document.addEventListener("onMinChange", () => {
     const state = restaurantState.getState();
     filteredRestaurants = RestaurantsModule.filterRestaurantList(
-      state.restaurantsOnMap, event.detail.min, event.detail.max
+      state.restaurantsOnMap,
+      event.detail.min,
+      event.detail.max
     );
 
     // remove old markers and replace with markers of filtered restaurants
@@ -80,14 +89,17 @@ document.addEventListener("DOMContentLoaded", function() {
     RestaurantsModule.displayRestaurantMarkers(filteredRestaurants, state.map);
 
     restaurantState.update({
-      ...state, filteredRestaurants
+      ...state,
+      filteredRestaurants
     });
   });
 
   document.addEventListener("onMaxChange", () => {
     const state = restaurantState.getState();
     filteredRestaurants = RestaurantsModule.filterRestaurantList(
-      state.restaurantsOnMap, event.detail.min, event.detail.max
+      state.restaurantsOnMap,
+      event.detail.min,
+      event.detail.max
     );
 
     // remove old markers and replace with markers of filtered restaurants
@@ -95,7 +107,8 @@ document.addEventListener("DOMContentLoaded", function() {
     RestaurantsModule.displayRestaurantMarkers(filteredRestaurants, state.map);
 
     restaurantState.update({
-      ...state, filteredRestaurants
+      ...state,
+      filteredRestaurants
     });
   });
 
@@ -113,7 +126,9 @@ document.addEventListener("DOMContentLoaded", function() {
       return event.detail.restaurant.id === restaurant.id;
     });
     // recalculate restaurant's average star rating
-    restaurant.averageRating = restaurant.calculateAverageRating(restaurant.ratings);
+    restaurant.averageRating = restaurant.calculateAverageRating(
+      restaurant.ratings
+    );
   });
 
   document.addEventListener("restaurantCreated", () => {
@@ -122,7 +137,8 @@ document.addEventListener("DOMContentLoaded", function() {
     state.allRestaurants.push(restaurant);
 
     restaurantState.update({
-      ...state, allRestaurants
+      ...state,
+      allRestaurants
     });
 
     showRestaurantList(state);
@@ -147,5 +163,4 @@ document.addEventListener("DOMContentLoaded", function() {
     const homepage = document.createElement("home-page");
     homepage.render(restaurantState, state, "main");
   }
-
 });

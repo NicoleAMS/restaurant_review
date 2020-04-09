@@ -11,7 +11,7 @@ export default {
       </div>
       <div class="dropdown-divider"></div>
     `;
-  }, 
+  },
 
   css(review, starInnerWidth) {
     return `
@@ -22,4 +22,4 @@ export default {
       </style>
     `;
   }
-}
+};

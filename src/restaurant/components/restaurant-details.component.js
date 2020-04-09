@@ -34,14 +34,17 @@ class RestaurantDetails extends HTMLElement {
       const map = event.detail.map;
       // remove old markers from map
       removeMarkers(map);
-      
+
       // add marker of current restaurant to map
       const marker = this.restaurant.marker;
       marker.setMap(map);
       map.markers.push(marker);
     });
 
-    this.dom.button.addEventListener("click", this.showRestaurantList.bind(this));
+    this.dom.button.addEventListener(
+      "click",
+      this.showRestaurantList.bind(this)
+    );
   }
 
   showRestaurantList(event) {
@@ -50,7 +53,6 @@ class RestaurantDetails extends HTMLElement {
     });
     event.target.dispatchEvent(showRestaurantListEvent);
   }
-
 }
 
 customElements.define("restaurant-details", RestaurantDetails);

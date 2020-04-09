@@ -7,7 +7,7 @@ class RestaurantList extends HTMLElement {
 
   set active(active) {
     this._active = active;
-  } 
+  }
 
   get active() {
     return this._active;
@@ -47,15 +47,10 @@ class RestaurantList extends HTMLElement {
 
   onAddRestaurant() {
     const addRestaurantEvent = new CustomEvent("addRestaurant", {
-      bubbles: true,
+      bubbles: true
     });
     event.target.dispatchEvent(addRestaurantEvent);
   }
-
-  // removeRestaurantListener() {
-  //   this.btn.removeEventListener("click", this._onAddRestaurant);
-  // }
-
 }
 
 if (!customElements.get("restaurant-list")) {

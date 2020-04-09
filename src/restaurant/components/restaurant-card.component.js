@@ -39,10 +39,14 @@ class RestaurantCard extends HTMLElement {
   }
 
   connectedCallback() {
-    this.starPercentage = (this.restaurant.averageRating / this.starTotal) * 100;
+    this.starPercentage =
+      (this.restaurant.averageRating / this.starTotal) * 100;
     this.starPercentageRounded = this.roundStarPercentage(this.starPercentage);
 
-    this.innerHTML = Template.render(this.restaurant, this.starPercentageRounded);
+    this.innerHTML = Template.render(
+      this.restaurant,
+      this.starPercentageRounded
+    );
     this.addEventListener("click", this.showDetails.bind(this));
   }
 

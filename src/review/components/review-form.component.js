@@ -54,7 +54,7 @@ class ReviewForm extends HTMLElement {
   }
 
   createReviewCard() {
-    const reviewCard = document.createElement('review-card');
+    const reviewCard = document.createElement("review-card");
     reviewCard.review = this.review;
     const container = document.querySelector("restaurant-details #reviews");
     container.appendChild(reviewCard);
@@ -78,7 +78,6 @@ class ReviewForm extends HTMLElement {
     this.dom.comment.value = "";
     this.dom.starRating.value = "3";
   }
-
 }
 
 customElements.define("review-form", ReviewForm);

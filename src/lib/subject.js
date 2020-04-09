@@ -10,7 +10,7 @@ class Subject {
 
   // remove an observer from this.observers
   removeObserver() {
-    const removeIndex = this.observers.findIndex((obs) => {
+    const removeIndex = this.observers.findIndex(obs => {
       return observer === obs;
     });
 
@@ -19,13 +19,13 @@ class Subject {
     }
   }
 
-  // loops over this.observers and calls the update method on each observer. 
+  // loops over this.observers and calls the update method on each observer.
   // the state object will call this method every time it is updated.
   notify(data) {
     if (this.observers.length > 0) {
-      this.observers.forEach((observer) => {
+      this.observers.forEach(observer => {
         observer.update(data);
-      }); 
+      });
     }
   }
 }

@@ -40,7 +40,7 @@ export function initMap() {
       const lng = event.latLng.lng();
       onGetLatLng(map, lat, lng);
       var marker = new google.maps.Marker({
-        position: {lat, lng},
+        position: { lat, lng },
         map: map
       });
       map.markers.push(marker);
@@ -54,7 +54,7 @@ export function initMap() {
 
 function onGetLatLng(map, lat, lng) {
   const getLatLngEvent = new CustomEvent("latlng", {
-    detail: {map: map, position: {lat: lat, lng: lng}},
+    detail: { map: map, position: { lat: lat, lng: lng } },
     bubbles: true
   });
   const mapEl = document.querySelector("#map");
@@ -63,12 +63,12 @@ function onGetLatLng(map, lat, lng) {
 
 function onMarkrestaurant(map) {
   const markrestaurantEvent = new CustomEvent("markRestaurant", {
-    detail: {map: map},
-    bubbles: true,
+    detail: { map: map },
+    bubbles: true
   });
   const mapEl = document.querySelector("#map");
   mapEl.dispatchEvent(markrestaurantEvent);
- }
+}
 
 function onMapIdle(map, bounds) {
   const mapEl = document.querySelector("#map");
