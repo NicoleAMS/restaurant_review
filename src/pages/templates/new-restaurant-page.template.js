@@ -3,6 +3,15 @@ export default {
     return `${this.html()}`;
   },
 
+  mapDOM(scope) {
+    // the scope parameter is the web components reference
+    return {
+      form: scope.querySelector("#newRestaurantForm"),
+      name: scope.querySelector("#inputName"),
+      address: scope.querySelector("#inputAddress")
+    };
+  },
+
   html() {
     return `
       <div class="container">
@@ -32,5 +41,16 @@ export default {
         </div>
       </div>
     `;
+  },
+
+  createHelpText() {
+    const helpText = document.createElement("div");
+    helpText.style.marginTop = "15px";
+    helpText.innerHTML = `
+      <small class="row">
+        <span class="col col-1 text-secondary pr-0">*</span> 
+        <span class="col col-11 px-0">Please click on the map for the location of the new restaurant.</span>
+      </small>`;
+    return helpText;
   }
 }

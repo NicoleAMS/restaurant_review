@@ -3,18 +3,46 @@ import Template from "../templates/review-card.template.js";
 class ReviewCard extends HTMLElement {
   constructor() {
     super();
-    this._starTotal = 5;
+    this.starTotal = 5;
   }
 
   set review(review) {
     this._review = review;
   }
 
+  get review() {
+    return this._review;
+  }
+
+  set starTotal(total) {
+    this._starTotal = total;
+  }
+
+  get starTotal() {
+    return this._starTotal;
+  }
+
+  set starPercentage(percentage) {
+    this._starPercentage = percentage;
+  }
+
+  get starPercentage() {
+    return this._starPercentage;
+  }
+
+  set starPercentageRounded(rounded) {
+    this._starPercentageRounded = rounded;
+  }
+
+  get starPercentageRounded() {
+    return this._starPercentageRounded;
+  }
+
   connectedCallback() {
-    this._starPercentage = (this._review.stars / this._starTotal) * 100;
-    this._starPercentageRounded = `${Math.round(this._starPercentage / 10) *
+    this.starPercentage = (this.review.stars / this.starTotal) * 100;
+    this.starPercentageRounded = `${Math.round(this.starPercentage / 10) *
       10}%`;
-    this.innerHTML = Template.render(this._review, this._starPercentageRounded);
+    this.innerHTML = Template.render(this.review, this.starPercentageRounded);
   }
 }
 

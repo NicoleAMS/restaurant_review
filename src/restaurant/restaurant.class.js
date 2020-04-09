@@ -48,7 +48,6 @@ export class Restaurant {
       element.restaurant = this;
       return element;
     } else {
-      console.log('details');
       return this.restaurantDetails;
     }
   }

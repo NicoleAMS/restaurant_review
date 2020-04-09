@@ -12,13 +12,13 @@ class NewRestaurantPage extends HTMLElement {
     if (window.google) {
       initMap();
     }
+    this.dom = Template.mapDOM(this);
 
     document.addEventListener("latlng", () => {
       this.position = event.detail.position;
     });
 
-    const form = document.getElementById("newRestaurantForm");
-    form.addEventListener("submit", this._onFormSubmit.bind(this));
+    this.dom.form.addEventListener("submit", this._onFormSubmit.bind(this));
   }
 
   render(state, selector) {
@@ -35,29 +35,13 @@ class NewRestaurantPage extends HTMLElement {
     event.preventDefault();
 
     if (!this.position) {
-      const form = document.getElementById("newRestaurantForm");
-      const helpText = document.createElement("div");
-      helpText.style.marginTop = "15px";
-      helpText.innerHTML = `
-        <small class="row">
-          <span class="col col-1 text-secondary pr-0">*</span> 
-          <span class="col col-11 px-0">Please click on the map for the location of the new restaurant.</span>
-        </small>`;
-      form.appendChild(helpText);
+      const helpText = Template.createHelpText();
+      this.dom.form.appendChild(helpText);
     } else {
-      // get restaurant details from user
-      const name = document.getElementById("inputName").value;
-      const address = document.getElementById("inputAddress").value;
-
-      // create restaurant
-      this.restaurant = this.createRestaurant(name, address);
-
+      // create restaurant with input values
+      this.restaurant = this.createRestaurant(this.dom.name.value, this.dom.address.value);
       // dispatch custom event
-      const restaurantCreatedEvent = new CustomEvent("restaurantCreated", {
-        bubbles: true,
-        detail: { restaurant: this.restaurant }
-      });
-      event.target.dispatchEvent(restaurantCreatedEvent);
+      this.dispatchCreatedEvent();
     }
   }
 
@@ -71,6 +55,14 @@ class NewRestaurantPage extends HTMLElement {
       ratings: []
     });
     return restaurant;
+  }
+
+  dispatchCreatedEvent() {
+    const restaurantCreatedEvent = new CustomEvent("restaurantCreated", {
+      bubbles: true,
+      detail: { restaurant: this.restaurant }
+    });
+    event.target.dispatchEvent(restaurantCreatedEvent);
   }
 }
 

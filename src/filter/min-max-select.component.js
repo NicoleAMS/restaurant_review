@@ -39,7 +39,6 @@ class MinMaxSelect extends HTMLElement {
   updateMaxSelect() {
     for (let i = 1; i <= this.maximum; i++) {
       const element = this.querySelector(`#maxStar${i}`);
-      console.log(element);
       if (i < this.minimum) {
         element.disabled = true;
       } else {

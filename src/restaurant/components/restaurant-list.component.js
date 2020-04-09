@@ -5,11 +5,19 @@ class RestaurantList extends HTMLElement {
     super();
   }
 
+  set active(active) {
+    this._active = active;
+  } 
+
+  get active() {
+    return this._active;
+  }
+
   connectedCallback() {
     this.active = true;
 
-    this.btn = document.querySelector("#addRestaurant");
-    this.btn.addEventListener("click", this._onAddRestaurant);
+    const btn = document.querySelector("#addRestaurant");
+    btn.addEventListener("click", this.onAddRestaurant);
   }
 
   disconnectedCallback() {
@@ -37,7 +45,7 @@ class RestaurantList extends HTMLElement {
     this.parent.appendChild(restaurant);
   }
 
-  _onAddRestaurant() {
+  onAddRestaurant() {
     const addRestaurantEvent = new CustomEvent("addRestaurant", {
       bubbles: true,
     });

@@ -10,8 +10,22 @@ class RestaurantDetails extends HTMLElement {
     this._restaurant = restaurant;
   }
 
+  get restaurant() {
+    return this._restaurant;
+  }
+
+  set dom(dom) {
+    this._dom = dom;
+  }
+
+  get dom() {
+    return this._dom;
+  }
+
   connectedCallback() {
-    this.innerHTML = Template.render(this._restaurant);
+    this.innerHTML = Template.render(this.restaurant);
+    this.dom = Template.mapDOM(this);
+
     if (window.google) {
       initMap();
     }
@@ -22,16 +36,15 @@ class RestaurantDetails extends HTMLElement {
       removeMarkers(map);
       
       // add marker of current restaurant to map
-      const marker = this._restaurant.marker;
+      const marker = this.restaurant.marker;
       marker.setMap(map);
       map.markers.push(marker);
     });
 
-    const btn = this.querySelector("#backBtn");
-    btn.addEventListener("click", this._showRestaurantList.bind(this));
+    this.dom.button.addEventListener("click", this.showRestaurantList.bind(this));
   }
 
-  _showRestaurantList(event) {
+  showRestaurantList(event) {
     const showRestaurantListEvent = new CustomEvent("showRestaurantList", {
       bubbles: true
     });

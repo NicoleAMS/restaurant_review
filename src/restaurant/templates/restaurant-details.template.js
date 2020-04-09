@@ -3,6 +3,13 @@ export default {
     return `${this.html(restaurant)}`;
   },
 
+  mapDOM(scope) {
+    // the scope parameter is the web components reference
+    return {
+      button: scope.querySelector("#backBtn")
+    };
+  },
+
   html(restaurant) {
     return `
     <div class="container main">

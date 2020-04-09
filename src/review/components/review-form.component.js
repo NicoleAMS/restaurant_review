@@ -6,8 +6,28 @@ class ReviewForm extends HTMLElement {
     super();
   }
 
+  set dom(dom) {
+    this._dom = dom;
+  }
+
+  get dom() {
+    return this._dom;
+  }
+
   set restaurant(restaurant) {
     this._restaurant = restaurant;
+  }
+
+  get restaurant() {
+    return this._restaurant;
+  }
+
+  set review(review) {
+    this._review = review;
+  }
+
+  get review() {
+    return this._review;
   }
 
   connectedCallback() {
@@ -16,8 +36,8 @@ class ReviewForm extends HTMLElement {
 
     this.dom.submitButton.addEventListener("click", e => {
       e.preventDefault();
-      const review = this.createReviewObject();
-      this.createReviewCard(review);
+      this.review = this.createReviewObject();
+      this.createReviewCard();
       this.clearForm();
 
       // custom event to update state & restaurantList
@@ -28,31 +48,28 @@ class ReviewForm extends HTMLElement {
   onReviewCreated() {
     const reviewCreatedEvent = new CustomEvent("reviewCreated", {
       bubbles: true,
-      detail: { restaurant: this._restaurant }
+      detail: { restaurant: this.restaurant }
     });
     event.target.dispatchEvent(reviewCreatedEvent);
   }
 
-  createReviewCard(review) {
+  createReviewCard() {
     const reviewCard = document.createElement('review-card');
-    reviewCard.review = review;
+    reviewCard.review = this.review;
     const container = document.querySelector("restaurant-details #reviews");
     container.appendChild(reviewCard);
 
-    this._restaurant.ratings.push(review);
+    this.restaurant.ratings.push(this.review);
     return reviewCard;
   }
 
   createReviewObject() {
-    this.review = new Review ({
-      // restaurant: this._restaurant,
+    return {
       name: this.dom.name.value,
       email: this.dom.email.value,
       comment: this.dom.comment.value,
       stars: parseInt(this.dom.starRating.value)
-    });
-    // console.log(this.review);
-    return this.review;
+    };
   }
 
   clearForm() {

@@ -37,14 +37,6 @@ export default {
       map.markers.push(marker);
     });
   },
-  
-  destroyRestaurantList(restaurants) {
-    const restaurantColumn = document.getElementById("restaurantCol");
-    restaurantColumn.innerHTML = "";
-    restaurants.forEach(restaurant => {
-      restaurant.marker.setMap(null);
-    });
-  },
 
   filterRestaurantList(restaurants, min, max){
     const filteredRestaurants = restaurants.filter(restaurant => {
