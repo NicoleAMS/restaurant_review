@@ -14,6 +14,13 @@ export function initMap() {
   map.markers = [];
   googleMap = map;
 
+  var locationP = new google.maps.LatLng(paris.lat, paris.lng);
+  var request = {
+    location: locationP,
+    radius: '10', 
+    type: ['restaurant']
+  };
+
   // geolocation: center map based on user's location
   if (navigator.geolocation) {
     navigator.geolocation.getCurrentPosition(function(position) {
@@ -24,14 +31,20 @@ export function initMap() {
       map.setCenter(pos);
       googleMap = map;
       var marker = new google.maps.Marker({ position: pos, map: map });
+      var location = new google.maps.LatLng(pos.lat, pos.lng);
+
+      request = {
+        location: location,
+        radius: "1000",
+        type: ['restaurant']
+      };
     });
   }
 
   // set lat/lng of NE & SW corners every time the map becomes idle after dragging, panning or zooming
   if (mapType === "list") {
     map.addListener("idle", function() {
-      let viewportBounds = setViewportBounds(map);
-      onMapIdle(map, viewportBounds);
+      makePlacesRequest(map, request);
     });
   } else if (mapType === "new") {
     map.addListener("click", function(event) {
@@ -50,6 +63,28 @@ export function initMap() {
       onMarkrestaurant(map);
     });
   }
+}
+
+function makePlacesRequest(map, request) {
+  var service = new google.maps.places.PlacesService(map);
+  service.nearbySearch(request, onReceivingPlaces);
+
+}
+
+function onReceivingPlaces(results, status) {
+  // uses global googleMap variable because 'map' can't be passed as argument
+  googleMap.results = [];
+  if (status == google.maps.places.PlacesServiceStatus.OK) {
+    for (var i = 0; i < results.length; i++) {
+      googleMap.results.push(results[i]);
+    }
+  }
+  mapIdle(googleMap);
+}
+
+function mapIdle(map) {
+  let viewportBounds = setViewportBounds(map);
+  onMapIdle(map, viewportBounds);
 }
 
 function onGetLatLng(map, lat, lng) {

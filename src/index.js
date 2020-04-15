@@ -21,7 +21,7 @@ document.addEventListener("DOMContentLoaded", function() {
 
   // add google script tag to DOM
   const googleScriptTag = document.createElement("script");
-  googleScriptTag.src = `https://maps.googleapis.com/maps/api/js?key=${google_api_key}&callback=initMap`;
+  googleScriptTag.src = `https://maps.googleapis.com/maps/api/js?key=${google_api_key}&callback=initMap&libraries=places`;
   document.getElementsByTagName("body")[0].appendChild(googleScriptTag);
 
   // initialize google maps
@@ -31,18 +31,49 @@ document.addEventListener("DOMContentLoaded", function() {
   const restaurantState = new State();
   const homePage = document.createElement("home-page");
 
-  const allRestaurants = getRestaurants();
+  const jsonRestaurantArray = createRestaurants(jsonRestaurants);
+  let allRestaurants = jsonRestaurantArray;
   let restaurantsOnMap = allRestaurants;
   let filteredRestaurants = allRestaurants;
 
   // create restaurant objects
-  function getRestaurants() {
+  // function getRestaurants() {
+  //   let restaurants = [];
+  //   for (let i = 0; i < jsonRestaurants.length; i++) {
+  //     const restaurant = RestaurantsModule.createRestaurant(jsonRestaurants[i]);
+  //     restaurants.push(restaurant);
+  //   }
+  //   return restaurants;
+  // }
+
+  function createRestaurants(array) {
     let restaurants = [];
-    for (let i = 0; i < jsonRestaurants.length; i++) {
-      const restaurant = RestaurantsModule.createRestaurant(jsonRestaurants[i]);
+    for (let i = 0; i < array.length; i++) {
+      const restaurant = RestaurantsModule.createRestaurant(array[i]);
       restaurants.push(restaurant);
     }
     return restaurants;
+  }
+
+  function convertNearbyRestaurants(restaurants) {
+    let nearbyRestaurants = [];
+    for (let i = 0; i < restaurants.length; i++) {
+      let restaurant = {
+        id: restaurants[i].id,
+        restaurantName: restaurants[i].name,
+        address: restaurants[i].vicinity,
+        lat: restaurants[i].geometry.location.lat(),
+        long: restaurants[i].geometry.location.lng(),
+        ratings: [
+          {
+            stars: 4,
+            comment: "Great place"
+          }
+        ]
+      };
+      nearbyRestaurants.push(restaurant);
+    }
+    return nearbyRestaurants;
   }
 
   // populate state with initial restaurants
@@ -60,7 +91,13 @@ document.addEventListener("DOMContentLoaded", function() {
   document.addEventListener("mapIdle", () => {
     const bounds = event.detail.bounds;
     const map = event.detail.map;
+
+    const convertedNearbyRestaurants = convertNearbyRestaurants(map.results);
+    const nearbyRestaurantObjects = createRestaurants(convertedNearbyRestaurants);
+
     const state = restaurantState.getState();
+    state.allRestaurants = [];
+    state.allRestaurants = [...jsonRestaurantArray, ...nearbyRestaurantObjects];
 
     restaurantsOnMap = RestaurantsModule.setRestaurantsOnMap(
       bounds,
