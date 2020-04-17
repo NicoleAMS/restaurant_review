@@ -12,7 +12,7 @@ export default {
           <div class="icon stars-outer">
             <div class="icon stars-inner"></div>
           </div>
-          <small class="text-muted">(${restaurant.ratings.length} reviews, ${restaurant.averageRating} stars)</small>
+          <small class="text-muted">(${restaurant.numberOfRatings} reviews, ${restaurant.averageRating} stars)</small>
         </div>
       </div>
     `;

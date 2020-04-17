@@ -1,13 +1,13 @@
 export class Restaurant {
-  constructor({ id, name, address, lat, long, ratings, photos }) {
+  constructor({ id, name, address, lat, long, ratings, numberOfRatings, averageRating, photos }) {
     this.id = id;
     this.restaurantName = name;
     this.address = address;
     this.lat = lat;
     this.long = long;
     this.ratings = ratings;
-    this.averageRating =
-      this.ratings.length > 0 ? this.calculateAverageRating(this.ratings) : 0;
+    this.numberOfRatings = numberOfRatings;
+    this.averageRating = averageRating || this.calculateAverageRating(this.ratings);
     this.photos = photos;
     this.restaurantCard = this.createRestaurantCard();
     this.restaurantDetails = this.createRestaurantDetails();
@@ -24,12 +24,14 @@ export class Restaurant {
 
   calculateAverageRating(ratings) {
     let average = 0;
-    ratings.forEach(rating => {
-      average += rating.stars;
-    });
-    average = average / ratings.length;
-    // calculate average with 1 decimal precision
-    average = Math.round(average * 10) / 10;
+    if (ratings.length > 0) {
+      ratings.forEach(rating => {
+        average += rating.stars;
+      });
+      average = average / ratings.length;
+      // calculate average with 1 decimal precision
+      average = Math.round(average * 10) / 10;
+    }
     return average;
   }
 

@@ -68,7 +68,6 @@ export function initMap() {
 function makePlacesRequest(map, request) {
   var service = new google.maps.places.PlacesService(map);
   service.nearbySearch(request, onReceivingPlaces);
-
 }
 
 function onReceivingPlaces(results, status) {

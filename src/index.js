@@ -36,16 +36,6 @@ document.addEventListener("DOMContentLoaded", function() {
   let restaurantsOnMap = allRestaurants;
   let filteredRestaurants = allRestaurants;
 
-  // create restaurant objects
-  // function getRestaurants() {
-  //   let restaurants = [];
-  //   for (let i = 0; i < jsonRestaurants.length; i++) {
-  //     const restaurant = RestaurantsModule.createRestaurant(jsonRestaurants[i]);
-  //     restaurants.push(restaurant);
-  //   }
-  //   return restaurants;
-  // }
-
   function createRestaurants(array) {
     let restaurants = [];
     for (let i = 0; i < array.length; i++) {
@@ -64,12 +54,9 @@ document.addEventListener("DOMContentLoaded", function() {
         address: restaurants[i].vicinity,
         lat: restaurants[i].geometry.location.lat(),
         long: restaurants[i].geometry.location.lng(),
-        ratings: [
-          {
-            stars: 4,
-            comment: "Great place"
-          }
-        ]
+        ratings: [],
+        user_ratings_total: restaurants[i].user_ratings_total,
+        averageRating: restaurants[i].rating
       };
       nearbyRestaurants.push(restaurant);
     }
@@ -91,6 +78,8 @@ document.addEventListener("DOMContentLoaded", function() {
   document.addEventListener("mapIdle", () => {
     const bounds = event.detail.bounds;
     const map = event.detail.map;
+
+    console.log(map.results);
 
     const convertedNearbyRestaurants = convertNearbyRestaurants(map.results);
     const nearbyRestaurantObjects = createRestaurants(convertedNearbyRestaurants);

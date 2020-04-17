@@ -9,7 +9,9 @@ export default {
       address: rest.address,
       lat: rest.lat,
       long: rest.long,
-      ratings: rest.ratings
+      ratings: rest.ratings,
+      numberOfRatings: rest.user_ratings_total || rest.ratings.length,
+      averageRating: rest.averageRating 
     });
     return restaurant;
   },
