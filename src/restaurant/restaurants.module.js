@@ -5,6 +5,7 @@ export default {
   createRestaurant(rest) {
     const restaurant = new Restaurant({
       id: rest.id,
+      placeId: rest.placeId,
       name: rest.restaurantName,
       address: rest.address,
       lat: rest.lat,
@@ -52,6 +53,7 @@ export default {
   },
 
   showRestaurantDetails(restaurant, state) {
+    console.log(state);
     const main = document.querySelector("main");
     main.innerHTML = "";
     const element = document.createElement("restaurant-details");

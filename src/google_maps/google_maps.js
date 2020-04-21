@@ -1,3 +1,5 @@
+import { restaurantState } from "../index.js";
+
 const styles = require("./google_maps.json");
 export let googleMap;
 
@@ -68,6 +70,20 @@ export function initMap() {
 function makePlacesRequest(map, request) {
   var service = new google.maps.places.PlacesService(map);
   service.nearbySearch(request, onReceivingPlaces);
+}
+
+export function makeDetailsRequest(map, request) {
+  const state = restaurantState.getState();
+  var service = new google.maps.places.PlacesService(map);
+  service.getDetails(request, (place, status) => {
+    if (status === google.maps.places.PlacesServiceStatus.OK) {
+      for (let j = 0; j < place.reviews.length; j++) {
+        // adds reviews to the state's current restaurant 
+        state.currentRestaurant.ratings.push(place.reviews[j]);
+      }
+      console.log(state);
+    }
+  });
 }
 
 function onReceivingPlaces(results, status) {

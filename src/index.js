@@ -16,6 +16,8 @@ import "./review/components/review-card.component";
 import { initMap, removeMarkers } from "./google_maps/google_maps";
 import RestaurantsModule from "./restaurant/restaurants.module.js";
 
+export const restaurantState = new State();
+
 document.addEventListener("DOMContentLoaded", function() {
   const google_api_key = process.env.GOOGLE_API_KEY;
 
@@ -28,7 +30,6 @@ document.addEventListener("DOMContentLoaded", function() {
   window.initMap = initMap;
 
   // instantiate classes
-  const restaurantState = new State();
   const homePage = document.createElement("home-page");
 
   const jsonRestaurantArray = createRestaurants(jsonRestaurants);
@@ -50,6 +51,7 @@ document.addEventListener("DOMContentLoaded", function() {
     for (let i = 0; i < restaurants.length; i++) {
       let restaurant = {
         id: restaurants[i].id,
+        placeId: restaurants[i].place_id,
         restaurantName: restaurants[i].name,
         address: restaurants[i].vicinity,
         lat: restaurants[i].geometry.location.lat(),
@@ -140,9 +142,10 @@ document.addEventListener("DOMContentLoaded", function() {
 
   document.addEventListener("showDetails", () => {
     const state = restaurantState.getState();
-    const restaurant = state.allRestaurants.find(restaurant => {
+    let restaurant = state.allRestaurants.find(restaurant => {
       return event.detail.restaurant.id === restaurant.id;
     });
+    state.currentRestaurant = restaurant;
     RestaurantsModule.showRestaurantDetails(restaurant, state);
   });
 

@@ -1,5 +1,5 @@
 import Template from "../templates/restaurant-details.template.js";
-import { removeMarkers } from "../../google_maps/google_maps.js";
+import { removeMarkers, makeDetailsRequest } from "../../google_maps/google_maps.js";
 
 class RestaurantDetails extends HTMLElement {
   constructor() {
@@ -39,6 +39,15 @@ class RestaurantDetails extends HTMLElement {
       const marker = this.restaurant.marker;
       marker.setMap(map);
       map.markers.push(marker);
+
+      if (this.restaurant.placeId) {
+        const detailsRequest = {
+          placeId: this.restaurant.placeId,
+          fields: ['review']
+        }
+
+        makeDetailsRequest(map, detailsRequest);
+      }
     });
 
     this.dom.button.addEventListener(

@@ -1,6 +1,7 @@
 export class Restaurant {
-  constructor({ id, name, address, lat, long, ratings, numberOfRatings, averageRating, photos }) {
+  constructor({ id, placeId, name, address, lat, long, ratings, numberOfRatings, averageRating, photos }) {
     this.id = id;
+    this.placeId = placeId;
     this.restaurantName = name;
     this.address = address;
     this.lat = lat;
