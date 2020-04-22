@@ -56,7 +56,7 @@ class ReviewForm extends HTMLElement {
   createReviewCard() {
     const reviewCard = document.createElement("review-card");
     reviewCard.review = this.review;
-    const container = document.querySelector("restaurant-details #reviews");
+    const container = document.querySelector("review-list #reviewCol");
     container.appendChild(reviewCard);
 
     this.restaurant.ratings.push(this.review);
@@ -65,10 +65,12 @@ class ReviewForm extends HTMLElement {
 
   createReviewObject() {
     return {
+      id: `restaurant_${this.restaurant.id}_rating_${this.restaurant.ratings.length}`,
       name: this.dom.name.value,
       email: this.dom.email.value,
       comment: this.dom.comment.value,
-      stars: parseInt(this.dom.starRating.value)
+      stars: parseInt(this.dom.starRating.value),
+      picture: "http://placekitten.com/200/200"
     };
   }
 

@@ -6,12 +6,13 @@ const jsonRestaurants = require("././restaurant/restaurants.json");
 
 import "./pages/components/homepage.component";
 import "./pages/components/new-restaurant-page.component";
+import "./pages/components/detailspage.component";
 import "./restaurant/components/restaurant-list.component";
 import "./restaurant/components/restaurant-card.component";
 import "./filter/min-max-select.component";
 import "./review/components/review-form.component";
-import "./restaurant/components/restaurant-details.component";
 import "./review/components/review-card.component";
+import "./review/components/review-list.component";
 
 import { initMap, removeMarkers } from "./google_maps/google_maps";
 import RestaurantsModule from "./restaurant/restaurants.module.js";
@@ -30,8 +31,6 @@ document.addEventListener("DOMContentLoaded", function() {
   window.initMap = initMap;
 
   // instantiate classes
-  const homePage = document.createElement("home-page");
-
   const jsonRestaurantArray = createRestaurants(jsonRestaurants);
   let allRestaurants = jsonRestaurantArray;
   let restaurantsOnMap = allRestaurants;
@@ -74,6 +73,7 @@ document.addEventListener("DOMContentLoaded", function() {
 
   // render restaurantList
   const state = restaurantState.getState();
+  const homePage = document.createElement("home-page");
   homePage.render(restaurantState, state, "main");
 
   // EVENT LISTENERS
@@ -146,7 +146,10 @@ document.addEventListener("DOMContentLoaded", function() {
       return event.detail.restaurant.id === restaurant.id;
     });
     state.currentRestaurant = restaurant;
-    RestaurantsModule.showRestaurantDetails(restaurant, state);
+
+    // render detailsPage
+    const detailsPage = document.createElement("details-page");
+    detailsPage.render(restaurantState, state, "main");
   });
 
   document.addEventListener("reviewCreated", () => {
@@ -158,6 +161,9 @@ document.addEventListener("DOMContentLoaded", function() {
     restaurant.averageRating = restaurant.calculateAverageRating(
       restaurant.ratings
     );
+
+    // recalculate restaurant's number of ratings
+    restaurant.numberOfRatings = restaurant.ratings.length;
   });
 
   document.addEventListener("restaurantCreated", () => {
@@ -187,6 +193,7 @@ document.addEventListener("DOMContentLoaded", function() {
   });
 
   function showRestaurantList(state) {
+    console.log("show restaurant list");
     const main = document.querySelector("#main");
     main.innerHTML = "";
     const homepage = document.createElement("home-page");
