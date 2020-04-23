@@ -34,15 +34,17 @@ class ReviewForm extends HTMLElement {
     this.innerHTML = Template.render();
     this.dom = Template.mapDOM(this);
 
-    this.dom.submitButton.addEventListener("click", e => {
-      e.preventDefault();
-      this.review = this.createReviewObject();
-      this.createReviewCard();
-      this.clearForm();
+    this.dom.form.addEventListener("submit", this.onFormSubmit.bind(this));
+  }
 
-      // custom event to update state & restaurantList
-      this.onReviewCreated();
-    });
+  onFormSubmit() {
+    event.preventDefault();
+    this.review = this.createReviewObject();
+    this.createReviewCard();
+    this.clearForm();
+
+    // custom event to update state & restaurantList
+    this.onReviewCreated();
   }
 
   onReviewCreated() {

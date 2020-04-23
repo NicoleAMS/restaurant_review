@@ -18,7 +18,7 @@ export default {
           <div class="col col-12">
             <nav aria-label="breadcrumb">
               <ol class="breadcrumb">
-                <li class="breadcrumb-item text-primary" id="backBtn">Home</li>
+                <li class="breadcrumb-item text-primary homeBtn" id="backBtn">Home</li>
                 <li class="breadcrumb-item active" aria-current="page">${restaurant.restaurantName}</li>
               </ol>
             </nav>
@@ -59,5 +59,5 @@ export default {
       </div>
       
     `;
-  }
+  }, 
 };

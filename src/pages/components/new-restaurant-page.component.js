@@ -27,8 +27,17 @@ class NewRestaurantPage extends HTMLElement {
     this.parent = document.getElementById(selector);
     this.parent.appendChild(this);
 
-    // const restaurantForm = document.createElement("restaurant-form");
-    // restaurantForm.render(state, "formSlot");
+    this.dom.button.addEventListener(
+      "click",
+      this.showRestaurantList.bind(this)
+    );
+  }
+
+  showRestaurantList(event) {
+    const showRestaurantListEvent = new CustomEvent("showRestaurantList", {
+      bubbles: true
+    });
+    event.target.dispatchEvent(showRestaurantListEvent);
   }
 
   _onFormSubmit() {

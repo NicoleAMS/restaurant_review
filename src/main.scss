@@ -20,6 +20,14 @@ $fa-font-path: "~@fortawesome/fontawesome-free/webfonts/";
   box-sizing: border-box;
 }
 
+.breadcrumb {
+  background-color: $light;
+}
+
+.homeBtn {
+  cursor: pointer;
+}
+
 #map {
   height: 60vh;
   position: fixed;

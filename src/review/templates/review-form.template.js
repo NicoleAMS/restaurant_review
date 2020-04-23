@@ -10,7 +10,8 @@ export default {
       email: scope.querySelector("#review-email"),
       comment: scope.querySelector("#review-comment"),
       starRating: scope.querySelector("#review_form").elements["star_rating"],
-      submitButton: scope.querySelector("#review-form-submit")
+      submitButton: scope.querySelector("#review-form-submit"),
+      form: scope.querySelector("#review_form")
     };
   },
 
@@ -43,7 +44,7 @@ export default {
             <div class="form-group">
               <textarea type="email" class="form-control" id="review-comment" placeholder="Comment" required></textarea>
             </div>
-            <input id="review-form-submit" type="submit" value="Submit" class="btn btn-primary px-5">
+            <button id="review-form-submit" type="submit" class="btn btn-primary px-5">Submit</button>
           </form>
         </div>
       </div>
