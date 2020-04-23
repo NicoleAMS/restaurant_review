@@ -5,23 +5,23 @@ class RestaurantList extends HTMLElement {
     super();
   }
 
-  set active(active) {
-    this._active = active;
+  set componentConnected(componentConnected) {
+    this._componentConnected = componentConnected;
   }
 
-  get active() {
-    return this._active;
+  get componentConnected() {
+    return this._componentConnected;
   }
 
   connectedCallback() {
-    this.active = true;
+    this.componentConnected = true;
 
     const btn = document.querySelector("#addRestaurant");
     btn.addEventListener("click", this.onAddRestaurant);
   }
 
   disconnectedCallback() {
-    this.active = false;
+    this.componentConnected = false;
   }
 
   render(state, selector) {
@@ -35,7 +35,7 @@ class RestaurantList extends HTMLElement {
   }
 
   update(state) {
-    if (this.active) {
+    if (this.componentConnected) {
       this.render(state, "homepageSlot");
     }
   }
