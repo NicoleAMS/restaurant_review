@@ -1,4 +1,3 @@
-import { Review } from "../review.class";
 import Template from "../templates/review-form.template.js";
 
 class ReviewForm extends HTMLElement {

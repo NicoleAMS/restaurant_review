@@ -13,11 +13,29 @@ class ReviewList extends HTMLElement {
     return this._restaurant;
   }
 
+  set componentConnected(componentConnected) {
+    this._componentConnected = componentConnected;
+  }
+
+  get componentConnected() {
+    return this._componentConnected;
+  }
+
+  connectedCallback() {
+    this.componentConnected = true;
+  }
+
+  disconnectedCallback() {
+    this.componentConnected = false;
+  }
+
   render(state, selector) {
     this.restaurant = state.currentRestaurant;
     this.innerHTML = Template.render(state);
     this.parent = document.getElementById(selector);
     this.parent.appendChild(this);
+
+    console.log("restaurant: ", this.restaurant);
 
     for (let i = 0; i < this.restaurant.ratings.length; i++) {
       const review = this.restaurant.ratings[i];
@@ -32,6 +50,13 @@ class ReviewList extends HTMLElement {
     this.parent.appendChild(reviewCard);
 
     document.querySelector(`#${review.id} .stars-inner`).style.width = reviewCard.starPercentageRounded;
+  }
+
+  update(state) {
+    console.log("update");
+    if (this.componentConnected) {
+      this.render(state, "reviewSlot");
+    }
   }
 }
 

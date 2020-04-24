@@ -26,29 +26,9 @@ class DetailsPage extends HTMLElement {
     if (window.google) {
       initMap();
     }
-
-    document.addEventListener("markRestaurant", () => {
-      const map = event.detail.map;
-      // remove old markers from map
-      removeMarkers(map);
-
-      // add marker of current restaurant to map
-      const marker = this.restaurant.marker;
-      marker.setMap(map);
-      map.markers.push(marker);
-
-      if (this.restaurant.placeId) {
-        const detailsRequest = {
-          placeId: this.restaurant.placeId,
-          fields: ['review']
-        }
-
-        makeDetailsRequest(map, detailsRequest);
-      }
-    });
   }
 
-  render(detailsState, state, selector) {
+  render(restaurantState, state, selector) {
     this.restaurant = state.currentRestaurant;
     this.innerHTML = Template.render(this.restaurant);
     this.parent = document.getElementById(selector);
@@ -65,12 +45,36 @@ class DetailsPage extends HTMLElement {
 
     const reviewList = document.createElement("review-list");
     reviewList.render(state, "reviewSlot");
-    // detailsState.addObserver(reviewList);
+    restaurantState.addObserver(reviewList);
+
+    console.log("restaurant State: ", restaurantState);
 
     const formContainer = document.getElementById("reviewForm");
     const form = document.createElement("review-form");
     form.restaurant = this.restaurant;
     formContainer.appendChild(form);
+
+    document.addEventListener("markRestaurant", () => {
+      const map = event.detail.map;
+      // remove old markers from map
+      removeMarkers(map);
+
+      // add marker of current restaurant to map
+      const marker = this.restaurant.marker;
+      marker.setMap(map);
+      map.markers.push(marker);
+
+      console.log("placeID: ", this.restaurant.restaurantName);
+
+      if (this.restaurant.placeId) {
+        const detailsRequest = {
+          placeId: this.restaurant.placeId,
+          fields: ['review']
+        }
+
+        makeDetailsRequest(map, detailsRequest);
+      }
+    });
   }
 
   addStreetView(restaurant) {

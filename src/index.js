@@ -35,6 +35,7 @@ document.addEventListener("DOMContentLoaded", function() {
   let allRestaurants = jsonRestaurantArray;
   let restaurantsOnMap = allRestaurants;
   let filteredRestaurants = allRestaurants;
+  let currentRestaurant;
 
   function createRestaurants(array) {
     let restaurants = [];
@@ -64,11 +65,27 @@ document.addEventListener("DOMContentLoaded", function() {
     return nearbyRestaurants;
   }
 
+  function convertReviews(reviews) {
+    let convertedReviews = [];
+    for (let i = 0; i < reviews.length; i++) {
+      let review = {
+        name: reviews[i].author_name,
+        stars: reviews[i].rating,
+        comment: reviews[i].text,
+        picture: reviews[i].profile_photo_url,
+        time: reviews[i].time
+      };
+      convertedReviews.push(review);
+    }
+    return convertedReviews;
+  }
+
   // populate state with initial restaurants
   restaurantState.update({
     allRestaurants,
     restaurantsOnMap,
-    filteredRestaurants
+    filteredRestaurants,
+    currentRestaurant
   });
 
   // render restaurantList
@@ -145,7 +162,13 @@ document.addEventListener("DOMContentLoaded", function() {
     let restaurant = state.allRestaurants.find(restaurant => {
       return event.detail.restaurant.id === restaurant.id;
     });
+    currentRestaurant = restaurant;
+    console.log('current restaurant: ', currentRestaurant);
     state.currentRestaurant = restaurant;
+    // restaurantState.update({
+    //   ...state, 
+    //   currentRestaurant
+    // });
 
     // render detailsPage
     const detailsPage = document.createElement("details-page");
@@ -164,6 +187,28 @@ document.addEventListener("DOMContentLoaded", function() {
 
     // recalculate restaurant's number of ratings
     restaurant.numberOfRatings = restaurant.ratings.length;
+  });
+
+  document.addEventListener("rating-event", () => {
+    const convertedReviews = convertReviews(event.detail.reviews);
+    const state = restaurantState.getState();
+    // console.log("ratings of current restaurant: ", currentRestaurant.ratings);
+    console.log("current restaurant in rating event: ", currentRestaurant);
+    // currentRestaurant.ratings = [];
+    for (let i = 0; i < convertedReviews.length; i++) {
+      // currentRestaurant.ratings.push(convertedReviews[i]);
+      const found = currentRestaurant.ratings.find(rating => {
+        return rating.time === convertedReviews[i].time
+      });
+      if (found === undefined) {
+        currentRestaurant.ratings.push(convertedReviews[i]);
+      }
+    }
+    restaurantState.update({
+      ...state,
+      currentRestaurant
+    });
+    console.log(restaurantState);
   });
 
   document.addEventListener("restaurantCreated", () => {
