@@ -1,4 +1,5 @@
 import Template from "../templates/review-list.template";
+import { restaurantState } from "../../index.js";
 
 class ReviewList extends HTMLElement {
   constructor() {
@@ -23,19 +24,22 @@ class ReviewList extends HTMLElement {
 
   connectedCallback() {
     this.componentConnected = true;
+    restaurantState.addObserver(this);
+    console.log("state observers after adding reviewList: ", restaurantState);
   }
 
   disconnectedCallback() {
+    console.log("disconnected reviewList");
     this.componentConnected = false;
+    restaurantState.removeObserver(this);
   }
 
   render(state, selector) {
+    console.log("render review list for: ", state.currentRestaurant);
     this.restaurant = state.currentRestaurant;
     this.innerHTML = Template.render(state);
     this.parent = document.getElementById(selector);
     this.parent.appendChild(this);
-
-    console.log("restaurant: ", this.restaurant);
 
     for (let i = 0; i < this.restaurant.ratings.length; i++) {
       const review = this.restaurant.ratings[i];
@@ -44,6 +48,7 @@ class ReviewList extends HTMLElement {
   }
 
   addReviewCard(review) {
+    console.log("add review card");
     this.parent = document.getElementById("reviewCol");
     const reviewCard = document.createElement("review-card");
     reviewCard.review = review;

@@ -12,15 +12,17 @@ class HomePage extends HTMLElement {
     }
   }
 
-  render(restaurantState, state, selector) {
+  disconnectedCallback() {
+    console.log("homepage disconnected");
+  }
+
+  render(state, selector) {
     this.innerHTML = Template.render(state);
     this.parent = document.getElementById(selector);
     this.parent.appendChild(this);
 
     const restaurantList = document.createElement("restaurant-list");
     restaurantList.render(state, "homepageSlot");
-
-    restaurantState.addObserver(restaurantList);
   }
 }
 

@@ -14,7 +14,7 @@ import "./review/components/review-form.component";
 import "./review/components/review-card.component";
 import "./review/components/review-list.component";
 
-import { initMap, removeMarkers } from "./google_maps/google_maps";
+import { initMap, removeMarkers, makeDetailsRequest } from "./google_maps/google_maps";
 import RestaurantsModule from "./restaurant/restaurants.module.js";
 
 export const restaurantState = new State();
@@ -77,6 +77,7 @@ document.addEventListener("DOMContentLoaded", function() {
       };
       convertedReviews.push(review);
     }
+    console.log("converted reviews: ", convertedReviews);
     return convertedReviews;
   }
 
@@ -91,7 +92,7 @@ document.addEventListener("DOMContentLoaded", function() {
   // render restaurantList
   const state = restaurantState.getState();
   const homePage = document.createElement("home-page");
-  homePage.render(restaurantState, state, "main");
+  homePage.render(state, "main");
 
   // EVENT LISTENERS
   document.addEventListener("mapIdle", () => {
@@ -119,6 +120,8 @@ document.addEventListener("DOMContentLoaded", function() {
       filteredRestaurants,
       map
     });
+
+    console.log(restaurantState);
   });
 
   document.addEventListener("onMinChange", () => {
@@ -158,21 +161,22 @@ document.addEventListener("DOMContentLoaded", function() {
   });
 
   document.addEventListener("showDetails", () => {
+    console.log("IN: show details listener");
     const state = restaurantState.getState();
-    let restaurant = state.allRestaurants.find(restaurant => {
-      return event.detail.restaurant.id === restaurant.id;
-    });
-    currentRestaurant = restaurant;
-    console.log('current restaurant: ', currentRestaurant);
-    state.currentRestaurant = restaurant;
-    // restaurantState.update({
-    //   ...state, 
-    //   currentRestaurant
+    // let restaurant = state.allRestaurants.find(restaurant => {
+    //   return event.detail.restaurant.id === restaurant.id;
     // });
+    currentRestaurant = event.detail.restaurant;
+    console.log('IN: current restaurant: ', currentRestaurant);
+    // state.currentRestaurant = event.detail.restaurant;
+    restaurantState.update({
+      ...state, 
+      currentRestaurant
+    });
 
     // render detailsPage
     const detailsPage = document.createElement("details-page");
-    detailsPage.render(restaurantState, state, "main");
+    detailsPage.render(state, "main");
   });
 
   document.addEventListener("reviewCreated", () => {
@@ -190,6 +194,7 @@ document.addEventListener("DOMContentLoaded", function() {
   });
 
   document.addEventListener("rating-event", () => {
+    console.log("rating event listener: ", event.detail.reviews);
     const convertedReviews = convertReviews(event.detail.reviews);
     const state = restaurantState.getState();
     // console.log("ratings of current restaurant: ", currentRestaurant.ratings);
@@ -237,12 +242,36 @@ document.addEventListener("DOMContentLoaded", function() {
     const newRestaurantPage = document.createElement("new-restaurant-page");
     newRestaurantPage.render(state, "main");
   });
+  
+  document.addEventListener("markRestaurant", () => {
+    console.log("IN: mark restaurant listener");
+    const state = restaurantState.getState();
+    const map = event.detail.map;
+    // remove old markers from map
+    removeMarkers(map);
+
+    // add marker of current restaurant to map
+    const marker = state.currentRestaurant.marker;
+    marker.setMap(map);
+    map.markers.push(marker);
+
+    console.log("placeID: ", state.currentRestaurant.restaurantName);
+
+    if (state.currentRestaurant.placeId) {
+      const detailsRequest = {
+        placeId: state.currentRestaurant.placeId,
+        fields: ['review']
+      }
+
+      makeDetailsRequest(map, detailsRequest);
+    }
+  });
 
   function showRestaurantList(state) {
     console.log("show restaurant list");
     const main = document.querySelector("#main");
     main.innerHTML = "";
     const homepage = document.createElement("home-page");
-    homepage.render(restaurantState, state, "main");
+    homepage.render(state, "main");
   }
 });

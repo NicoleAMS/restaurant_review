@@ -62,6 +62,7 @@ export function initMap() {
     });
   } else {
     map.addListener("idle", function() {
+      console.log("details map idle");
       onMarkrestaurant(map);
     });
   }
@@ -73,7 +74,7 @@ function makePlacesRequest(map, request) {
 }
 
 export function makeDetailsRequest(map, request) {
-  console.log("make details request: ", request);
+  console.log("GM: make details request: ", request);
   // const state = restaurantState.getState();
   var service = new google.maps.places.PlacesService(map);
   service.getDetails(request, (place, status) => {
@@ -130,6 +131,7 @@ function onGetLatLng(map, lat, lng) {
 }
 
 function onMarkrestaurant(map) {
+  console.log("emit onMarkrestaurant event");
   const markrestaurantEvent = new CustomEvent("markRestaurant", {
     detail: { map: map },
     bubbles: true

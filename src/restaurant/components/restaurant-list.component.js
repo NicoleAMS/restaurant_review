@@ -1,4 +1,5 @@
 import Template from "../templates/restaurant-list.template";
+import { restaurantState } from "../../index.js";
 
 class RestaurantList extends HTMLElement {
   constructor() {
@@ -14,14 +15,18 @@ class RestaurantList extends HTMLElement {
   }
 
   connectedCallback() {
+    console.log("connected restaurantList");
     this.componentConnected = true;
+    restaurantState.addObserver(this);
 
     const btn = document.querySelector("#addRestaurant");
     btn.addEventListener("click", this.onAddRestaurant);
   }
 
   disconnectedCallback() {
+    console.log("disconnected restaurantList");
     this.componentConnected = false;
+    restaurantState.removeObserver(this);
   }
 
   render(state, selector) {
