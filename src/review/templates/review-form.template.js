@@ -21,8 +21,8 @@ export default {
         <div class="card-body">
           <form id="review_form">
             <div class="form-group row">
-              <h4 class="mb-3 col-6">Write a Review</h4>
-              <div class="star_rating form-check col-6">
+              <h4 class="mb-3 col-sm-6 col-12">Write a Review</h4>
+              <div class="star_rating form-check col-sm-6 col-12">
                 <input type="radio" id="star5" name="star_rating" class="star form-check-input" value="5">
                 <label for="star5" class="star form-check-label" title="5 stars"></label>
                 <input type="radio" id="star4" name="star_rating" class="star form-check-input" value="4">

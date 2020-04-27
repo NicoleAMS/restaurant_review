@@ -194,16 +194,16 @@ document.addEventListener("DOMContentLoaded", function() {
     const state = restaurantState.getState();
     // console.log("ratings of current restaurant: ", currentRestaurant.ratings);
     console.log("current restaurant in rating event: ", currentRestaurant);
-    // currentRestaurant.ratings = [];
-    for (let i = 0; i < convertedReviews.length; i++) {
-      // currentRestaurant.ratings.push(convertedReviews[i]);
-      const found = currentRestaurant.ratings.find(rating => {
-        return rating.time === convertedReviews[i].time
-      });
-      if (found === undefined) {
-        currentRestaurant.ratings.push(convertedReviews[i]);
-      }
-    }
+    currentRestaurant.ratings = convertedReviews;
+    // for (let i = 0; i < convertedReviews.length; i++) {
+    //   // currentRestaurant.ratings.push(convertedReviews[i]);
+    //   const found = currentRestaurant.ratings.find(rating => {
+    //     return rating.time === convertedReviews[i].time
+    //   });
+    //   if (found === undefined) {
+    //     currentRestaurant.ratings.push(convertedReviews[i]);
+    //   }
+    // }
     restaurantState.update({
       ...state,
       currentRestaurant
@@ -212,9 +212,10 @@ document.addEventListener("DOMContentLoaded", function() {
   });
 
   document.addEventListener("restaurantCreated", () => {
+    console.log(event.detail.restaurant);
     const state = restaurantState.getState();
     const restaurant = event.detail.restaurant;
-    state.allRestaurants.push(restaurant);
+    allRestaurants.push(restaurant);
 
     restaurantState.update({
       ...state,

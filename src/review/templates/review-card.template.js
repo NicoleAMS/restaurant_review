@@ -31,6 +31,13 @@ export default {
           border-radius: 50%;
           border: 3px solid #f2d11d;
         }
+
+        @media only screen and (max-width: 425px) {
+          .media {
+            display: block;
+            text-align: center;
+          }
+        }
       </style>
     `;
   }

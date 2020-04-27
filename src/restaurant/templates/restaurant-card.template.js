@@ -24,6 +24,12 @@ export default {
         .id_${restaurant.id} .stars-inner {
           width: ${starInnerWidth}
         }
+
+        @media only screen and (max-width: 425px) {
+          .restaurant-name {
+            font-size: 1.2rem;
+          }
+        }
       </style>
     `;
   }

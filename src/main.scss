@@ -45,6 +45,12 @@ $fa-font-path: "~@fortawesome/fontawesome-free/webfonts/";
   height: 90px;
 }
 
+@media only screen and (max-width: 425px) {
+  .navbar .logo {
+    height: 80px;
+  }
+}
+
 .icon::before {
   display: inline-block;
   font-style: normal;

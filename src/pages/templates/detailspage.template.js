@@ -38,7 +38,7 @@ export default {
         </div>
 
         <div class="row">
-          <div class="col col-4">
+          <div class="col col-lg-4 col-12">
             <div class="card bg-default">
               <h4 class="card-header text-primary bg-light">Location</h4>
               <div class="card-body">
@@ -50,7 +50,7 @@ export default {
               </div>
             </div>
           </div>
-          <div class="col col-8">
+          <div class="col col-lg-8 col-12">
             <div id="reviewSlot"></div>
             <div id="reviewForm" class="mt-3"></div>
           </div>

@@ -1,6 +1,6 @@
 export default {
   render() {
-    return `${this.html()}`;
+    return `${this.html()} ${this.css()}`;
   },
 
   mapDOM(scope) {
@@ -28,16 +28,17 @@ export default {
         </div>
         <div class="row mb-5">
           <div class="col col-12">
-            <h3 class="mb-3 text-uppercase">Create New Restaurant</h3>
+            <h3 class="mb-3 text-uppercase text-new-r">Create New Restaurant</h3>
             <p>Click on the map to select the location of the new restaurant, then fill in the form and click submit.</p>
           </div>
         </div>
         <div class="row">
-          <div class="col col-8">
+          <div class="col col-lg-8 col-12">
             <div id="map" type="new"></div>
           </div>
-          <div class="col col-4" id="formContainer">
+          <div class="col col-lg-4 col-12" id="formContainer">
             <form id="newRestaurantForm" class="mt-3">  
+              <h5 class="text-uppercase mb-3">New restaurant</h5>
               <div class="form-group">
                 <input type="text" class="form-control" id="inputName" placeholder="Restaurant Name" required>
               </div>
@@ -51,6 +52,24 @@ export default {
         <div class="row">
         </div>
       </div>
+    `;
+  },
+
+  css() {
+    return `
+      <style>
+        @media only screen and (max-width: 991px) {
+          #formContainer {
+            margin-top: 30px;
+          }
+        }
+
+        @media only screen and (max-width: 425px) {
+          .text-new-r h3 {
+            font-size: 1.5rem;
+          }
+        }
+      </style>
     `;
   },
 
