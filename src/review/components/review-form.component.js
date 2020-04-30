@@ -49,7 +49,7 @@ class ReviewForm extends HTMLElement {
   onReviewCreated() {
     const reviewCreatedEvent = new CustomEvent("reviewCreated", {
       bubbles: true,
-      detail: { restaurant: this.restaurant }
+      detail: { restaurant: this.restaurant, review: this.review }
     });
     event.target.dispatchEvent(reviewCreatedEvent);
   }

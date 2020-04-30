@@ -36,6 +36,7 @@ document.addEventListener("DOMContentLoaded", function() {
   let restaurantsOnMap = allRestaurants;
   let filteredRestaurants = allRestaurants;
   let currentRestaurant;
+  let formReviews = [];
 
   function createRestaurants(array) {
     let restaurants = [];
@@ -88,7 +89,8 @@ document.addEventListener("DOMContentLoaded", function() {
     allRestaurants,
     restaurantsOnMap,
     filteredRestaurants,
-    currentRestaurant
+    currentRestaurant,
+    formReviews
   });
 
   // render restaurantList
@@ -187,6 +189,7 @@ document.addEventListener("DOMContentLoaded", function() {
     //   return event.detail.restaurant.id === restaurant.id;
     // });
     let restaurant = event.detail.restaurant;
+    formReviews.push(event.detail.review);
     // recalculate restaurant's average star rating
     restaurant.averageRating = restaurant.calculateAverageRating(
       restaurant.ratings
@@ -202,7 +205,8 @@ document.addEventListener("DOMContentLoaded", function() {
 
     restaurantState.update({
       ...state, 
-      currentRestaurant
+      currentRestaurant, 
+      formReviews
     });
   });
 
@@ -212,16 +216,14 @@ document.addEventListener("DOMContentLoaded", function() {
     const state = restaurantState.getState();
     currentRestaurant = state.currentRestaurant;
     console.log("current restaurant in rating event: ", currentRestaurant);
-    currentRestaurant.ratings = convertedReviews;
-    //  for (let i = 0; i < convertedReviews.length; i++) {
-    //   //  currentRestaurant.ratings.push(convertedReviews[i]);
-    //    const found = currentRestaurant.ratings.find(rating => {
-    //      return rating.time === convertedReviews[i].time
-    //    });
-    //    if (found === undefined) {
-    //      currentRestaurant.ratings.push(convertedReviews[i]);
-    //    }
-    //  }
+    const currentFormReviews = [];
+    state.formReviews.forEach((review) => {
+      if (review.restaurantID === currentRestaurant.id) {
+        currentFormReviews.push(review);
+      }
+    });
+
+    currentRestaurant.ratings = [...currentFormReviews, ...convertedReviews];
 
      // update allRestaurants
     const index = state.allRestaurants.findIndex(restaurant => {
