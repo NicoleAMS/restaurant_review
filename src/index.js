@@ -69,8 +69,10 @@ document.addEventListener("DOMContentLoaded", function() {
     let convertedReviews = [];
     for (let i = 0; i < reviews.length; i++) {
       let review = {
+        id: `restaurant_${currentRestaurant.id}_rating_${convertedReviews.length}`,
+        restaurantID: currentRestaurant.id,
         name: reviews[i].author_name,
-        stars: reviews[i].rating,
+        stars: parseFloat(reviews[i].rating),
         comment: reviews[i].text,
         picture: reviews[i].profile_photo_url,
         time: reviews[i].time
@@ -181,9 +183,10 @@ document.addEventListener("DOMContentLoaded", function() {
 
   document.addEventListener("reviewCreated", () => {
     const state = restaurantState.getState();
-    let restaurant = state.allRestaurants.find(restaurant => {
-      return event.detail.restaurant.id === restaurant.id;
-    });
+    // let restaurant = state.allRestaurants.find(restaurant => {
+    //   return event.detail.restaurant.id === restaurant.id;
+    // });
+    let restaurant = event.detail.restaurant;
     // recalculate restaurant's average star rating
     restaurant.averageRating = restaurant.calculateAverageRating(
       restaurant.ratings
@@ -191,29 +194,50 @@ document.addEventListener("DOMContentLoaded", function() {
 
     // recalculate restaurant's number of ratings
     restaurant.numberOfRatings = restaurant.ratings.length;
+
+    // here, Google Places restaurants have created review in their ratings array, which is kept in currentRestaurant 
+    console.log("review created for: ", restaurant);
+  
+    currentRestaurant = restaurant;
+
+    restaurantState.update({
+      ...state, 
+      currentRestaurant
+    });
   });
 
   document.addEventListener("rating-event", () => {
     console.log("rating event listener: ", event.detail.reviews);
     const convertedReviews = convertReviews(event.detail.reviews);
     const state = restaurantState.getState();
-    // console.log("ratings of current restaurant: ", currentRestaurant.ratings);
+    currentRestaurant = state.currentRestaurant;
     console.log("current restaurant in rating event: ", currentRestaurant);
     currentRestaurant.ratings = convertedReviews;
-    // for (let i = 0; i < convertedReviews.length; i++) {
-    //   // currentRestaurant.ratings.push(convertedReviews[i]);
-    //   const found = currentRestaurant.ratings.find(rating => {
-    //     return rating.time === convertedReviews[i].time
-    //   });
-    //   if (found === undefined) {
-    //     currentRestaurant.ratings.push(convertedReviews[i]);
-    //   }
-    // }
+    //  for (let i = 0; i < convertedReviews.length; i++) {
+    //   //  currentRestaurant.ratings.push(convertedReviews[i]);
+    //    const found = currentRestaurant.ratings.find(rating => {
+    //      return rating.time === convertedReviews[i].time
+    //    });
+    //    if (found === undefined) {
+    //      currentRestaurant.ratings.push(convertedReviews[i]);
+    //    }
+    //  }
+
+     // update allRestaurants
+    const index = state.allRestaurants.findIndex(restaurant => {
+      if (restaurant.id === currentRestaurant.id) {
+        return restaurant;
+      }
+    });
+    state.allRestaurants[index] = currentRestaurant;
+    allRestaurants = state.allRestaurants;
+
     restaurantState.update({
       ...state,
-      currentRestaurant
+      currentRestaurant,
+      allRestaurants
     });
-    console.log(restaurantState);
+    console.log("restaurant state in rating event: ", restaurantState);
   });
 
   document.addEventListener("restaurantCreated", () => {
@@ -232,6 +256,8 @@ document.addEventListener("DOMContentLoaded", function() {
 
   document.addEventListener("showRestaurantList", () => {
     const state = restaurantState.getState();
+    // currentRestaurant is up to date, but allRestaurants, restaurantsOnMap, filteredRestaurants are not --> ratings is empty
+    console.log("show list listener, state: ", state);
     showRestaurantList(state);
   });
 
@@ -255,8 +281,9 @@ document.addEventListener("DOMContentLoaded", function() {
     marker.setMap(map);
     map.markers.push(marker);
 
-    console.log("placeID: ", state.currentRestaurant.restaurantName);
+    console.log("place: ", state.currentRestaurant);
 
+    // commenting this out does not make custom reviews stay
     if (state.currentRestaurant.placeId) {
       const detailsRequest = {
         placeId: state.currentRestaurant.placeId,

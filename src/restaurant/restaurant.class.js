@@ -20,6 +20,7 @@ export class Restaurant {
   addIDtoRatings() {
     for (let i = 0; i < this.ratings.length; i++) {
       this.ratings[i].id = `restaurant_${this.id}_rating_${i}`;
+      this.ratings[i].restaurantID = this.id;
     }
   }
 

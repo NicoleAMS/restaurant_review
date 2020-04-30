@@ -48,11 +48,14 @@ class ReviewList extends HTMLElement {
   }
 
   addReviewCard(review) {
-    console.log("add review card");
+    // in review, stars are still correct
+    console.log("add review card for: ", review);
     this.parent = document.getElementById("reviewCol");
     const reviewCard = document.createElement("review-card");
     reviewCard.review = review;
     this.parent.appendChild(reviewCard);
+    console.log("review element: ", document.querySelector(`${review.id} .stars-inner`));
+    console.log("review star percentage rounded: ", reviewCard.starPercentageRounded);
 
     document.querySelector(`#${review.id} .stars-inner`).style.width = reviewCard.starPercentageRounded;
   }

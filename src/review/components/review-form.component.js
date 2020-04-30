@@ -67,6 +67,7 @@ class ReviewForm extends HTMLElement {
   createReviewObject() {
     return {
       id: `restaurant_${this.restaurant.id}_rating_${this.restaurant.ratings.length}`,
+      restaurantID: this.restaurant.id,
       name: this.dom.name.value,
       email: this.dom.email.value,
       comment: this.dom.comment.value,
