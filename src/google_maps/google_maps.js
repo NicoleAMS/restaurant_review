@@ -75,22 +75,9 @@ function makePlacesRequest(map, request) {
 
 export function makeDetailsRequest(map, request) {
   console.log("GM: make details request: ", request);
-  // const state = restaurantState.getState();
   var service = new google.maps.places.PlacesService(map);
   service.getDetails(request, (place, status) => {
     if (status === google.maps.places.PlacesServiceStatus.OK) {
-      // const googleRatings = [];
-      // for (let j = 0; j < place.reviews.length; j++) {
-        // adds reviews to the state's current restaurant if not there yet
-        // const found = state.currentRestaurant.ratings.find(rating => {
-        //   return rating.time === place.reviews[j].time
-        // });
-        // if (found === undefined) {
-        //   state.currentRestaurant.ratings.push(place.reviews[j]);
-        // }
-      //   googleRatings.push(place.reviews[j]);
-      // }
-      console.log('google ratings: ', place);
       onStoringRatings(place.reviews);
     }
   });

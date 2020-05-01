@@ -17,6 +17,34 @@ export default {
     return restaurant;
   },
 
+  createRestaurants(array) {
+    let restaurants = [];
+    for (let i = 0; i < array.length; i++) {
+      const restaurant = this.createRestaurant(array[i]);
+      restaurants.push(restaurant);
+    }
+    return restaurants;
+  },
+
+  convertNearbyRestaurants(restaurants) {
+    let nearbyRestaurants = [];
+    for (let i = 0; i < restaurants.length; i++) {
+      let restaurant = {
+        id: restaurants[i].id,
+        placeId: restaurants[i].place_id,
+        restaurantName: restaurants[i].name,
+        address: restaurants[i].vicinity,
+        lat: restaurants[i].geometry.location.lat(),
+        long: restaurants[i].geometry.location.lng(),
+        ratings: [],
+        user_ratings_total: restaurants[i].user_ratings_total,
+        averageRating: restaurants[i].rating
+      };
+      nearbyRestaurants.push(restaurant);
+    }
+    return nearbyRestaurants;
+  },
+
   setRestaurantsOnMap(viewportBounds, restaurants) {
     this.restaurantsOnMap = [];
     restaurants.forEach(restaurant => {
@@ -40,6 +68,14 @@ export default {
     });
   },
 
+  showRestaurantList(state) {
+    console.log("show restaurant list");
+    const main = document.querySelector("#main");
+    main.innerHTML = "";
+    const homepage = document.createElement("home-page");
+    homepage.render(state, "main");
+  },
+
   filterRestaurantList(restaurants, min, max) {
     const filteredRestaurants = restaurants.filter(restaurant => {
       const average = restaurant.averageRating;
@@ -50,5 +86,52 @@ export default {
 
   showRestaurantCard(restaurant, restaurantColumn) {
     restaurantColumn.appendChild(restaurant.restaurantCard);
+  },
+
+  convertReviews(reviews, currentRestaurant) {
+    const convertedReviews = [];
+    for (let i = 0; i < reviews.length; i++) {
+      const review = {
+        id: `restaurant_${currentRestaurant.id}_rating_${i}`,
+        restaurantID: currentRestaurant.id,
+        name: reviews[i].author_name,
+        stars: parseFloat(reviews[i].rating),
+        comment: reviews[i].text,
+        picture: reviews[i].profile_photo_url,
+        time: reviews[i].time
+      };
+      convertedReviews.push(review);
+    }
+    return convertedReviews;
+  }, 
+
+  getCurrentFormReviews(state, currentRestaurant) {
+    const currentFormReviews = [];
+    state.formReviews.forEach((review) => {
+      if (review.restaurantID === currentRestaurant.id) {
+        currentFormReviews.push(review);
+      }
+    });
+    return currentFormReviews;
+  }, 
+
+  updateAverageRating(restaurant, formReviews) {
+    const gpRating = restaurant.rating;
+    const gpTotalReviews = restaurant.user_ratings_total;
+    const formAverage = this.getFormRatingAverage(formReviews);
+    const formTotalReviews = formReviews.length;
+    const totalReviews = gpTotalReviews + formTotalReviews;
+
+    const totalScore = (gpRating * gpTotalReviews) + (formAverage * formTotalReviews);
+    const average = totalScore / totalReviews;
+    return average;
+  } ,
+
+  getFormRatingAverage(formReviews) {
+    let totalScore = 0;
+    formReviews.forEach((review) => {
+      totalScore += review.stars;
+    });
+    return totalScore / formReviews.length;
   }
 };

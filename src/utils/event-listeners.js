@@ -47,6 +47,15 @@ document.addEventListener("DOMContentLoaded", function() {
   
     // gets app's state
     const state = restaurantState.getState();
+
+    // update GP restaurant's average rating and number of reviews with formReviews
+    restaurants.forEach((restaurant) => {
+      const currentFormReviews = RestaurantsModule.getCurrentFormReviews(state, restaurant);
+      if (currentFormReviews.length > 0) {
+        restaurant.rating = RestaurantsModule.updateAverageRating(restaurant, currentFormReviews);
+        restaurant.user_ratings_total = restaurant.user_ratings_total + currentFormReviews.length;
+      }
+    });
   
     // converts GP restaurants to app's format 
     const convertedNearbyRestaurants = RestaurantsModule.convertNearbyRestaurants(restaurants);
