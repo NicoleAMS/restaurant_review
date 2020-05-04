@@ -16,12 +16,7 @@ export function initMap() {
   map.markers = [];
   googleMap = map;
 
-  var locationP = new google.maps.LatLng(paris.lat, paris.lng);
-  var request = {
-    location: locationP,
-    radius: '10', 
-    type: ['restaurant']
-  };
+  var request;
 
   // geolocation: center map based on user's location
   if (navigator.geolocation) {
@@ -33,10 +28,9 @@ export function initMap() {
       map.setCenter(pos);
       googleMap = map;
       var marker = new google.maps.Marker({ position: pos, map: map });
-      var location = new google.maps.LatLng(pos.lat, pos.lng);
 
       request = {
-        location: location,
+        location: map.getCenter(),
         radius: "1000",
         type: ['restaurant']
       };
@@ -46,6 +40,11 @@ export function initMap() {
   // set lat/lng of NE & SW corners every time the map becomes idle after dragging, panning or zooming
   if (mapType === "list") {
     map.addListener("idle", function() {
+      // request = {
+      //   location: map.getCenter(),
+      //   radius: "1000",
+      //   type: ['restaurant']
+      // };
       makePlacesRequest(map, request);
     });
   } else if (mapType === "new") {
