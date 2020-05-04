@@ -123,7 +123,7 @@ export default {
 
     const totalScore = (gpRating * gpTotalReviews) + (formAverage * formTotalReviews);
     const average = totalScore / totalReviews;
-    return average;
+    return Math.round(average * 10) / 10;
   } ,
 
   getFormRatingAverage(formReviews) {
