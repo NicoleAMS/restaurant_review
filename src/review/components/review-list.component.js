@@ -25,17 +25,14 @@ class ReviewList extends HTMLElement {
   connectedCallback() {
     this.componentConnected = true;
     restaurantState.addObserver(this);
-    console.log("state observers after adding reviewList: ", restaurantState);
   }
 
   disconnectedCallback() {
-    console.log("disconnected reviewList");
     this.componentConnected = false;
     restaurantState.removeObserver(this);
   }
 
   render(state, selector) {
-    console.log("render review list for: ", state.currentRestaurant);
     this.restaurant = state.currentRestaurant;
     this.innerHTML = Template.render(state);
     this.parent = document.getElementById(selector);
@@ -64,20 +61,15 @@ class ReviewList extends HTMLElement {
   }
 
   addReviewCard(review) {
-    // in review, stars are still correct
-    console.log("add review card for: ", review);
     this.parent = document.getElementById("reviewCol");
     const reviewCard = document.createElement("review-card");
     reviewCard.review = review;
     this.parent.appendChild(reviewCard);
-    console.log("review element: ", document.querySelector(`${review.id} .stars-inner`));
-    console.log("review star percentage rounded: ", reviewCard.starPercentageRounded);
 
     document.querySelector(`#${review.id} .stars-inner`).style.width = reviewCard.starPercentageRounded;
   }
 
   update(state) {
-    console.log("update");
     if (this.componentConnected) {
       this.render(state, "reviewSlot");
     }

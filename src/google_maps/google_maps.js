@@ -1,5 +1,3 @@
-import { restaurantState } from "../index.js";
-
 const styles = require("./google_maps.json");
 export let googleMap;
 
@@ -65,7 +63,6 @@ export function initMap() {
     });
   } else {
     map.addListener("idle", function() {
-      console.log("details map idle");
       onMarkrestaurant(map);
     });
   }
@@ -77,7 +74,6 @@ function makePlacesRequest(map, request) {
 }
 
 export function makeDetailsRequest(map, request) {
-  console.log("GM: make details request: ", request);
   var service = new google.maps.places.PlacesService(map);
   service.getDetails(request, (place, status) => {
     if (status === google.maps.places.PlacesServiceStatus.OK) {
@@ -121,7 +117,6 @@ function onGetLatLng(map, lat, lng) {
 }
 
 function onMarkrestaurant(map) {
-  console.log("emit onMarkrestaurant event");
   const markrestaurantEvent = new CustomEvent("markRestaurant", {
     detail: { map: map },
     bubbles: true

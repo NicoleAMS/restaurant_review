@@ -5,13 +5,11 @@ class Subject {
 
   // add an observer to this.observers
   addObserver(observer) {
-    console.log("add: ", observer);
     this.observers.push(observer);
   }
 
   // remove an observer from this.observers
   removeObserver(observer) {
-    console.log("remove: ", observer);
     const removeIndex = this.observers.findIndex(obs => {
       return observer === obs;
     });

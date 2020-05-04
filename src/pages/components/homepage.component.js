@@ -13,7 +13,6 @@ class HomePage extends HTMLElement {
   }
 
   disconnectedCallback() {
-    console.log("homepage disconnected");
   }
 
   render(state, selector) {

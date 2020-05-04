@@ -39,7 +39,6 @@ class RestaurantCard extends HTMLElement {
   }
 
   connectedCallback() {
-    console.log("RC connected callback");
     this.starPercentage =
       (this.restaurant.averageRating / this.starTotal) * 100;
     this.starPercentageRounded = this.roundStarPercentage(this.starPercentage);
@@ -52,12 +51,10 @@ class RestaurantCard extends HTMLElement {
   }
 
   disconnectedCallback() {
-    console.log("RC disconnected");
     this.removeEventListener("click", this.showDetails);
   }
 
   showDetails(event) {
-    console.log("RC: show details for: ", this.restaurant);
     const showDetailsEvent = new CustomEvent("showDetails", {
       bubbles: true,
       detail: { restaurant: this.restaurant }

@@ -69,7 +69,6 @@ export default {
   },
 
   showRestaurantList(state) {
-    console.log("show restaurant list");
     const main = document.querySelector("#main");
     main.innerHTML = "";
     const homepage = document.createElement("home-page");

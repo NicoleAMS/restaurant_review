@@ -15,7 +15,6 @@ class RestaurantList extends HTMLElement {
   }
 
   connectedCallback() {
-    console.log("connected restaurantList");
     this.componentConnected = true;
     restaurantState.addObserver(this);
 
@@ -24,7 +23,6 @@ class RestaurantList extends HTMLElement {
   }
 
   disconnectedCallback() {
-    console.log("disconnected restaurantList");
     this.componentConnected = false;
     restaurantState.removeObserver(this);
   }

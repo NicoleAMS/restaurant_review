@@ -29,11 +29,9 @@ class DetailsPage extends HTMLElement {
   }
 
   disconnectedCallback() {
-    console.log("details page disconnected");
   }
 
   render(state, selector) {
-    console.log("render detailspage for: ", state.currentRestaurant);
     this.restaurant = state.currentRestaurant;
     this.innerHTML = Template.render(this.restaurant);
     this.parent = document.getElementById(selector);
