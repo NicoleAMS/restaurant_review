@@ -41,10 +41,26 @@ class ReviewList extends HTMLElement {
     this.parent = document.getElementById(selector);
     this.parent.appendChild(this);
 
-    for (let i = 0; i < this.restaurant.ratings.length; i++) {
+    const sortedReviews = this.sortReviewsByTime(this.restaurant.ratings);
+
+    for (let i = 0; i < sortedReviews.length; i++) {
       const review = this.restaurant.ratings[i];
       this.addReviewCard(review);
     }
+  }
+
+  sortReviewsByTime(ratings) {
+    // uses bubble sort (desc)
+    for (let i = 0; i < ratings.length; i++) {
+      for (let j = 0; j < (ratings.length - i - 1); j++) {
+        if (ratings[j].timestamp < ratings[j + 1].timestamp) {
+          let temp = ratings[j];
+          ratings[j] = ratings[j + 1];
+          ratings[j + 1] = temp;
+        }
+      }
+    }
+    return ratings;
   }
 
   addReviewCard(review) {

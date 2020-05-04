@@ -98,7 +98,7 @@ export default {
         stars: parseFloat(reviews[i].rating),
         comment: reviews[i].text,
         picture: reviews[i].profile_photo_url,
-        time: reviews[i].time
+        timestamp: (reviews[i].time * 1000)
       };
       convertedReviews.push(review);
     }

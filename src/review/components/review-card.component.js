@@ -38,11 +38,25 @@ class ReviewCard extends HTMLElement {
     return this._starPercentageRounded;
   }
 
+  set dateString(date) {
+    this._dateString = date;
+  }
+
+  get dateString() {
+    return this._dateString;
+  }
+
   connectedCallback() {
     this.starPercentage = (this.review.stars / this.starTotal) * 100;
     this.starPercentageRounded = `${Math.round(this.starPercentage / 10) *
       10}%`;
-    this.innerHTML = Template.render(this.review, this.starPercentageRounded);
+    this.dateString = this.convertTimestamp();
+    this.innerHTML = Template.render(this.review, this.starPercentageRounded, this.dateString);
+  }
+
+  convertTimestamp() {
+    const date = new Date(this.review.timestamp);
+    return date.toLocaleString();
   }
 }
 

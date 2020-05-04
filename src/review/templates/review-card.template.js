@@ -1,9 +1,9 @@
 export default {
-  render(review, starInnerWidth) {
-    return `${this.html(review)} ${this.css(review, starInnerWidth)}`;
+  render(review, starInnerWidth, date) {
+    return `${this.html(review, date)} ${this.css(review, starInnerWidth)}`;
   },
 
-  html(review) {
+  html(review, date) {
     return `
       <div class="media">
         <img src="${review.picture}" id="profile-picture" class="align-self-center mr-3" alt="profile picture">
@@ -13,6 +13,7 @@ export default {
           </div>
           <p>${review.comment}</p>
           <p><strong>${review.name}</strong></p>
+          <small class="text-muted">${date}</small>
         </div>
       </div>
       <div class="dropdown-divider"></div>

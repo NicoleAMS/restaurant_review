@@ -72,7 +72,8 @@ class ReviewForm extends HTMLElement {
       email: this.dom.email.value,
       comment: this.dom.comment.value,
       stars: parseInt(this.dom.starRating.value),
-      picture: "http://placekitten.com/200/200"
+      picture: "http://placekitten.com/200/200",
+      timestamp: Date.now()
     };
   }
 

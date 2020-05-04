@@ -16,7 +16,11 @@ export function initMap() {
   map.markers = [];
   googleMap = map;
 
-  var request;
+  var request = {
+    location: map.getCenter(),
+    radius: "1000",
+    type: ['restaurant']
+  };
 
   // geolocation: center map based on user's location
   if (navigator.geolocation) {
