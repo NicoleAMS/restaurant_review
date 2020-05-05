@@ -49,7 +49,7 @@ class ReviewList extends HTMLElement {
   sortReviewsByTime(ratings) {
     // uses bubble sort (desc)
     for (let i = 0; i < ratings.length; i++) {
-      for (let j = 0; j < (ratings.length - i - 1); j++) {
+      for (let j = 0; j < ratings.length - i - 1; j++) {
         if (ratings[j].timestamp < ratings[j + 1].timestamp) {
           let temp = ratings[j];
           ratings[j] = ratings[j + 1];
@@ -66,7 +66,8 @@ class ReviewList extends HTMLElement {
     reviewCard.review = review;
     this.parent.appendChild(reviewCard);
 
-    document.querySelector(`#${review.id} .stars-inner`).style.width = reviewCard.starPercentageRounded;
+    document.querySelector(`#${review.id} .stars-inner`).style.width =
+      reviewCard.starPercentageRounded;
   }
 
   update(state) {

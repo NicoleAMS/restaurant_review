@@ -51,7 +51,11 @@ class ReviewCard extends HTMLElement {
     this.starPercentageRounded = `${Math.round(this.starPercentage / 10) *
       10}%`;
     this.dateString = this.convertTimestamp();
-    this.innerHTML = Template.render(this.review, this.starPercentageRounded, this.dateString);
+    this.innerHTML = Template.render(
+      this.review,
+      this.starPercentageRounded,
+      this.dateString
+    );
   }
 
   convertTimestamp() {

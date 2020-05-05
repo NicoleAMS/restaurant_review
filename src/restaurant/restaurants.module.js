@@ -12,7 +12,7 @@ export default {
       long: rest.long,
       ratings: rest.ratings,
       numberOfRatings: rest.user_ratings_total || rest.ratings.length,
-      averageRating: rest.averageRating 
+      averageRating: rest.averageRating
     });
     return restaurant;
   },
@@ -97,22 +97,22 @@ export default {
         stars: parseFloat(reviews[i].rating),
         comment: reviews[i].text,
         picture: reviews[i].profile_photo_url,
-        timestamp: (reviews[i].time * 1000)
+        timestamp: reviews[i].time * 1000
       };
       convertedReviews.push(review);
     }
     return convertedReviews;
-  }, 
+  },
 
   getCurrentFormReviews(state, currentRestaurant) {
     const currentFormReviews = [];
-    state.formReviews.forEach((review) => {
+    state.formReviews.forEach(review => {
       if (review.restaurantID === currentRestaurant.id) {
         currentFormReviews.push(review);
       }
     });
     return currentFormReviews;
-  }, 
+  },
 
   updateAverageRating(restaurant, formReviews) {
     const gpRating = restaurant.rating;
@@ -121,14 +121,15 @@ export default {
     const formTotalReviews = formReviews.length;
     const totalReviews = gpTotalReviews + formTotalReviews;
 
-    const totalScore = (gpRating * gpTotalReviews) + (formAverage * formTotalReviews);
+    const totalScore =
+      gpRating * gpTotalReviews + formAverage * formTotalReviews;
     const average = totalScore / totalReviews;
     return Math.round(average * 10) / 10;
-  } ,
+  },
 
   getFormRatingAverage(formReviews) {
     let totalScore = 0;
-    formReviews.forEach((review) => {
+    formReviews.forEach(review => {
       totalScore += review.stars;
     });
     return totalScore / formReviews.length;

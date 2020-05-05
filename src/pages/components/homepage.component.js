@@ -12,9 +12,6 @@ class HomePage extends HTMLElement {
     }
   }
 
-  disconnectedCallback() {
-  }
-
   render(state, selector) {
     this.innerHTML = Template.render(state);
     this.parent = document.getElementById(selector);

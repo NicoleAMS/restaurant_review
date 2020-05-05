@@ -17,7 +17,7 @@ export function initMap() {
   var request = {
     location: map.getCenter(),
     radius: "1000",
-    type: ['restaurant']
+    type: ["restaurant"]
   };
 
   // geolocation: center map based on user's location
@@ -34,7 +34,7 @@ export function initMap() {
       request = {
         location: map.getCenter(),
         radius: "1000",
-        type: ['restaurant']
+        type: ["restaurant"]
       };
     });
   }
@@ -76,7 +76,7 @@ function makePlacesRequest(map, request) {
 export function makeDetailsRequest(map, request) {
   var service = new google.maps.places.PlacesService(map);
   service.getDetails(request, (place, status) => {
-    if (status === google.maps.places.PlacesServiceStatus.OK) {
+    if (status === google.maps.places.PlacesServiceStatus.OK) {
       onStoringRatings(place.reviews);
     }
   });

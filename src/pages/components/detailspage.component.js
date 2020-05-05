@@ -28,9 +28,6 @@ class DetailsPage extends HTMLElement {
     }
   }
 
-  disconnectedCallback() {
-  }
-
   render(state, selector) {
     this.restaurant = state.currentRestaurant;
     this.innerHTML = Template.render(this.restaurant);
@@ -56,7 +53,9 @@ class DetailsPage extends HTMLElement {
   }
 
   addStreetView(restaurant) {
-    const streetViewImg = document.querySelector(`#container-${restaurant.id} #streetViewImg`);
+    const streetViewImg = document.querySelector(
+      `#container-${restaurant.id} #streetViewImg`
+    );
     const google_api_key = process.env.GOOGLE_API_KEY;
     const streetViewSrc = `https://maps.googleapis.com/maps/api/streetview?size=500x400&location=${restaurant.lat},${restaurant.long}
     &key=${google_api_key}`;
