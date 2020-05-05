@@ -1,5 +1,5 @@
 import Template from "../templates/review-list.template";
-import { restaurantState } from "../../utils/event-listeners.js";
+import { restaurantState } from "../../index.js";
 
 class ReviewList extends HTMLElement {
   constructor() {

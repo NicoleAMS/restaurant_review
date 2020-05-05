@@ -1,5 +1,5 @@
 import Template from "../templates/restaurant-list.template";
-import { restaurantState } from "../../utils/event-listeners.js";
+import { restaurantState } from "../../index.js";
 
 class RestaurantList extends HTMLElement {
   constructor() {

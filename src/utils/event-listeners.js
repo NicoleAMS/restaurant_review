@@ -1,51 +1,9 @@
 import RestaurantsModule from "../restaurant/restaurants.module";
-import {
-  initMap,
-  removeMarkers,
-  makeDetailsRequest
-} from "../google_maps/google_maps";
-import State from "../lib/state.js";
-
-const jsonRestaurants = require("../restaurant/restaurants.json");
-
-export const restaurantState = new State();
+import { removeMarkers, makeDetailsRequest } from "../google_maps/google_maps";
+import { restaurantState } from "../index.js";
 
 document.addEventListener("DOMContentLoaded", function() {
-  const google_api_key = process.env.GOOGLE_API_KEY;
-
-  // add google script tag to DOM
-  const googleScriptTag = document.createElement("script");
-  googleScriptTag.src = `https://maps.googleapis.com/maps/api/js?key=${google_api_key}&callback=initMap&libraries=places`;
-  document.getElementsByTagName("body")[0].appendChild(googleScriptTag);
-
-  // initialize google maps
-  window.initMap = initMap;
-
-  // instantiate state properties
-  const jsonRestaurantArray = RestaurantsModule.createRestaurants(
-    jsonRestaurants
-  );
-  let allRestaurants = jsonRestaurantArray;
-  let restaurantsOnMap = allRestaurants;
-  let filteredRestaurants = allRestaurants;
-  let currentRestaurant;
-  let formReviews = [];
-
-  // populate state with properties
-  restaurantState.update({
-    allRestaurants,
-    restaurantsOnMap,
-    filteredRestaurants,
-    currentRestaurant,
-    formReviews
-  });
-
-  // render restaurantList
-  const state = restaurantState.getState();
-  const homePage = document.createElement("home-page");
-  homePage.render(state, "main");
-
-  // // EVENT LISTENERS
+  // EVENT LISTENERS
   document.addEventListener("mapIdle", () => {
     // gets event details
     const bounds = event.detail.bounds;
@@ -54,6 +12,7 @@ document.addEventListener("DOMContentLoaded", function() {
 
     // gets app's state
     const state = restaurantState.getState();
+    const jsonRestaurantArray = state.jsonRestaurants;
 
     // update GP restaurant's average rating and number of reviews with formReviews
     restaurants.forEach(restaurant => {
@@ -82,11 +41,11 @@ document.addEventListener("DOMContentLoaded", function() {
     // updates properties of app's state
     state.allRestaurants = [];
     state.allRestaurants = [...jsonRestaurantArray, ...nearbyRestaurantObjects];
-    restaurantsOnMap = RestaurantsModule.setRestaurantsOnMap(
+    let restaurantsOnMap = RestaurantsModule.setRestaurantsOnMap(
       bounds,
       state.allRestaurants
     );
-    filteredRestaurants = restaurantsOnMap;
+    let filteredRestaurants = restaurantsOnMap;
 
     // displays restaurant markers
     RestaurantsModule.displayRestaurantMarkers(restaurantsOnMap, map);
@@ -105,7 +64,7 @@ document.addEventListener("DOMContentLoaded", function() {
     const state = restaurantState.getState();
 
     // updates properties of app's state
-    filteredRestaurants = RestaurantsModule.filterRestaurantList(
+    let filteredRestaurants = RestaurantsModule.filterRestaurantList(
       state.restaurantsOnMap,
       event.detail.min,
       event.detail.max
@@ -127,7 +86,7 @@ document.addEventListener("DOMContentLoaded", function() {
     const state = restaurantState.getState();
 
     // updates properties of app's state
-    filteredRestaurants = RestaurantsModule.filterRestaurantList(
+    let filteredRestaurants = RestaurantsModule.filterRestaurantList(
       state.restaurantsOnMap,
       event.detail.min,
       event.detail.max
@@ -149,7 +108,7 @@ document.addEventListener("DOMContentLoaded", function() {
     const state = restaurantState.getState();
 
     // updates properties of app's state
-    currentRestaurant = event.detail.restaurant;
+    let currentRestaurant = event.detail.restaurant;
 
     // calls update on state to inform observers of changes
     restaurantState.update({
@@ -165,6 +124,7 @@ document.addEventListener("DOMContentLoaded", function() {
   document.addEventListener("reviewCreated", () => {
     // gets app's state
     const state = restaurantState.getState();
+    let formReviews = state.formReviews;
 
     // get event details
     let restaurant = event.detail.restaurant;
@@ -179,7 +139,7 @@ document.addEventListener("DOMContentLoaded", function() {
     restaurant.numberOfRatings = restaurant.ratings.length;
 
     // updates properties of app's state
-    currentRestaurant = restaurant;
+    let currentRestaurant = restaurant;
     formReviews.push(review);
 
     // calls update on state to inform observers of changes
@@ -205,7 +165,7 @@ document.addEventListener("DOMContentLoaded", function() {
 
     // updates currentRestaurant property of app's state
     const currentFormReviews = [];
-    currentRestaurant = state.currentRestaurant;
+    let currentRestaurant = state.currentRestaurant;
     state.formReviews.forEach(review => {
       if (review.restaurantID === currentRestaurant.id) {
         currentFormReviews.push(review);
@@ -220,7 +180,7 @@ document.addEventListener("DOMContentLoaded", function() {
       }
     });
     state.allRestaurants[index] = currentRestaurant;
-    allRestaurants = state.allRestaurants;
+    let allRestaurants = state.allRestaurants;
 
     // calls update on state to inform observers of changes
     restaurantState.update({
@@ -233,6 +193,7 @@ document.addEventListener("DOMContentLoaded", function() {
   document.addEventListener("restaurantCreated", () => {
     // gets app's state
     const state = restaurantState.getState();
+    let allRestaurants = state.allRestaurants;
 
     // gets event details
     const restaurant = event.detail.restaurant;
