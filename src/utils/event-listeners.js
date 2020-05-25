@@ -40,7 +40,7 @@ document.addEventListener("DOMContentLoaded", function() {
 
     // updates properties of app's state
     state.allRestaurants = [];
-    state.allRestaurants = [...jsonRestaurantArray, ...nearbyRestaurantObjects];
+    state.allRestaurants = [...state.formRestaurants, ...jsonRestaurantArray, ...nearbyRestaurantObjects];
     let restaurantsOnMap = RestaurantsModule.setRestaurantsOnMap(
       bounds,
       state.allRestaurants
@@ -193,19 +193,21 @@ document.addEventListener("DOMContentLoaded", function() {
   document.addEventListener("restaurantCreated", () => {
     // gets app's state
     const state = restaurantState.getState();
-    let allRestaurants = state.allRestaurants;
+    let formRestaurants = state.formRestaurants;
 
     // gets event details
     const restaurant = event.detail.restaurant;
 
     // updates properties of app's state
-    allRestaurants.push(restaurant);
+    formRestaurants.push(restaurant);
 
     // calls update on state to inform observers of changes
     restaurantState.update({
       ...state,
-      allRestaurants
+      formRestaurants
     });
+
+    console.log(restaurantState);
 
     // navigates back to homepage
     RestaurantsModule.showRestaurantList(state);

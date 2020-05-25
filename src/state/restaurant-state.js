@@ -18,6 +18,7 @@ class RestaurantState extends State {
     this.state.restaurantsOnMap = this.state.allRestaurants;
     this.state.filteredRestaurants = this.state.allRestaurants;
     this.state.currentRestaurant;
+    this.state.formRestaurants = [];
     this.state.formReviews = [];
   }
 
