@@ -207,8 +207,6 @@ document.addEventListener("DOMContentLoaded", function() {
       formRestaurants
     });
 
-    console.log(restaurantState);
-
     // navigates back to homepage
     RestaurantsModule.showRestaurantList(state);
   });
