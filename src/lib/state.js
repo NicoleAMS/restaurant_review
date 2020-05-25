@@ -6,14 +6,6 @@ class State extends Subject {
     this.state = {};
   }
 
-  // set state(s) {
-  //   this._state = s;
-  // }
-
-  // get state() {
-  //   return this._state;
-  // }
-
   // updates the state.
   // calls the update method on each observer
   update(data = {}) {
@@ -23,7 +15,7 @@ class State extends Subject {
 
   // get the state.
   getState() {
-    return this.state;
+    return {...this.state};
   }
 }
 

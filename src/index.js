@@ -18,24 +18,20 @@ const jsonRestaurants = require("./restaurant/restaurants.json");
 // instantiate state
 export const restaurantState = new RestaurantState(jsonRestaurants);
 
-initApp();
+document.addEventListener("DOMContentLoaded", function() {
+  // get google api key
+  const google_api_key = process.env.GOOGLE_API_KEY;
 
-function initApp() {
-  document.addEventListener("DOMContentLoaded", function() {
-    // get google api key
-    const google_api_key = process.env.GOOGLE_API_KEY;
+  // add google script tag to DOM
+  const googleScriptTag = document.createElement("script");
+  googleScriptTag.src = `https://maps.googleapis.com/maps/api/js?key=${google_api_key}&callback=initMap&libraries=places`;
+  document.getElementsByTagName("body")[0].appendChild(googleScriptTag);
 
-    // add google script tag to DOM
-    const googleScriptTag = document.createElement("script");
-    googleScriptTag.src = `https://maps.googleapis.com/maps/api/js?key=${google_api_key}&callback=initMap&libraries=places`;
-    document.getElementsByTagName("body")[0].appendChild(googleScriptTag);
+  // initialize google maps
+  window.initMap = initMap;
 
-    // initialize google maps
-    window.initMap = initMap;
-
-    // render homepage
-    const state = restaurantState.getState();
-    const homePage = document.createElement("home-page");
-    homePage.render(state, "main");
-  });
-}
+  // render homepage
+  const state = restaurantState.getState();
+  const homePage = document.createElement("home-page");
+  homePage.render(state, "main");
+});

@@ -12,15 +12,6 @@ class RestaurantState extends State {
     this.init();
   }
 
-  // set state(s) {
-  //   console.log('set state');
-  //   this._state = s;
-  // }
-
-  // get state() {
-  //   return this._state;
-  // }
-
   init() {
     // initializes the restaurant-state's properties
     this.state.allRestaurants = this.state.jsonRestaurants;
