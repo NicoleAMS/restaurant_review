@@ -9,7 +9,6 @@ class State extends Subject {
   // updates the state.
   // calls the update method on each observer
   update(data = {}) {
-    console.log(data);
     this.state = Object.assign(this.state, data);
     this.notify(this.state);
   }
