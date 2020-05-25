@@ -40,9 +40,14 @@ class ReviewList extends HTMLElement {
 
     const sortedReviews = this.sortReviewsByTime(this.restaurant.ratings);
 
-    for (let i = 0; i < sortedReviews.length; i++) {
-      const review = this.restaurant.ratings[i];
-      this.addReviewCard(review);
+    if (sortedReviews.length === 0) {
+      this.parent = document.getElementById("reviewCol");
+      this.parent.innerHTML = `<p>This restaurant has no reviews yet.</p>`;
+    } else {
+      for (let i = 0; i < sortedReviews.length; i++) {
+        const review = this.restaurant.ratings[i];
+        this.addReviewCard(review);
+      }
     }
   }
 

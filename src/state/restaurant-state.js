@@ -19,8 +19,6 @@ class RestaurantState extends State {
     this.state.filteredRestaurants = this.state.allRestaurants;
     this.state.currentRestaurant;
     this.state.formReviews = [];
-
-    console.log(this);
   }
 
   convertJSONRestaurants(jsonRestaurants) {

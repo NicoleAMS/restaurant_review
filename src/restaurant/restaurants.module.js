@@ -88,8 +88,9 @@ export default {
   },
 
   convertReviews(reviews, currentRestaurant) {
+    const length = reviews !== undefined ? reviews.length : 0;
     const convertedReviews = [];
-    for (let i = 0; i < reviews.length; i++) {
+    for (let i = 0; i < length; i++) {
       const review = {
         id: `restaurant_${currentRestaurant.id}_rating_${i}`,
         restaurantID: currentRestaurant.id,
