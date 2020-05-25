@@ -21,6 +21,10 @@ document.addEventListener("DOMContentLoaded", function() {
         restaurant
       );
       if (currentFormReviews.length > 0) {
+        // if rating or user_ratings_total properties don't exist, set them to 0
+        restaurant.rating = restaurant.rating ? restaurant.rating : 0;
+        restaurant.user_ratings_total = restaurant.user_ratings_total || 0;
+
         restaurant.rating = RestaurantsModule.updateAverageRating(
           restaurant,
           currentFormReviews
