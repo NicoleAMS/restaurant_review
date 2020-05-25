@@ -1,4 +1,4 @@
-import State from "./state.js";
+import State from "../lib/state.js";
 import restaurantsModule from "../restaurant/restaurants.module.js";
 
 class RestaurantState extends State {

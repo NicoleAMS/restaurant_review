@@ -11,7 +11,7 @@ import "./review/components/review-form.component";
 import "./review/components/review-card.component";
 import "./review/components/review-list.component";
 import "./utils/event-listeners";
-import RestaurantState from "./lib/restaurant-state";
+import RestaurantState from "./state/restaurant-state";
 import { initMap } from "./google_maps/google_maps";
 const jsonRestaurants = require("./restaurant/restaurants.json");
 
