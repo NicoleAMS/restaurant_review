@@ -43,7 +43,7 @@
     "kind-of": ">=6.0.3",
     "acorn": ">=7.1.1",
     "websocket-extensions": ">=0.1.4",
-    "lodash": ">=4.17.19",
+    "lodash": ">=4.17.21",
     "elliptic": ">=6.5.3",
     "serialize-javascript": ">=3.1.0"
   }
