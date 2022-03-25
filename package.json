@@ -39,7 +39,7 @@
     "dotenv-webpack": "^1.7.0",
     "jquery": "^3.5.0",
     "popper.js": "^1.16.1",
-    "minimist": ">=1.2.5",
+    "minimist": ">=1.2.6",
     "kind-of": ">=6.0.3",
     "acorn": ">=7.1.1",
     "websocket-extensions": ">=0.1.4",
